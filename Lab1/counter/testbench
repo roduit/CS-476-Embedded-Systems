@@ -1,0 +1,193 @@
+#! /usr/bin/vvp
+:ivl_version "12.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 12;
+:vpi_module "/usr/lib64/ivl/system.vpi";
+:vpi_module "/usr/lib64/ivl/vhdl_sys.vpi";
+:vpi_module "/usr/lib64/ivl/vhdl_textio.vpi";
+:vpi_module "/usr/lib64/ivl/v2005_math.vpi";
+:vpi_module "/usr/lib64/ivl/va_math.vpi";
+S_0x5593858773a0 .scope module, "counterTestBench" "counterTestBench" 2 3;
+ .timescale -12 -12;
+v0x55938588d4a0_0 .var "clock", 0 0;
+v0x55938588d560_0 .var "reset", 0 0;
+v0x55938588d630_0 .var "s_direction", 0 0;
+v0x55938588d730_0 .var "s_enable", 0 0;
+v0x55938588d800_0 .net "s_value", 7 0, v0x55938588d0b0_0;  1 drivers
+E_0x559385876630 .event negedge, v0x559385865130_0;
+E_0x55938584e680 .event negedge, v0x55938588d2f0_0;
+S_0x559385877570 .scope module, "dut" "counter" 2 17, 3 1 0, S_0x5593858773a0;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "reset";
+    .port_info 1 /INPUT 1 "clock";
+    .port_info 2 /INPUT 1 "enable";
+    .port_info 3 /INPUT 1 "direction";
+    .port_info 4 /OUTPUT 8 "counterValue";
+P_0x559385877750 .param/l "WIDTH" 0 3 1, +C4<00000000000000000000000000001000>;
+v0x559385865130_0 .net "clock", 0 0, v0x55938588d4a0_0;  1 drivers
+v0x55938588d0b0_0 .var "counterValue", 7 0;
+v0x55938588d190_0 .net "direction", 0 0, v0x55938588d630_0;  1 drivers
+v0x55938588d230_0 .net "enable", 0 0, v0x55938588d730_0;  1 drivers
+v0x55938588d2f0_0 .net "reset", 0 0, v0x55938588d560_0;  1 drivers
+E_0x55938583df40 .event posedge, v0x559385865130_0;
+    .scope S_0x559385877570;
+T_0 ;
+    %wait E_0x55938583df40;
+    %load/vec4 v0x55938588d2f0_0;
+    %cmpi/e 1, 0, 1;
+    %flag_mov 8, 4;
+    %jmp/0 T_0.0, 8;
+    %pushi/vec4 0, 0, 8;
+    %jmp/1 T_0.1, 8;
+T_0.0 ; End of true expr.
+    %load/vec4 v0x55938588d230_0;
+    %cmpi/e 0, 0, 1;
+    %flag_mov 9, 4;
+    %jmp/0 T_0.2, 9;
+    %load/vec4 v0x55938588d0b0_0;
+    %jmp/1 T_0.3, 9;
+T_0.2 ; End of true expr.
+    %load/vec4 v0x55938588d190_0;
+    %cmpi/e 1, 0, 1;
+    %flag_mov 10, 4;
+    %jmp/0 T_0.4, 10;
+    %load/vec4 v0x55938588d0b0_0;
+    %addi 1, 0, 8;
+    %jmp/1 T_0.5, 10;
+T_0.4 ; End of true expr.
+    %load/vec4 v0x55938588d0b0_0;
+    %subi 1, 0, 8;
+    %jmp/0 T_0.5, 10;
+ ; End of false expr.
+    %blend;
+T_0.5;
+    %jmp/0 T_0.3, 9;
+ ; End of false expr.
+    %blend;
+T_0.3;
+    %jmp/0 T_0.1, 8;
+ ; End of false expr.
+    %blend;
+T_0.1;
+    %assign/vec4 v0x55938588d0b0_0, 0;
+    %jmp T_0;
+    .thread T_0;
+    .scope S_0x5593858773a0;
+T_1 ;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x55938588d560_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x55938588d4a0_0, 0, 1;
+    %pushi/vec4 4, 0, 32;
+T_1.0 %dup/vec4;
+    %pushi/vec4 0, 0, 32;
+    %cmp/s;
+    %jmp/1xz T_1.1, 5;
+    %jmp/1 T_1.1, 4;
+    %pushi/vec4 1, 0, 32;
+    %sub;
+    %delay 5, 0;
+    %load/vec4 v0x55938588d4a0_0;
+    %inv;
+    %store/vec4 v0x55938588d4a0_0, 0, 1;
+    %jmp T_1.0;
+T_1.1 ;
+    %pop/vec4 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x55938588d560_0, 0, 1;
+T_1.2 ;
+    %delay 5, 0;
+    %load/vec4 v0x55938588d4a0_0;
+    %inv;
+    %store/vec4 v0x55938588d4a0_0, 0, 1;
+    %jmp T_1.2;
+    %end;
+    .thread T_1;
+    .scope S_0x5593858773a0;
+T_2 ;
+    %wait E_0x559385876630;
+    %load/vec4 v0x55938588d560_0;
+    %cmpi/e 1, 0, 1;
+    %flag_mov 8, 4;
+    %jmp/0 T_2.0, 8;
+    %pushi/vec4 0, 0, 1;
+    %jmp/1 T_2.1, 8;
+T_2.0 ; End of true expr.
+    %load/vec4 v0x55938588d730_0;
+    %inv;
+    %jmp/0 T_2.1, 8;
+ ; End of false expr.
+    %blend;
+T_2.1;
+    %assign/vec4 v0x55938588d730_0, 0;
+    %load/vec4 v0x55938588d560_0;
+    %cmpi/e 1, 0, 1;
+    %flag_mov 8, 4;
+    %jmp/0 T_2.2, 8;
+    %pushi/vec4 1, 0, 1;
+    %jmp/1 T_2.3, 8;
+T_2.2 ; End of true expr.
+    %load/vec4 v0x55938588d730_0;
+    %cmpi/e 0, 0, 1;
+    %flag_get/vec4 4;
+    %jmp/0 T_2.6, 4;
+    %load/vec4 v0x55938588d800_0;
+    %pushi/vec4 55, 0, 8;
+    %cmp/e;
+    %flag_get/vec4 4;
+    %and;
+T_2.6;
+    %flag_set/vec4 9;
+    %jmp/0 T_2.4, 9;
+    %pushi/vec4 0, 0, 1;
+    %jmp/1 T_2.5, 9;
+T_2.4 ; End of true expr.
+    %load/vec4 v0x55938588d630_0;
+    %jmp/0 T_2.5, 9;
+ ; End of false expr.
+    %blend;
+T_2.5;
+    %jmp/0 T_2.3, 8;
+ ; End of false expr.
+    %blend;
+T_2.3;
+    %assign/vec4 v0x55938588d630_0, 0;
+    %jmp T_2;
+    .thread T_2;
+    .scope S_0x5593858773a0;
+T_3 ;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x55938588d630_0, 0, 1;
+    %wait E_0x55938584e680;
+T_3.0 ;
+    %wait E_0x559385876630;
+    %load/vec4 v0x55938588d630_0;
+    %cmpi/e 0, 0, 1;
+    %flag_get/vec4 4;
+    %jmp/0 T_3.3, 4;
+    %load/vec4 v0x55938588d800_0;
+    %pushi/vec4 127, 0, 8;
+    %cmp/e;
+    %flag_get/vec4 4;
+    %and;
+T_3.3;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_3.1, 8;
+    %vpi_call 2 35 "$finish" {0 0 0};
+T_3.1 ;
+    %jmp T_3.0;
+    %vpi_call 2 36 "$finish" {0 0 0};
+    %end;
+    .thread T_3;
+    .scope S_0x5593858773a0;
+T_4 ;
+    %vpi_call 2 42 "$dumpfile", "counterSignals.vcd" {0 0 0};
+    %vpi_call 2 43 "$dumpvars", 32'sb00000000000000000000000000000001, S_0x559385877570 {0 0 0};
+    %end;
+    .thread T_4;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "counter_tb.v";
+    "counter.v";
