@@ -3,6 +3,7 @@
 module fifoTestbench;
     reg reset, clock;
 
+    // Reset and clock generation
     initial begin
         reset = 1'b1;
         clock = 1'b0; // set the initial values
@@ -16,7 +17,7 @@ module fifoTestbench;
     reg [7:0] s_pushData;
     wire [7:0] s_popData;
 
-    fifo #(.nrOfEntries(32), .bitWidth(8)) DUT (
+    fifo #(.nrOfEntries(8), .bitWidth(8)) DUT (
         .clock(clock),
         .reset(reset),
         .push(s_push),
@@ -31,20 +32,30 @@ module fifoTestbench;
         begin
             s_push = 1'b0;
             s_pop = 1'b0;
-            s_pushData = 8'd0;
+            s_pushData = 8'd5;
             @(negedge reset); /* wait for the reset period to end */
             repeat(2) @(negedge clock); /* wait for 2 clock cycles */
             s_push = 1'b1;
-            repeat(32) @(negedge clock) s_pushData = s_pushData + 8'd1;
-            s_push = 1'b0;
+            repeat(4) @(negedge clock) s_pushData = s_pushData + 8'd1;
             s_pop = 1'b1;
-            repeat(32) @(negedge clock); /* wait for 32 clock cycles */
-            s_pop = 1'b0;
+            repeat(10) @(negedge clock) s_pushData = s_pushData + 8'd1;; /* wait for 32 clock cycles */
+            // s_pop = 1'b0;
             $finish; /* finish the simulation */
         end
-
+    
+    integer idx;
     initial begin
-        $dumpfile("fifoSignals.vcd"); // define the name of the .vcd file that can be viewed by GTKWAVE
-        $dumpvars(1, DUT); // dump all signals inside the DUT-component in the .vcd file
+        // define the name of the .vcd file that can be viewed by GTKWAVE
+        $dumpfile("fifoSignals.vcd"); 
+        
+        // dump all signals inside the DUT-component in the .vcd file
+        $dumpvars(1, DUT); 
+        
+        // dump all signals inside the fifoMemory-component in the .vcd file
+        $dumpvars(1, DUT.fifoMemory); 
+        
+        for(idx = 0; idx < 8; idx = idx + 1)
+            // dump all signals inside the memoryContent-array in the .vcd file
+            $dumpvars(1, DUT.fifoMemory.memoryContent[idx]); 
     end
 endmodule
