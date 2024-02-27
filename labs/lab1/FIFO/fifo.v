@@ -49,4 +49,8 @@ always @(posedge clock) begin
         pop_pointer <= pop_pointer_wire;
     end
 end
+
+assign full = (push_pointer == pop_pointer - 1);
+assign empty = (push_pointer == pop_pointer);
+
 endmodule
