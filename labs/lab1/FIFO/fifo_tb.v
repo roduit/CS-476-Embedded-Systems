@@ -11,7 +11,8 @@ module fifoTestbench;
         forever #5 clock = ~clock; // generate a clock with a period of 10 time-units
     end
 
-    reg s_push, s_pop, s_full, s_empty; // define the signals for the DUT
+    reg s_push, s_pop; // define the signals for the DUT
+    wire s_full, s_empty; // changed from reg to wire
     reg [7:0] s_pushData;
     wire [7:0] s_popData;
 

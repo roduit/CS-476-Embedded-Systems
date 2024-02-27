@@ -4,23 +4,24 @@ module fifo #(
 )
 (
     input wire clock,
-    reset,
-    push,
-    pop,
+    input wire reset,
+    input wire push,
+    input wire pop,
     input wire [bitWidth-1:0] pushData,
     output wire full,
-    empty,
+    output wire empty,
     output wire [bitWidth-1:0] popData
 );
 
+wire [$clog2(nrOfEntries)-1:0] push_pointer_wire, pop_pointer_wire;
 reg [$clog2(nrOfEntries)-1:0] push_pointer, pop_pointer = 0;
 
 semiDualPortSSRAM #(.bitwidth(bitWidth), .nrOfEntries(nrOfEntries)) fifoMemory  
     (.clockA(clock),
      .clockB(clock),
      .writeEnable(push),
-     .addressA(push_pointer),
-     .addressB(pop_pointer),
+     .addressA(push_pointer_wire),
+     .addressB(pop_pointer_wire),
      .dataIn(pushData),
      .dataOutA(popData),
      .dataOutB());
@@ -30,22 +31,22 @@ counter #(.WIDTH($clog2(nrOfEntries))) counterPush
       .clock(clock),
       .enable(push && !full),
       .direction(1'b1),
-      .counterValue(push_pointer));
+      .counterValue(push_pointer_wire));
 
 counter #(.WIDTH($clog2(nrOfEntries))) counterPop 
      (.reset(reset),
       .clock(clock),
       .enable(pop && !empty),
       .direction(1'b1),
-      .counterValue(pop_pointer));
+      .counterValue(pop_pointer_wire));
 
 always @(posedge clock) begin
-    if (reset)
-        // reset the FIFO
-        pop_pointer <= push_pointer;
+    if (reset) begin
+        push_pointer <= 0;
+        pop_pointer <= 0;
+    end else begin
+        push_pointer <= push_pointer_wire;
+        pop_pointer <= pop_pointer_wire;
+    end
 end
-
-assign full = push_pointer == pop_pointer -1
-assign empty = push_pointer == pop_pointer;
-
 endmodule
