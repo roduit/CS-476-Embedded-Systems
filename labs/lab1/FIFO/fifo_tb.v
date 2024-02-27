@@ -26,6 +26,22 @@ module fifoTestbench;
         .popData(s_popData)
     );
 
+    initial
+        begin
+            s_push = 1'b0;
+            s_pop = 1'b0;
+            s_pushData = 8'd0;
+            @(negedge reset); /* wait for the reset period to end */
+            repeat(2) @(negedge clock); /* wait for 2 clock cycles */
+            s_push = 1'b1;
+            repeat(32) @(negedge clock) s_pushData = s_pushData + 8'd1;
+            s_push = 1'b0;
+            s_pop = 1'b1;
+            repeat(32) @(negedge clock); /* wait for 32 clock cycles */
+            s_pop = 1'b0;
+            $finish; /* finish the simulation */
+        end
+
     initial begin
         $dumpfile("fifoSignals.vcd"); // define the name of the .vcd file that can be viewed by GTKWAVE
         $dumpvars(1, DUT); // dump all signals inside the DUT-component in the .vcd file
