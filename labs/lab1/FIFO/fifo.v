@@ -28,8 +28,8 @@ fifoMemory (
     .clockA(clock),
     .clockB(clock),
     .writeEnable(push && ~full),
-    .addressA(nextWriteAddress),
-    .addressB(nextReadAddress),
+    .addressA(writeAddress),
+    .addressB(readAddress),
     .dataIn(pushData),
     .dataOutA(),
     .dataOutB(popData)

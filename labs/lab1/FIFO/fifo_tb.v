@@ -38,7 +38,7 @@ module fifoTestbench;
             s_push = 1'b1;
             repeat(4) @(negedge clock) s_pushData = s_pushData + 8'd1;
             s_pop = 1'b1;
-            repeat(10) @(negedge clock) s_pushData = s_pushData + 8'd1;; /* wait for 32 clock cycles */
+            repeat(30) @(negedge clock) s_pushData = s_pushData + 8'd1;; /* wait for 32 clock cycles */
             // s_pop = 1'b0;
             $finish; /* finish the simulation */
         end
