@@ -13,10 +13,15 @@ module fifo #(
     output  wire [bitWidth-1:0] popData
 );
 
-// FIFO control
-reg [$clog2(nrOfEntries)-1:0] writeAddress, readAddress;
-wire [$clog2(nrOfEntries)-1:0] nextWriteAddress, nextReadAddress;
-wire isFullCounter, isEmptyCounter;
+// FIFO control signals
+wire [$clog2(nrOfEntries)-1:0] writeAddress, readAddress;
+wire isFullCounter = ((writeAddress + 1) % nrOfEntries == readAddress) ? 1'b1 : 1'b0;
+wire isEmptyCounter = (writeAddress == readAddress) ? 1'b1 : 1'b0;
+wire do_push = push && ~isFullCounter;
+wire do_pop = pop && ~isEmptyCounter;
+
+assign full = isFullCounter;
+assign empty = isEmptyCounter;
 
 // FIFO memory
 semiDualPortSSRAM #(
@@ -27,7 +32,7 @@ semiDualPortSSRAM #(
 fifoMemory (
     .clockA(clock),
     .clockB(clock),
-    .writeEnable(push && ~full),
+    .writeEnable(do_push),
     .addressA(writeAddress),
     .addressB(readAddress),
     .dataIn(pushData),
@@ -42,9 +47,9 @@ counter #(
 counterPush (
     .reset(reset),
     .clock(clock),
-    .enable(push && ~isFullCounter),
+    .enable(do_push),
     .direction(1'b1),
-    .counterValue(nextWriteAddress)
+    .counterValue(writeAddress)
 );
 
 counter #(
@@ -53,30 +58,10 @@ counter #(
 counterPop (
     .reset(reset),
     .clock(clock),
-    .enable(pop && ~isEmptyCounter),
+    .enable(do_pop),
     .direction(1'b1),
-    .counterValue(nextReadAddress)
+    .counterValue(readAddress)
 );
-
-
-always @(posedge clock or posedge reset) begin
-    if (reset)
-        begin
-            writeAddress <= 0;
-            readAddress <= 0;
-        end
-    else
-        begin
-            writeAddress <= nextWriteAddress;
-            readAddress <= nextReadAddress;
-        end
-end
-
-assign isFullCounter = ((nextWriteAddress + 1) % nrOfEntries == nextReadAddress);
-assign isEmptyCounter = (nextWriteAddress == nextReadAddress);
-
-assign full = ((writeAddress + 1) % nrOfEntries == readAddress);
-assign empty = (writeAddress == readAddress);
 
 
 endmodule
