@@ -1,0 +1,229 @@
+$date
+	Sun Mar 17 21:15:26 2024
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module profileCi_tb $end
+$scope module DUT $end
+$var wire 1 ! busIdle $end
+$var wire 8 " ciN [7:0] $end
+$var wire 1 # clock $end
+$var wire 1 $ done $end
+$var wire 1 % reset $end
+$var wire 1 & s_outEnable $end
+$var wire 1 ' stall $end
+$var wire 1 ( start $end
+$var wire 32 ) valueA [31:0] $end
+$var wire 32 * valueB [31:0] $end
+$var wire 1 + s_enCounter3 $end
+$var wire 1 , s_enCounter2 $end
+$var wire 1 - s_enCounter1 $end
+$var wire 1 . s_enCounter0 $end
+$var wire 32 / s_counter3Value [31:0] $end
+$var wire 32 0 s_counter2Value [31:0] $end
+$var wire 32 1 s_counter1Value [31:0] $end
+$var wire 32 2 s_counter0Value [31:0] $end
+$var wire 32 3 result [31:0] $end
+$var parameter 8 4 customId $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b1011 4
+$end
+#0
+$dumpvars
+b0 3
+bx 2
+bx 1
+bx 0
+bx /
+0.
+0-
+0,
+0+
+b0 *
+b0 )
+0(
+1'
+0&
+1%
+0$
+0#
+b1011 "
+1!
+$end
+#5
+b0 2
+b0 1
+b0 0
+b0 /
+1#
+#10
+0#
+#15
+1#
+#20
+0%
+0#
+#25
+1#
+#30
+0#
+#35
+1#
+#40
+0#
+#45
+1.
+1$
+1&
+1(
+b1 *
+1#
+#50
+0#
+#55
+b1 2
+0$
+0&
+0(
+1#
+#60
+0#
+#65
+b10 2
+b10 3
+1$
+1&
+1(
+1#
+#70
+0#
+#75
+b11 2
+b0 3
+0$
+0&
+0(
+1#
+#80
+0#
+#85
+b100 2
+1#
+#90
+0#
+#95
+b101 2
+0.
+b101 3
+1$
+1&
+1(
+b10001 *
+1#
+#100
+0#
+#105
+b0 3
+0$
+0&
+b0 *
+0(
+1#
+#110
+0#
+#115
+1#
+#120
+0#
+#125
+1#
+#130
+0#
+#135
+1#
+#140
+0#
+#145
+1-
+b101 3
+1$
+1&
+1(
+b10 *
+1#
+#150
+0#
+#155
+b1 1
+b0 3
+0$
+0&
+b0 *
+0(
+1#
+#160
+0#
+#165
+b10 1
+1#
+#170
+0#
+#175
+b11 1
+1#
+#180
+0#
+#185
+b100 1
+0'
+1#
+#190
+0#
+#195
+1#
+#200
+0#
+#205
+1.
+1,
+1+
+b101 3
+1$
+1&
+1(
+b1101 *
+1#
+#210
+0#
+#215
+b1 /
+b1 0
+b110 2
+b0 3
+0$
+0&
+b0 *
+0(
+1#
+#220
+0#
+#225
+b111 2
+b10 0
+b10 /
+1#
+#230
+0#
+#235
+b11 /
+b11 0
+b1000 2
+1#
