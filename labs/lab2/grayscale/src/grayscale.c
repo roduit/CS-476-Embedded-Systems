@@ -27,7 +27,15 @@ int main () {
   uint32_t grayPixels;
   vga[2] = swap_u32(2);
   vga[3] = swap_u32((uint32_t) &grayscale[0]);
+
+  uint32_t control;
+  uint32_t counterid;
+  
   while(1) {
+    printf("\n\n");
+    control = 7;
+    asm volatile ("l.nios_rrr r0,r0,%[in2],0xB"::[in2]"r"(control));
+    
     uint32_t * gray = (uint32_t *) &grayscale[0];
     takeSingleImageBlocking((uint32_t) &rgb565[0]);
     for (int line = 0; line < camParams.nrOfLinesPerImage; line++) {
@@ -40,5 +48,48 @@ int main () {
         grayscale[line*camParams.nrOfPixelsPerLine+pixel] = gray;
       }
     }
+
+    control = 7<<4;
+    asm volatile ("l.nios_rrr r0,r0,%[in2],0xB"::[in2]"r"(control));
+
+    // reading the number of cycles
+    counterid = 1;
+    asm volatile ("l.nios_rrr %[out1],%[in1],r0,0xB":[out1]"=r"(result):[in1]"r"(counterid));
+    printf("Cycles CPU: %d\n", result);
+
+    // reading the number of stalls
+    counterid = 2;
+    asm volatile ("l.nios_rrr %[out1],%[in1],r0,0xB":[out1]"=r"(result):[in1]"r"(counterid));
+    printf("Cycles Stall: %d\n", result);
+
+    // reading the number of idle cycles
+    counterid = 4;
+    asm volatile ("l.nios_rrr %[out1],%[in1],r0,0xB":[out1]"=r"(result):[in1]"r"(counterid));
+    printf("Cycles Idle: %d\n", result);
+
+    // reset the counters
+    control = 1<<8;
+    asm volatile ("l.nios_rrr r0,r0,%[in2],0xB"::[in2]"r"(control));
+    control = 1<<9;
+    asm volatile ("l.nios_rrr r0,r0,%[in2],0xB"::[in2]"r"(control));
+    control = 1<<10;
+    asm volatile ("l.nios_rrr r0,r0,%[in2],0xB"::[in2]"r"(control));
+
+    // reading the number of cycles
+    printf("reset\n\n");
+    counterid = 1;
+    asm volatile ("l.nios_rrr %[out1],%[in1],r0,0xB":[out1]"=r"(result):[in1]"r"(counterid));
+    printf("Cycles CPU: %d\n", result);
+
+    // reading the number of stalls
+    counterid = 2;
+    asm volatile ("l.nios_rrr %[out1],%[in1],r0,0xB":[out1]"=r"(result):[in1]"r"(counterid));
+    printf("Cycles Stall: %d\n", result);
+
+    // reading the number of idle cycles
+    counterid = 4;
+    asm volatile ("l.nios_rrr %[out1],%[in1],r0,0xB":[out1]"=r"(result):[in1]"r"(counterid));
+    printf("Cycles Idle: %d\n", result);
+
   }
 }

@@ -32,7 +32,7 @@ module profileCi_tb;
     initial begin
 
         // Initialize the inputs
-        start = 1'b0;
+        //start = 1'b0;
         ciN = 8'h0B;
         busIdle = 1'b1;
         stall = 1'b1;
@@ -44,7 +44,7 @@ module profileCi_tb;
         valueB = 32'h00000001;
         start = 1'b1;
         @(posedge clock); /* wait for the next clock cycle */
-        start = 1'b0;
+        //start = 1'b0;
         //valueB = 32'h00000000;
         @(posedge clock); /* wait for 2 clock cycles */
 
@@ -52,15 +52,23 @@ module profileCi_tb;
         // Read the result
         start = 1'b1;
         @(posedge clock); /* wait for the next clock cycle */
-        start = 1'b0;
-
+        //start = 1'b0;
+        
+        @(posedge clock); /* wait for the next clock cycle */
+        ciN = 8'h0C;
         repeat(2) @(posedge clock); /* wait for 5 clock cycles */
+        start = 1'b1;
+        valueB = 32'h00000003;
+        @(posedge clock); /* wait for the next clock cycle */
+        ciN = 8'h0B;
+        repeat(2) @(posedge clock); /* wait for 5 clock cycles */
+
 
         // Disable counter 0
         valueB = 32'h00000011;
         start = 1'b1;
         @(posedge clock); /* wait for the next clock cycle */
-        start = 1'b0;
+        //start = 1'b0;
         valueB = 32'h00000000;
 
         repeat(2) @(posedge clock); /* wait for 5 clock cycles */
@@ -69,7 +77,7 @@ module profileCi_tb;
         // valueB = 32'h00000100;
         // start = 1'b1;
         // @(posedge clock); /* wait for the next clock cycle */
-        // start = 1'b0;
+        // //start = 1'b0;
         // valueB = 32'h00000000;
         
         repeat(2) @(posedge clock); /* wait for 5 clock cycles */
@@ -78,7 +86,7 @@ module profileCi_tb;
         valueB = 32'h00000002;
         start = 1'b1;
         @(posedge clock); /* wait for the next clock cycle */
-        start = 1'b0;
+        //start = 1'b0;
         valueB = 32'h00000000;
         @(posedge clock); /* wait for 2 clock cycles */
 
@@ -93,7 +101,7 @@ module profileCi_tb;
         valueB = 32'h000000D;
         start = 1'b1;
         @(posedge clock); /* wait for the next clock cycle */
-        start = 1'b0;
+        //start = 1'b0;
         valueB = 32'h00000000;
 
         repeat(2) @(posedge clock); /* wait for 5 clock cycles */
