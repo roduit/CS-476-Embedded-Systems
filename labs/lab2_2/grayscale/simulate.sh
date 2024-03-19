@@ -1,4 +1,4 @@
 #!/bin/bash
-iverilog -s profileCi_tb -o testbench test_profiler.v profileCi.v counter.v sr_latch.v
+iverilog -s rgb565GrayscaleIse_tb -o testbench rgb_tb.v rgb565GrayscaleIse.v
 ./testbench
-#gtkwave profiler.vcd &
+#gtkwave grayscale.vcd &

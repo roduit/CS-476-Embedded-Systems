@@ -5,7 +5,7 @@ module rgb565GrayscaleIse # (parameter [7:0] customInstructionId = 8'd0)
                              output wire        done,
                              output wire [31:0] result);
 
-    wire R, G, B;
+    wire [15:0] R, G, B;
     wire [15:0] partialR1, partialR2, partialR3, partialR4;
     wire [15:0] partialG1, partialG2, partialG3, partialG4, partialG5;
     wire [15:0] partialB1, partialB2;
@@ -44,7 +44,7 @@ module rgb565GrayscaleIse # (parameter [7:0] customInstructionId = 8'd0)
                         partialB1 + partialB2 + B) >> 8;
     
     // Output
-    assign done = (ciN == customId) ? start : 1'b0;
+    assign done = (iseId == customInstructionId) ? start : 1'b0;
     assign result = done ? (grayscale & 32'h000000FF) : 32'b0;
 
 endmodule
