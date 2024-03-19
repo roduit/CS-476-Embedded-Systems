@@ -12,13 +12,13 @@ module rgb565GrayscaleIse # (parameter [7:0] customInstructionId = 8'd0)
     wire [31:0] grayscale;
 
     // R values - 5 bit
-    assign R = valueA[15:11];
+    assign R = valueA[15:11] << 3;
 
     // G values - 6 bit
-    assign G = valueA[10:5];
+    assign G = valueA[10:5] << 2;
 
     // B values - 5 bit
-    assign B = valueA[4:0];
+    assign B = valueA[4:0] << 3;
 
 
     // Red multiplication

@@ -30,11 +30,10 @@ module rgb565GrayscaleIse_tb;
         ciN = 8'h0B;
         @(negedge clock); /* wait for the reset period to end */
         repeat(2) @(negedge clock); /* wait for 2 clock cycles */
-        $display("r = 16, g = 16, b = 16 ==> q = %d, theretical = 16",result);
+        $display("r = 128, g = 64, b = 128 ==> q = %d, theoretical = 82",result);
         start = 1'b0;
         valueA = 32'h00000000;
         repeat(2) @(negedge clock); /* wait for 2 clock cycles */
-
 
         // Start the conversion
         start = 1'b1;
@@ -42,11 +41,10 @@ module rgb565GrayscaleIse_tb;
         ciN = 8'h0B;
         @(negedge clock); /* wait for the reset period to end */
         repeat(2) @(negedge clock); /* wait for 2 clock cycles */
-        $display("r = 10, g = 15, b = 20 ==> q =%d, theretical = 14",result);
+        $display("r = 80, g = 60, b = 160 ==> q = %d, theoretical = 71",result);
         start = 1'b0;
         valueA = 32'h00000000;
         repeat(2) @(negedge clock); /* wait for 2 clock cycles */
-
 
         // Start the conversion
         start = 1'b1;
@@ -54,23 +52,21 @@ module rgb565GrayscaleIse_tb;
         ciN = 8'h0B;
         @(negedge clock); /* wait for the reset period to end */
         repeat(2) @(negedge clock); /* wait for 2 clock cycles */
-        $display("r = 31, g = 31, b = 31 ==> q = %d, theretical = 31",result);
+        $display("r = 248, g = 124, b = 248 ==> q = %d, theoretical = 159",result);
         start = 1'b0;
         valueA = 32'h00000000;
         repeat(2) @(negedge clock); /* wait for 2 clock cycles */
 
-        
         // Start the conversion
         start = 1'b1;
         valueA = 32'd12642;
         ciN = 8'h0B;
         @(negedge clock); /* wait for the reset period to end */
         repeat(2) @(negedge clock); /* wait for 2 clock cycles */
-        $display("r = 6, g = 11, b = 2 ==> q = %d, theretical = 9",result);
+        $display("r = 48, g = 44, b = 16 ==> q = %d, theoretical = 42",result);
         start = 1'b0;
         valueA = 32'h00000000;
         repeat(2) @(negedge clock); /* wait for 2 clock cycles */
-        
         $finish;
     end
 

@@ -1,5 +1,5 @@
 def calculate_grayscale(r, g, b):
-    return (54 * r + 183 * g + 19 * b) // 256
+    return (54 * (r << 3) + 183 * (g <<2) + 19 * (b << 3)) // 256
 
 def print_grayscale(r, g, b):
     grayscale = calculate_grayscale(r, g, b)
@@ -11,10 +11,11 @@ def print_grayscale(r, g, b):
     print("ciN = 8'h0B;")
     print("@(negedge clock); /* wait for the reset period to end */")
     print("repeat(2) @(negedge clock); /* wait for 2 clock cycles */")
-    print(f'$display("r = {r}, g = {g}, b = {b} ==> q = %d, theretical = {grayscale}",result);')
+    print(f'$display("r = {r << 3}, g = {g << 2}, b = {b << 3} ==> q = %d, theoretical = {grayscale}",result);')
     print("start = 1'b0;")
     print("valueA = 32'h00000000;")
     print("repeat(2) @(negedge clock); /* wait for 2 clock cycles */")
+    print()
 
 print_grayscale(16, 16, 16)
 print_grayscale(10, 15, 20)
