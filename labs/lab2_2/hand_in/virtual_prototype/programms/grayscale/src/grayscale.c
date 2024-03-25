@@ -11,7 +11,7 @@ int main () {
   volatile unsigned int *vga = (unsigned int *) 0X50000020;
   camParameters camParams;
 
-  int custome_en = 1;
+  int custom_en = 0; // Put this variable to 1 to use custom
 
   vga_clear();
   
@@ -53,7 +53,7 @@ int main () {
       for (int pixel = 0; pixel < camParams.nrOfPixelsPerLine; pixel++) {
         uint32_t gray;
         uint16_t rgb = swap_u16(rgb565[line*camParams.nrOfPixelsPerLine+pixel]);
-        if (custome_en) {
+        if (custom_en) {
           asm volatile ("l.nios_rrr %[out1],%[in1],r0,0x3":[out1]"=r"(gray):[in1]"r"(rgb));
         }
         else{
