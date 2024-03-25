@@ -9,6 +9,11 @@ The file `grayscale.c`, that can be found in the folder `programms/grayscale/src
 
 Here we present the results of our simulations
 
+**The grayscale custom module**
+As you can see in this snippet from the TB we created, the computation is completed in less than one clock cycle, as requested.
+
+![alt text](verilog_sim.png)
+
 **Without custom grayscale module**
 | Type    | Frame 1 | Frame 2 | Frame 3 | Mean|
 | -------- | ------- | ------- | ------- | ------- |
