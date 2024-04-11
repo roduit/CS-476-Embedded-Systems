@@ -1,0 +1,198 @@
+#! /Users/vincentroduit/Documents/document_vincent/epfl/master/ma2/embedded_system/software/oss-cad-suite/bin/vvp
+:ivl_version "13.0 (devel)" "(s20221226-498-g52d049b51)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 12;
+:vpi_module "/Users/vincentroduit/Documents/document_vincent/epfl/master/ma2/embedded_system/software/oss-cad-suite/lib/ivl/system.vpi";
+:vpi_module "/Users/vincentroduit/Documents/document_vincent/epfl/master/ma2/embedded_system/software/oss-cad-suite/lib/ivl/vhdl_sys.vpi";
+:vpi_module "/Users/vincentroduit/Documents/document_vincent/epfl/master/ma2/embedded_system/software/oss-cad-suite/lib/ivl/vhdl_textio.vpi";
+:vpi_module "/Users/vincentroduit/Documents/document_vincent/epfl/master/ma2/embedded_system/software/oss-cad-suite/lib/ivl/v2005_math.vpi";
+:vpi_module "/Users/vincentroduit/Documents/document_vincent/epfl/master/ma2/embedded_system/software/oss-cad-suite/lib/ivl/va_math.vpi";
+S_0x7fb91e804c00 .scope module, "ramDmaCiTestbench" "ramDmaCiTestbench" 2 3;
+ .timescale -12 -12;
+v0x600003e4e370_0 .var "ciN", 7 0;
+v0x600003e4e400_0 .var "clock", 0 0;
+v0x600003e4e490_0 .net "done", 0 0, L_0x600003d4c6e0;  1 drivers
+v0x600003e4e520_0 .var "reset", 0 0;
+v0x600003e4e5b0_0 .net "result", 31 0, L_0x600003d4c5a0;  1 drivers
+v0x600003e4e640_0 .var "start", 0 0;
+v0x600003e4e6d0_0 .var "valueA", 31 0;
+v0x600003e4e760_0 .var "valueB", 31 0;
+S_0x7fb91e804d70 .scope module, "DUT" "ramDmaCi" 2 14, 3 1 0, S_0x7fb91e804c00;
+ .timescale -12 -12;
+    .port_info 0 /INPUT 1 "start";
+    .port_info 1 /INPUT 1 "clock";
+    .port_info 2 /INPUT 1 "reset";
+    .port_info 3 /INPUT 32 "valueA";
+    .port_info 4 /INPUT 32 "valueB";
+    .port_info 5 /INPUT 8 "ciN";
+    .port_info 6 /OUTPUT 1 "done";
+    .port_info 7 /OUTPUT 32 "result";
+P_0x600001948540 .param/l "customId" 0 3 1, C4<00000000>;
+L_0x600002748770 .functor AND 1, L_0x600003d4c460, L_0x600003d4c280, C4<1>, C4<1>;
+L_0x6000027488c0 .functor AND 1, L_0x600003d4c500, L_0x600002748770, C4<1>, C4<1>;
+L_0x7fb910040008 .functor BUFT 1, C4<00000000>, C4<0>, C4<0>, C4<0>;
+v0x600003e4d5f0_0 .net/2u *"_ivl_0", 7 0, L_0x7fb910040008;  1 drivers
+v0x600003e4d680_0 .net *"_ivl_10", 31 0, L_0x600003d4c3c0;  1 drivers
+L_0x7fb910040098 .functor BUFT 1, C4<0000000000>, C4<0>, C4<0>, C4<0>;
+v0x600003e4d710_0 .net *"_ivl_13", 9 0, L_0x7fb910040098;  1 drivers
+L_0x7fb9100400e0 .functor BUFT 1, C4<00000000000000000000000000000000>, C4<0>, C4<0>, C4<0>;
+v0x600003e4d7a0_0 .net/2u *"_ivl_14", 31 0, L_0x7fb9100400e0;  1 drivers
+v0x600003e4d830_0 .net *"_ivl_16", 0 0, L_0x600003d4c460;  1 drivers
+v0x600003e4d8c0_0 .net *"_ivl_2", 0 0, L_0x600003d4c1e0;  1 drivers
+v0x600003e4d950_0 .net *"_ivl_21", 0 0, L_0x600003d4c500;  1 drivers
+L_0x7fb910040128 .functor BUFT 1, C4<00000000000000000000000000000000>, C4<0>, C4<0>, C4<0>;
+v0x600003e4d9e0_0 .net/2u *"_ivl_24", 31 0, L_0x7fb910040128;  1 drivers
+L_0x7fb910040248 .functor BUFT 1, C4<1>, C4<0>, C4<0>, C4<0>;
+v0x600003e4da70_0 .net/2u *"_ivl_36", 0 0, L_0x7fb910040248;  1 drivers
+L_0x7fb910040050 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0x600003e4db00_0 .net/2u *"_ivl_4", 0 0, L_0x7fb910040050;  1 drivers
+v0x600003e4db90_0 .net *"_ivl_9", 21 0, L_0x600003d4c320;  1 drivers
+v0x600003e4dc20_0 .net "ciN", 7 0, v0x600003e4e370_0;  1 drivers
+v0x600003e4dcb0_0 .net "clock", 0 0, v0x600003e4e400_0;  1 drivers
+v0x600003e4dd40_0 .net "done", 0 0, L_0x600003d4c6e0;  alias, 1 drivers
+v0x600003e4ddd0_0 .net "enWR", 0 0, L_0x600002748770;  1 drivers
+v0x600003e4de60_0 .var "read_done", 0 0;
+v0x600003e4def0_0 .net "reset", 0 0, v0x600003e4e520_0;  1 drivers
+v0x600003e4df80_0 .net "result", 31 0, L_0x600003d4c5a0;  alias, 1 drivers
+v0x600003e4e010_0 .net "resultSRAM", 31 0, v0x600003e4d320_0;  1 drivers
+v0x600003e4e0a0_0 .net "s_isMyCi", 0 0, L_0x600003d4c280;  1 drivers
+v0x600003e4e130_0 .net "start", 0 0, v0x600003e4e640_0;  1 drivers
+v0x600003e4e1c0_0 .net "valueA", 31 0, v0x600003e4e6d0_0;  1 drivers
+v0x600003e4e250_0 .net "valueB", 31 0, v0x600003e4e760_0;  1 drivers
+v0x600003e4e2e0_0 .net "writeEnableA", 0 0, L_0x6000027488c0;  1 drivers
+E_0x60000194a580 .event negedge, v0x600003e4d0e0_0;
+L_0x600003d4c1e0 .cmp/eq 8, v0x600003e4e370_0, L_0x7fb910040008;
+L_0x600003d4c280 .functor MUXZ 1, L_0x7fb910040050, v0x600003e4e640_0, L_0x600003d4c1e0, C4<>;
+L_0x600003d4c320 .part v0x600003e4e6d0_0, 10, 22;
+L_0x600003d4c3c0 .concat [ 22 10 0 0], L_0x600003d4c320, L_0x7fb910040098;
+L_0x600003d4c460 .cmp/eq 32, L_0x600003d4c3c0, L_0x7fb9100400e0;
+L_0x600003d4c500 .part v0x600003e4e6d0_0, 9, 1;
+L_0x600003d4c5a0 .functor MUXZ 32, L_0x7fb910040128, v0x600003e4d320_0, L_0x600003d4c6e0, C4<>;
+L_0x600003d4c640 .part v0x600003e4e6d0_0, 0, 9;
+L_0x600003d4c6e0 .functor MUXZ 1, v0x600003e4de60_0, L_0x7fb910040248, L_0x6000027488c0, C4<>;
+S_0x7fb91e8044a0 .scope module, "SSRAm" "dualPortSSRAM" 3 25, 4 2 0, S_0x7fb91e804d70;
+ .timescale -12 -12;
+    .port_info 0 /INPUT 1 "clockA";
+    .port_info 1 /INPUT 1 "clockB";
+    .port_info 2 /INPUT 1 "writeEnableA";
+    .port_info 3 /INPUT 1 "writeEnableB";
+    .port_info 4 /INPUT 9 "addressA";
+    .port_info 5 /INPUT 9 "addressB";
+    .port_info 6 /INPUT 32 "dataInA";
+    .port_info 7 /INPUT 32 "dataInB";
+    .port_info 8 /OUTPUT 32 "dataOutA";
+    .port_info 9 /OUTPUT 32 "dataOutB";
+P_0x600003949200 .param/l "bitwidth" 0 4 2, +C4<00000000000000000000000000100000>;
+P_0x600003949240 .param/l "nrOfEntries" 0 4 3, +C4<00000000000000000000001000000000>;
+P_0x600003949280 .param/l "readAfterWrite" 0 4 4, +C4<00000000000000000000000000000000>;
+v0x600003e4cfc0_0 .net "addressA", 8 0, L_0x600003d4c640;  1 drivers
+L_0x7fb9100401b8 .functor BUFT 1, C4<000000000>, C4<0>, C4<0>, C4<0>;
+v0x600003e4d050_0 .net "addressB", 8 0, L_0x7fb9100401b8;  1 drivers
+v0x600003e4d0e0_0 .net "clockA", 0 0, v0x600003e4e400_0;  alias, 1 drivers
+v0x600003e4d170_0 .net "clockB", 0 0, v0x600003e4e400_0;  alias, 1 drivers
+v0x600003e4d200_0 .net "dataInA", 31 0, v0x600003e4e760_0;  alias, 1 drivers
+L_0x7fb910040200 .functor BUFT 1, C4<00000000000000000000000000000000>, C4<0>, C4<0>, C4<0>;
+v0x600003e4d290_0 .net "dataInB", 31 0, L_0x7fb910040200;  1 drivers
+v0x600003e4d320_0 .var "dataOutA", 31 0;
+v0x600003e4d3b0_0 .var "dataOutB", 31 0;
+v0x600003e4d440 .array "memoryContent", 0 511, 31 0;
+v0x600003e4d4d0_0 .net "writeEnableA", 0 0, L_0x6000027488c0;  alias, 1 drivers
+L_0x7fb910040170 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0x600003e4d560_0 .net "writeEnableB", 0 0, L_0x7fb910040170;  1 drivers
+E_0x60000194a680 .event posedge, v0x600003e4d0e0_0;
+    .scope S_0x7fb91e8044a0;
+T_0 ;
+    %wait E_0x60000194a680;
+    %load/vec4 v0x600003e4d4d0_0;
+    %cmpi/e 1, 0, 1;
+    %jmp/0xz  T_0.0, 4;
+    %load/vec4 v0x600003e4d200_0;
+    %load/vec4 v0x600003e4cfc0_0;
+    %pad/u 11;
+    %ix/vec4 4;
+    %store/vec4a v0x600003e4d440, 4, 0;
+T_0.0 ;
+    %load/vec4 v0x600003e4cfc0_0;
+    %pad/u 11;
+    %ix/vec4 4;
+    %load/vec4a v0x600003e4d440, 4;
+    %store/vec4 v0x600003e4d320_0, 0, 32;
+    %jmp T_0;
+    .thread T_0;
+    .scope S_0x7fb91e8044a0;
+T_1 ;
+    %wait E_0x60000194a680;
+    %load/vec4 v0x600003e4d560_0;
+    %cmpi/e 1, 0, 1;
+    %jmp/0xz  T_1.0, 4;
+    %load/vec4 v0x600003e4d290_0;
+    %load/vec4 v0x600003e4d050_0;
+    %pad/u 11;
+    %ix/vec4 4;
+    %store/vec4a v0x600003e4d440, 4, 0;
+T_1.0 ;
+    %load/vec4 v0x600003e4d050_0;
+    %pad/u 11;
+    %ix/vec4 4;
+    %load/vec4a v0x600003e4d440, 4;
+    %store/vec4 v0x600003e4d3b0_0, 0, 32;
+    %jmp T_1;
+    .thread T_1;
+    .scope S_0x7fb91e804d70;
+T_2 ;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x600003e4de60_0, 0, 1;
+    %end;
+    .thread T_2;
+    .scope S_0x7fb91e804d70;
+T_3 ;
+    %wait E_0x60000194a580;
+    %load/vec4 v0x600003e4ddd0_0;
+    %assign/vec4 v0x600003e4de60_0, 0;
+    %jmp T_3;
+    .thread T_3;
+    .scope S_0x7fb91e804c00;
+T_4 ;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x600003e4e520_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x600003e4e400_0, 0, 1;
+    %pushi/vec4 4, 0, 32;
+T_4.0 %dup/vec4;
+    %pushi/vec4 0, 0, 32;
+    %cmp/s;
+    %jmp/1xz T_4.1, 5;
+    %jmp/1 T_4.1, 4;
+    %pushi/vec4 1, 0, 32;
+    %sub;
+    %delay 5, 0;
+    %load/vec4 v0x600003e4e400_0;
+    %inv;
+    %store/vec4 v0x600003e4e400_0, 0, 1;
+    %jmp T_4.0;
+T_4.1 ;
+    %pop/vec4 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x600003e4e520_0, 0, 1;
+T_4.2 ;
+    %delay 5, 0;
+    %load/vec4 v0x600003e4e400_0;
+    %inv;
+    %store/vec4 v0x600003e4e400_0, 0, 1;
+    %jmp T_4.2;
+T_4.3 ;
+    %end;
+    .thread T_4;
+    .scope S_0x7fb91e804c00;
+T_5 ;
+    %vpi_call 2 35 "$dumpfile", "ramDmaCi.vcd" {0 0 0};
+    %vpi_call 2 38 "$dumpvars", 32'sb00000000000000000000000000000001, S_0x7fb91e804d70 {0 0 0};
+    %end;
+    .thread T_5;
+# The file index is used to find the file name in the following table.
+:file_names 5;
+    "N/A";
+    "<interactive>";
+    "ramDmaCi_tb.v";
+    "ramDmaCi.v";
+    "dualPortSSRAM.v";

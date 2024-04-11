@@ -1,7 +1,6 @@
-`timescale 1ns/1ps
+`timescale 1ps/1ps // set the time-units for simulation
 
-module ramDmaCi_test;
-
+module ramDmaCiTestbench;
     reg start;
     reg clock;
     reg reset;
@@ -11,8 +10,8 @@ module ramDmaCi_test;
     wire done;
     wire [31:0] result;
 
-    // Instantiate the module
-    ramDmaCi #(8'h01) uut (
+    // Declare DUT as an instance of your ramDmaCi module
+    ramDmaCi DUT (
         .start(start),
         .clock(clock),
         .reset(reset),
@@ -24,37 +23,18 @@ module ramDmaCi_test;
     );
 
     initial begin
-        // Initialize signals
-        start = 0;
-        clock = 0;
-        reset = 1;
-        valueA = 0;
-        valueB = 0;
-        ciN = 0;
-
-        // Apply reset
-        #10 reset = 0;
-        #10 reset = 1;
-        #10 reset = 0;
-
-        // Perform write operation
-        start = 1;
-        valueA = 32'h00000200; // Address 0x200
-        valueB = 32'h12345678; // Some data
-        ciN = 8'h01; // Custom ID
-        #10;
-
-        // Perform read operation
-        start = 0;
-        valueA = 32'h00000200; // Address 0x200
-        ciN = 8'h01; // Custom ID
-        #10;
-
-        // End simulation
-        $finish;
+        reset = 1'b1;
+        clock = 1'b0; // set the initial values
+        repeat (4) #5 clock = ~clock; // generate 2 clock periods
+        reset = 1'b0; // de-activate the reset
+        forever #5 clock = ~clock; // generate a clock with a period of 10 time-units
     end
 
-    // Clock generator
-    always #5 clock = ~clock;
-
+    initial begin
+        // define the name of the .vcd file that can be viewed by GTKWAVE
+        $dumpfile("ramDmaCi.vcd"); 
+        
+        // dump all signals inside the DUT-component in the .vcd file
+        $dumpvars(1, DUT); 
+    end
 endmodule
