@@ -12,8 +12,6 @@ module ramDmaCi #(parameter [7:0] customId = 8'h00)
     wire enWR = (valueA[31:10] == 0 && s_isMyCi);
     wire writeEnableA = valueA[9] && enWR;
     wire [31:0] resultSRAM; 
-
-    assign result = done ? resultSRAM : 32'b0;
     
     reg read_done = 0;
 
@@ -36,6 +34,7 @@ always @(negedge clock) begin
         read_done <= enWR;
     end
 
-assign done = writeEnableA ? 1'b1 : read_done;
+assign done = ((writeEnableA | ~enWR) ? 1'b1 : read_done) && s_isMyCi;
+assign result = done ? resultSRAM : 32'b0;
 
 endmodule
