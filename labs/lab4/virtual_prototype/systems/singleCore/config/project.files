@@ -54,3 +54,5 @@
 ../verilog/counter.v
 ../verilog/profileCi.v
 ../verilog/rgb565GrayscaleIse.v
+../verilog/ramDmaCi.v
+../verilog/dualPortSSRAM.v
