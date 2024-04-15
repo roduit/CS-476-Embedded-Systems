@@ -312,10 +312,10 @@ module or1420SingleCore ( input wire         clock12MHz,
    * Here we instantiate the CPU
    *
    */
-  wire [31:0] s_cpu1CiResult;
-  wire [31:0] s_cpu1CiDataA, s_cpu1CiDataB, s_camCiResult, s_delayResult, s_profilingResult, s_rgb_GrayScale;
+  wire [31:0] s_cpu1CiResult, s_profileResult, s_grayResult, s_attachedMemoryResult;
+  wire [31:0] s_cpu1CiDataA, s_cpu1CiDataB, s_camCiResult, s_delayResult;
   wire [7:0]  s_cpu1CiN;
-  wire        s_cpu1CiRa, s_cpu1CiRb, s_cpu1CiRc, s_cpu1CiStart, s_cpu1CiCke, s_cpu1CiDone, s_i2cCiDone, s_delayCiDone, s_profilingCiDone,s_rgb_CiDone;
+  wire        s_cpu1CiRa, s_cpu1CiRb, s_cpu1CiRc, s_cpu1CiStart, s_cpu1CiCke, s_cpu1CiDone, s_i2cCiDone, s_delayCiDone;
   wire [4:0]  s_cpu1CiA, s_cpu1CiB, s_cpu1CiC;
   wire        s_cpu1IcacheRequestBus, s_cpu1DcacheRequestBus, s_camCiDone;
   wire        s_cpu1IcacheBusAccessGranted, s_cpu1DcacheBusAccessGranted;
@@ -324,17 +324,16 @@ module or1420SingleCore ( input wire         clock12MHz,
   wire [3:0]  s_cpu1byteEnables;
   wire        s_cpu1DataValid;
   wire [7:0]  s_cpu1BurstSize;
-  wire        s_spm1Irq;
-  wire        s_cpu1IsStalled;
+  wire        s_spm1Irq, s_profileDone, s_stall, s_grayDone, s_attachedMemoryDone;
   
-  assign s_cpu1CiDone = s_hdmiDone | s_swapByteDone | s_flashDone | s_cpuFreqDone | s_i2cCiDone | s_delayCiDone | s_camCiDone | s_profilingCiDone | s_rgb_CiDone;
-  assign s_cpu1CiResult = s_hdmiResult | s_swapByteResult | s_flashResult | s_cpuFreqResult | s_i2cCiResult | s_camCiResult | s_delayResult | s_profilingResult | s_rgb_GrayScale; 
+  assign s_cpu1CiDone = s_hdmiDone | s_swapByteDone | s_flashDone | s_cpuFreqDone | s_i2cCiDone | s_delayCiDone | s_camCiDone | s_profileDone | s_grayDone | s_attachedMemoryDone;
+  assign s_cpu1CiResult = s_hdmiResult | s_swapByteResult | s_flashResult | s_cpuFreqResult | s_i2cCiResult | s_camCiResult | s_delayResult | s_profileResult | s_grayResult | s_attachedMemoryResult; 
 
   or1420Top #( .NOP_INSTRUCTION(32'h1500FFFF)) cpu1
              (.cpuClock(s_systemClock),
               .cpuReset(s_cpuReset),
               .irq(1'b0),
-              .cpuIsStalled(s_cpu1IsStalled),
+              .cpuIsStalled(s_stall),
               .iCacheReqBus(s_cpu1IcacheRequestBus),
               .dCacheReqBus(s_cpu1DcacheRequestBus),
               .iCacheBusGrant(s_cpu1IcacheBusAccessGranted),
@@ -437,21 +436,51 @@ module or1420SingleCore ( input wire         clock12MHz,
 
   /*
    *
-   * Here we define a custom instruction that implements the  profiling hardware
+   * A profile ISE
    *
    */
-  profileCi #(.customId(8'd11))
+  profileCi #(.customId(8'd12)) profiler
              (.start(s_cpu1CiStart),
               .clock(s_systemClock),
               .reset(s_cpuReset),
-              .stall(s_cpu1IsStalled),
+              .stall(s_stall),
               .busIdle(s_busIdle),
               .valueA(s_cpu1CiDataA),
               .valueB(s_cpu1CiDataB),
               .ciN(s_cpu1CiN),
-              .done(s_profilingCiDone),
-              .result(s_profilingResult));
+              .done(s_profileDone),
+              .result(s_profileResult) );
 
+  /*
+  *
+  * Here we define the CI attached memory
+  *
+  */
+  ramDmaCi #(.customId(8'd11)) attachedMemory (
+        .start(s_cpu1CiStart), 
+        .clock(s_systemClock), 
+        .reset(s_cpuReset), 
+        .valueA(s_cpu1CiDataA), 
+        .valueB(s_cpu1CiDataB),
+        .ciN(s_cpu1CiN),
+        .done(s_attachedMemoryDone), 
+        .result(s_attachedMemoryResult));
+
+
+
+  /*
+   *
+   * An rgb to grayscale ISE
+   *
+   */
+  rgb565GrayscaleIse #(.customInstructionId(8'd9)) converter
+                      (.start(s_cpu1CiStart),
+                       .valueA(s_cpu1CiDataA),
+                       .valueB(s_cpu1CiDataB),
+                       .iseId(s_cpu1CiN),
+                       .done(s_grayDone),
+                       .result(s_grayResult) );
+  
   /*
    *
    * Here we define the camera interface
@@ -489,17 +518,6 @@ module or1420SingleCore ( input wire         clock12MHz,
            .busyIn(s_busy),
            .busErrorIn(s_busError));
 
-  /*
-   *
-   * Here the grayscale is defined
-   *
-   */
-   rgb565GrayscaleIse # (.customInstructionId(8'd3) ) rgb_GrayScale
-   			 (.start(s_cpu1CiStart),
-         .valueA(s_cpu1CiDataA),
-   			 .iseId(s_cpu1CiN),
-   			 .done(s_rgb_CiDone),
-   			 .result(s_rgb_GrayScale));
 
   /*
    *
