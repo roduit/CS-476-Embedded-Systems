@@ -57,3 +57,5 @@
 ../verilog/or1420SingleCore.v
 ../verilog/ramDmaCi.v
 ../verilog/dualPortSSRAM.v
+../verilog/profileCi.v
+../verilog/counter.v

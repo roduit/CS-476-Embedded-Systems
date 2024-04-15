@@ -15,15 +15,15 @@ Info: Running Quartus Prime Shell
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Mon Mar 25 20:51:30 2024
+    Info: Processing started: Mon Apr 15 13:57:59 2024
 Info: Command: quartus_sh --determine_smart_action or1420SingleCore
 Info: Quartus(args): or1420SingleCore
-Info (293031): Detected changes in Quartus Prime Settings File (.qsf).
-    Info (293028): Assignment PHYSICAL_SYNTHESIS_REGISTER_RETIMING changed value from ON to OFF.
+Info (293032): Detected changes in source files.
+    Info (293033): A new file was added to the project: /home/vroduit/Desktop/myfiles/CS-476-Embedded-Systems/labs/lab4/325140_329487/virtual_prototype/systems/singleCore/verilog/counter.v.
 Info: SMART_ACTION = SOURCE
 Info (23030): Evaluation of Tcl script /opt/intelFPGA-lite/18.1/quartus/common/tcl/internal/qsh_smart.tcl was successful
 Info: Quartus Prime Shell was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 780 megabytes
-    Info: Processing ended: Mon Mar 25 20:51:31 2024
-    Info: Elapsed time: 00:00:01
+    Info: Peak virtual memory: 778 megabytes
+    Info: Processing ended: Mon Apr 15 13:57:59 2024
+    Info: Elapsed time: 00:00:00
     Info: Total CPU time (on all processors): 00:00:00
