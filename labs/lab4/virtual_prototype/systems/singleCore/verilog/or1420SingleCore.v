@@ -476,7 +476,6 @@ module or1420SingleCore ( input wire         clock12MHz,
   rgb565GrayscaleIse #(.customInstructionId(8'd9)) converter
                       (.start(s_cpu1CiStart),
                        .valueA(s_cpu1CiDataA),
-                       .valueB(s_cpu1CiDataB),
                        .iseId(s_cpu1CiN),
                        .done(s_grayDone),
                        .result(s_grayResult) );
