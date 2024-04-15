@@ -20,7 +20,7 @@ module ramDmaCi #(parameter [7:0] customId = 8'h00)
         .nrOfEntries(512), 
         .readAfterWrite(0))
 
-    SSRAm(.clockA(clock),
+    SSRAM(.clockA(clock),
          .clockB(clock),
          .writeEnableA(writeEnableA),
          .writeEnableB(1'b0),
@@ -30,10 +30,9 @@ module ramDmaCi #(parameter [7:0] customId = 8'h00)
          .dataInB(0),
          .dataOutA(resultSRAM));
 
-always @(negedge clock) begin
+always @(posedge clock) begin
         read_done <= enWR;
     end
-
 assign done = ((writeEnableA | ~enWR) ? 1'b1 : read_done) && s_isMyCi;
 assign result = done ? resultSRAM : 32'b0;
 

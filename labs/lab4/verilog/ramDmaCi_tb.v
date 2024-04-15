@@ -34,7 +34,6 @@ module ramDmaCiTestbench;
         start = 1'b0;
         @(negedge reset); /* wait for the reset period to end */
         repeat(2) @(posedge clock); /* wait for 2 clock cycles */
-        #5
 
         /*
         Perform a write operation to the RAM
@@ -47,8 +46,15 @@ module ramDmaCiTestbench;
         ValueB is a 32-bit signal containing the data to be written
         */
         start = 1'b1; // set the start signal to 1
-        valueA = 32'b 0000_0000_0000_0000_0000_0010_0000_0001; // set a random address and write-enable signal to 1
-        valueB = 32'h 00000001; // Data to send is 1
+        valueA = 32'b 0000_0000_0000_0000_0000_0010_0000_0001; // set address 1 and write-enable signal to 1
+        valueB = 32'h 00000011; // Data to send is 1
+        repeat(2) @(posedge clock); /* wait for the next clock cycle */
+        start = 1'b0; // set the start signal to 0
+        repeat(2) @(posedge clock); /* wait for 2 clock cycles */
+
+        start = 1'b1; // set the start signal to 1
+        valueA = 32'b 0000_0000_0000_0000_0000_0010_0000_0010; // set address 2 and write-enable signal to 1
+        valueB = 32'h 00000012; // Data to send is 1
         repeat(2) @(posedge clock); /* wait for the next clock cycle */
         start = 1'b0; // set the start signal to 0
         repeat(2) @(posedge clock); /* wait for 2 clock cycles */
@@ -63,9 +69,17 @@ module ramDmaCiTestbench;
         start = 1'b0; // set the start signal to 0
         repeat(2) @(posedge clock); /* wait for 2 clock cycles */
 
+        start = 1'b1; // set the start signal to 1
+        valueA = 32'b 0000_0000_0000_0000_0000_0000_0000_0010; // set a random address and write-enable signal to 0
+        valueB = 32'h 00000000; // Data to send is 0
+        repeat(2)@(posedge clock); /* wait for the next clock cycle */
+        start = 1'b0; // set the start signal to 0
+        repeat(2) @(posedge clock); /* wait for 2 clock cycles */
+
+
         // Perform an illicit write operation to the RAM
         start = 1'b1; // set the start signal to 1
-        valueA = 32'b 0001_0000_0000_0000_0000_0010_0000_0011; // set a random address and write-enable signal to 1
+        valueA = 32'b 0001_0000_0000_0000_0000_0010_0000_0001; // set the same address and write-enable signal to 1
         valueB = 32'h 00000001; // Data to send is 1
         repeat(2) @(posedge clock); /* wait for the next clock cycle */
         start = 1'b0; // set the start signal to 0
@@ -73,7 +87,7 @@ module ramDmaCiTestbench;
 
         // Read the last illegal write operation
         start = 1'b1; // set the start signal to 1
-        valueA = 32'b 0000_0000_0000_0000_0000_0000_0000_0011; // set a random address and write-enable signal to 0
+        valueA = 32'b 0000_0000_0000_0000_0000_0000_0000_0001; // set a random address and write-enable signal to 0
         valueB = 32'h 00000000; // Data to send is 0
         repeat(2) @(posedge clock); /* wait for the next clock cycle */
         start = 1'b0; // set the start signal to 0
