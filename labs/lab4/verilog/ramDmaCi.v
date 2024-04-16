@@ -1,4 +1,7 @@
-module ramDmaCi #(parameter [7:0] customId = 8'h00)
+// ramDmaCi module
+// Author: Filippo Quadri & Vincent Roduit
+
+module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
                 (   input wire          start,
                                         clock,
                                         reset,
@@ -9,8 +12,8 @@ module ramDmaCi #(parameter [7:0] customId = 8'h00)
                     output wire [31:0]  result, 
                     
                     // Bus interfaces
-                    output wire         busOut_request;
-                    input wire          busIn_grants;
+                    output wire         busOut_request,
+                    input wire          busIn_grants,
 
                     // BusIn interface 
                     input wire [31:0]   busIn_address_data,
@@ -31,8 +34,7 @@ module ramDmaCi #(parameter [7:0] customId = 8'h00)
                 );
 
     /// Enumerated states
-    parameter       IDLE = 3'b111;
-    parameter       RW_MEMORY = 3'b000;
+    // parameter       RW_MEMORY = 3'b000;
     parameter       RW_BUS_START_ADD = 3'b001;
     parameter       RW_MEMORY_START_ADD = 3'b010;
     parameter       RW_BLOCK_SIZE = 3'b011;
@@ -42,6 +44,7 @@ module ramDmaCi #(parameter [7:0] customId = 8'h00)
     /// Global control signals
     wire            s_isMyCi = (ciN == customId) ? start : 1'b0;
     wire            state = valueA[12:10];
+    wire            read = valueA[9];
     
     /// SRAM control signals
     wire            enWR = (valueA[31:10] == 0 && s_isMyCi); 
@@ -58,52 +61,45 @@ module ramDmaCi #(parameter [7:0] customId = 8'h00)
     reg             control_register = 0;
     reg [1:0]       status_register = 0;
     reg [8:0]       memory_address = 0;
+    // reg             write_enable = 0;
+
+    /// Done and result signal
+    always @(posedge clock) begin
+        read_done <= enWR;
+    end
+
+    assign done     = ((writeEnableA | ~enWR) ? 1'b1 : read_done) && s_isMyCi;
+
+
+    //! result needs to be a reg, not a wire
+    assign result   = done ? resultSRAM_CPU : 32'b0;
 
     /// State transition and output logic
     always @(*) begin
         case(state)
-            RW_MEMORY: begin
-                if (valueA[9] == 0) begin
-                    // Read from memory location A[8:0]
-                    memory_address = valueA[8:0];
-                    write_enable = 0;
-                end else begin
-                    // Write to memory location A[8:0]
-                    memory_address = valueA[8:0];
-                    write_enable = 1;
-                end
-            end
-
+            // RW_MEMORY: begin
+            //     if (read) begin
+            //         // Read from memory location A[8:0]
+            //         memory_start_address = valueA[8:0];
+            //         write_enable = 0;
+            //     end else begin
+            //         // Write to memory location A[8:0]
+            //         memory_start_address = valueA[8:0];
+            //         write_enable = 1;
+            //     end
+            // end
             RW_BUS_START_ADD: begin
                 if (valueA[9] == 0) begin
-                    bus_start_address = valueA[8:0];
+                    // Read the bus start address of the DMA transfer
+                    result = bus_start_address;
                 end else begin
-                    memory_start_address = valueA[8:0];
+                    // Write the bus start address of the DMA transfer B[31:0]
+                    bus_start_address = valueB;
                 end
             end
-
-            RW_MEMORY_START_ADD: begin
-                memory_start_address = valueA[8:0];
-            end
-
-            RW_BLOCK_SIZE: begin
-                block_size = valueA[8:0];
-            end
-
-            RW_BURST_SIZE: begin
-                burst_size = valueA[8:0];
-            end
-
-            RW_STATUS_CTRL_REG: begin
-                if (valueA[9] == 0) begin
-                    control_register = valueA[8];
-                end else begin
-                    status_register = valueA[8:0];
-                end
-            end
+                    
         endcase
     end
-    
     
     
     /// SRAM module
@@ -119,19 +115,12 @@ module ramDmaCi #(parameter [7:0] customId = 8'h00)
         .addressB(9'b0),
         .dataInA(valueB),
         .dataInB(0),
-        .dataOutA(resultSRAM_CPU)
+        .dataOutA(resultSRAM_CPU),
         .dataOutB(resultSRAM_DMA)
     );
 
     
     /// DMA module
     // Here we will implement the DMA module that will handle the bus interface
-
-    always @(posedge clock) begin
-        read_done <= enWR;
-    end
-
-    assign done     = ((writeEnableA | ~enWR) ? 1'b1 : read_done) && s_isMyCi;
-    assign result   = done ? resultSRAM : 32'b0;
 
 endmodule

@@ -25,7 +25,7 @@ module ramDmaCiTestbench;
         .valueA(valueA), 
         .valueB(valueB),
         .ciN(ciN),
-        .done(), 
+        .done(done), 
         .result(result)
     );
 
