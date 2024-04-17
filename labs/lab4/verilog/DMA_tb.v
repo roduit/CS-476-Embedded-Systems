@@ -1,13 +1,14 @@
 `timescale 1ps/1ps // set the time-units for simulation
 
+`define WAIT2CYCLES repeat(2) @(posedge clock);
+
 `define DISPLAY_DMA_REGISTERS \
     $display("[DMA_SETUP] bus_start_address: \t%0d", DUT.bus_start_address);\
     $display("            mem_start_address: \t%0d", DUT.memory_start_address);\
     $display("            block_size: \t%0d", DUT.block_size);\
     $display("            burst_size: \t%0d", DUT.burst_size);\
-    $display("            control_register: \t%0d", DUT.control_register);\
-    $display("            status_register: \t%0d", DUT.status_register);\
-    $display("            memory_address: \t%0d", DUT.memory_address);
+    $display("            control_register: \t%0b   %0b", DUT.control_register[1], DUT.control_register[0]);\
+    $display("            status_register: \t%0b   %0b", DUT.status_register[1], DUT.status_register[0]);
 
 module DMATestBench;
 
@@ -33,6 +34,125 @@ module DMATestBench;
         .result(result)
     );
 
+    /// Testbench functions
+
+    //* Set the bus start address
+    task set_bus_start_address;
+        input [31:0] new_address;
+        begin
+            valueA = 0;
+            valueA[12:10] = 3'b001;
+            valueA[9] = 1;
+            valueB = new_address;
+            $display("[BUS_START] Setting bus_start_address to %0d", new_address);
+        end
+    endtask
+
+    //* Read the bus start address
+    task read_bus_start_address;
+        begin
+            valueA = 0;
+            valueA[12:10] = 3'b001;
+            valueA[9] = 0;
+            @(posedge clock);
+            $display("[BUS_START] Reading bus_start_address via resTemp = %0d", DUT.resTemp);
+        end
+    endtask
+
+    //* Set the memory start address
+    task set_memory_start_address;
+        input [8:0] new_address;
+        begin
+            valueA = 0;
+            valueA[12:10] = 3'b010;
+            valueA[9] = 1;
+            valueB = new_address;
+            $display("[MEMORY_START] Setting memory_start_address to %0d", new_address);
+        end
+    endtask
+
+    //* Read the memory start address
+    task read_memory_start_address;
+        begin
+            valueA = 0;
+            valueA[12:10] = 3'b010;
+            valueA[9] = 0;
+            @(posedge clock);
+            $display("[MEMORY_START] Reading memory_start_address via resTemp = %0d", DUT.resTemp);
+        end
+    endtask
+
+    //* Set the block size
+    task set_block_size;
+        input [9:0] new_block_size;
+        begin
+            valueA = 0;
+            valueA[12:10] = 3'b011;
+            valueA[9] = 1;
+            valueB = new_block_size;
+            $display("[BLOCK_SIZE] Setting block_size to %0d", new_block_size);
+        end
+    endtask
+
+    //* Read the block size
+    task read_block_size;
+        begin
+            valueA = 0;
+            valueA[12:10] = 3'b011;
+            valueA[9] = 0;
+            @(posedge clock);
+            $display("[BLOCK_SIZE] Reading block_size via resTemp = %0d", DUT.resTemp);
+        end
+    endtask
+
+    //* Set the burst size
+    task set_burst_size;
+        input [7:0] new_burst_size;
+        begin
+            valueA = 0;
+            valueA[12:10] = 3'b100;
+            valueA[9] = 1;
+            valueB = new_burst_size;
+            $display("[BURST_SIZE] Setting burst_size to %0d", new_burst_size);
+        end
+    endtask
+
+    //* Read the burst size
+    task read_burst_size;
+        begin
+            valueA = 0;
+            valueA[12:10] = 3'b100;
+            valueA[9] = 0;
+            @(posedge clock);
+            $display("[BURST_SIZE] Reading burst_size via resTemp = %0d", DUT.resTemp);
+        end
+    endtask
+
+    //* Set the control register
+    task set_control_register;
+        input [1:0] new_control_register;
+        begin
+            valueA = 0;
+            valueA[12:10] = 3'b101;
+            valueA[9] = 1;
+            valueB = new_control_register;
+            $display("[CTRL_REG] Setting control_register to [%0b %0b]", new_control_register[1], new_control_register[0]);
+        end
+    endtask
+
+    //* Read the control register
+    task read_status_register;
+        begin
+            valueA = 0;
+            valueA[12:10] = 3'b101;
+            valueA[9] = 0;
+            @(posedge clock);
+            $display("[STAT_REG] Reading status_register via resTemp = [%0b %0b]", DUT.resTemp[1], DUT.resTemp[0]);
+        end
+    endtask
+
+
+    
     /// TestBench behavior
 
     //? Generate the clock signal
@@ -58,7 +178,7 @@ module DMATestBench;
         $display("[LOG] DUT reset complete at %0tps", $time);
 
         //* Wait 2 clock cycles
-        repeat(2) @(posedge clock);
+        `WAIT2CYCLES;
         $display("\n");
 
         //* Perform some write operation from the CPU to the SSRAM
@@ -76,7 +196,7 @@ module DMATestBench;
         end
 
         //* Wait 2 clock cycles
-        repeat(2) @(posedge clock);
+        `WAIT2CYCLES;
         $display("\n");
 
         //* Perform some read operation from the CPU to the SSRAM
@@ -93,11 +213,60 @@ module DMATestBench;
         end
 
         //* Wait 2 clock cycles
-        repeat(2) @(posedge clock);
+        `WAIT2CYCLES;
         $display("\n");
 
         //* Test the DMA setup
-        $display("[DMA_SETUP] Setting up the DMA controller");
+        $display("[DMA_SETUP] Setting up the DMA controller\n");
+        
+        set_bus_start_address(32'd5);
+        `WAIT2CYCLES;
+        read_bus_start_address();
+        `WAIT2CYCLES;
+
+        $display("\n");
+
+        set_memory_start_address(9'd220);
+        `WAIT2CYCLES;
+        read_memory_start_address();
+        `WAIT2CYCLES;   
+
+        $display("\n");
+
+        set_block_size(10'd100);
+        `WAIT2CYCLES;
+        read_block_size();
+        `WAIT2CYCLES;
+
+        $display("\n");
+
+        set_burst_size(8'd10);
+        `WAIT2CYCLES;
+        read_burst_size();
+        `WAIT2CYCLES;
+
+        $display("\n");
+
+        set_control_register(2'b11);
+        `WAIT2CYCLES;
+        read_status_register();
+        `WAIT2CYCLES;
+
+        $display("\n");
+
+        `DISPLAY_DMA_REGISTERS;
+
+        $display("\n");
+
+        $display("[DMA_ERROR] Test an error case. Normally the DMA controller should not respond to this operation");
+        $display("            Setting valueA[12:10] = 3'b111 and valueA[9] = 1'b1 and valueB = 32'd17n");
+        valueA = 0;
+        valueA[12:10] = 3'b111;
+        valueA[9] = 1;
+        valueB = 32'd17;
+        
+        `WAIT2CYCLES;
+        $display("\n");
         
         `DISPLAY_DMA_REGISTERS;
         
