@@ -2,6 +2,7 @@
 // Author: Filippo Quadri & Vincent Roduit
 
 // TODO: 
+//       [x] Implement the DMA control registers
 //       [ ] Implement the DMA module that will handle the bus interface
 //       [ ] Implement the bus interface
 //       [ ] Implement the test program in C
