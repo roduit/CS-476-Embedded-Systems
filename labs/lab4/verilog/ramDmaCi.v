@@ -98,7 +98,7 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
             //     end
             // end
             RW_BUS_START_ADD: begin
-                if (valueA[9] == 0) begin
+                if (read == 0) begin
                     //* Read the bus start address of the DMA transfer
                     resTemp = bus_start_address;
                 end else begin
@@ -107,7 +107,7 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
                 end
             end
             RW_MEMORY_START_ADD: begin
-                if (valueA[9] == 0) begin
+                if (read == 0) begin
                     //* Read the memory start address of the DMA transfer
                     resTemp = {23'b0, memory_start_address};
                 end else begin
@@ -116,7 +116,7 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
                 end
             end
             RW_BLOCK_SIZE: begin
-                if (valueA[9] == 0) begin
+                if (read == 0) begin
                     //* Read block size (nb. of words) of the DMA transfer
                     resTemp = {22'b0, block_size};
                 end else begin
@@ -125,7 +125,7 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
                 end
             end
             RW_BURST_SIZE: begin
-                if (valueA[9] == 0) begin
+                if (read == 0) begin
                     //* Read the burst size for the DMA transfer
                     resTemp = {24'b0, burst_size};
                 end else begin
@@ -134,15 +134,14 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
                 end
             end
             RW_STATUS_CTRL_REG: begin
-                if (valueA[9] == 0) begin
+                if (read == 0) begin
                     //* Read the status register
                     resTemp = {30'b0, status_register};
                 end else begin
                     //* Write the control register
                     control_register = valueB[1:0];
                 end
-            end
-                    
+            end       
         endcase
     end
     
@@ -164,7 +163,6 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
         .dataOutB(resultSRAM_DMA)
     );
 
-    
     /// DMA Controller module
     // Here we will implement the DMA module that will handle the bus interface
 
