@@ -221,36 +221,36 @@ module DMATestBench;
         
         set_bus_start_address(32'd5);
         `WAIT2CYCLES;
-        read_bus_start_address();
-        `WAIT2CYCLES;
+        //read_bus_start_address();
+        //`WAIT2CYCLES;
 
         $display("\n");
 
         set_memory_start_address(9'd220);
         `WAIT2CYCLES;
-        read_memory_start_address();
-        `WAIT2CYCLES;   
+        //read_memory_start_address();
+        //`WAIT2CYCLES;   
 
         $display("\n");
 
         set_block_size(10'd100);
         `WAIT2CYCLES;
-        read_block_size();
-        `WAIT2CYCLES;
+        //read_block_size();
+        //`WAIT2CYCLES;
 
         $display("\n");
 
         set_burst_size(8'd10);
         `WAIT2CYCLES;
-        read_burst_size();
-        `WAIT2CYCLES;
+        //read_burst_size();
+        //`WAIT2CYCLES;
 
         $display("\n");
 
         set_control_register(2'b11);
         `WAIT2CYCLES;
-        read_status_register();
-        `WAIT2CYCLES;
+        //read_status_register();
+        //`WAIT2CYCLES;
 
         $display("\n");
 

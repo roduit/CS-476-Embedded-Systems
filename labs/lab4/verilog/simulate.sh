@@ -1,4 +1,4 @@
 #!/bin/bash
-iverilog -s DMATestBench -o testbench DMA_tb.v ramDmaCi.v dualPortSSRAM.v
+iverilog -s DMATestBench -o testbench DMA_tb.v ramDmaCi.v DMAController.v dualPortSSRAM.v
 ./testbench
 #gtkwave dma_tb.vcd &
