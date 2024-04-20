@@ -160,6 +160,8 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
     DMAController #()
     DMA (
         .state(read_b ? state : 3'b111),
+        .data_valueB(valueB),
+        .clock(clock),
         .busOut_request(busOut_request),
         .busIn_grants(busIn_grants),
         .bus_start_address_out(bus_start_address),

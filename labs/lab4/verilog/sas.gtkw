@@ -1,0 +1,87 @@
+[*]
+[*] GTKWave Analyzer v3.3.118 (w)1999-2023 BSI
+[*] Sat Apr 20 10:45:17 2024
+[*]
+[dumpfile] "/home/filoquadro/Nextcloud/EPFL/MA2/Embedded Systems/CS-476-Embedded-Systems/labs/lab4/verilog/dma_tb.vcd"
+[dumpfile_mtime] "Sat Apr 20 10:41:42 2024"
+[dumpfile_size] 4575
+[savefile] "/home/filoquadro/Nextcloud/EPFL/MA2/Embedded Systems/CS-476-Embedded-Systems/labs/lab4/verilog/sas.gtkw"
+[timestart] 3
+[size] 1920 1001
+[pos] -27 -24
+*-6.013911 72 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] DMATestBench.
+[treeopen] DMATestBench.DUT.
+[sst_width] 273
+[signals_width] 316
+[sst_expanded] 1
+[sst_vpaned_height] 296
+@24
+DMATestBench.DUT.clock
+@204
+-
+@22
+DMATestBench.DUT.valueA[31:0]
+DMATestBench.DUT.valueB[31:0]
+@204
+-
+@24
+DMATestBench.DUT.start
+DMATestBench.DUT.done
+DMATestBench.DUT.read_b
+DMATestBench.DUT.read_done
+DMATestBench.DUT.enWR
+@204
+-
+@24
+DMATestBench.DUT.result[31:0]
+DMATestBench.DUT.resultSRAM_CPU[31:0]
+@c00024
+DMATestBench.DUT.resultSRAM_DMA[31:0]
+@28
+(0)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(1)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(2)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(3)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(4)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(5)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(6)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(7)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(8)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(9)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(10)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(11)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(12)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(13)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(14)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(15)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(16)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(17)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(18)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(19)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(20)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(21)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(22)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(23)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(24)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(25)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(26)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(27)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(28)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(29)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(30)DMATestBench.DUT.resultSRAM_DMA[31:0]
+(31)DMATestBench.DUT.resultSRAM_DMA[31:0]
+@1401204
+-group_end
+@204
+-
+@28
+DMATestBench.DUT.state[2:0]
+DMATestBench.DUT.control_register[1:0]
+DMATestBench.DUT.status_register[1:0]
+@24
+DMATestBench.DUT.memory_start_address[8:0]
+DMATestBench.DUT.block_size[9:0]
+DMATestBench.DUT.burst_size[7:0]
+[pattern_trace] 1
+[pattern_trace] 0

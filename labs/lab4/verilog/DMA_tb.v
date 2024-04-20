@@ -165,6 +165,7 @@ module DMATestBench;
         $dumpfile("dma_tb.vcd");
         $dumpvars(1, DUT);
         $dumpvars(1, DUT.SSRAM);
+        $dumpvars(1, DUT.DMA);
 
         //* Set the initial values and reset the DUT
         $display("\n");
