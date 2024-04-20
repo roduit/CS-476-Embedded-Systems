@@ -3,7 +3,7 @@
 `define WAIT2CYCLES repeat(2) @(posedge clock);
 
 `define DISPLAY_DMA_REGISTERS \
-    $display("[DMA_SETUP] bus_start_address: \t%0d", DUT.bus_start_address);\
+    $display("[DMA_SETUP] bus_start_address: \t%0d", DUT.DMA.bus_start_address_out);\
     $display("            mem_start_address: \t%0d", DUT.memory_start_address);\
     $display("            block_size: \t%0d", DUT.block_size);\
     $display("            burst_size: \t%0d", DUT.burst_size);\
@@ -182,53 +182,62 @@ module DMATestBench;
         `WAIT2CYCLES;
         $display("\n");
 
-        //* Perform some write operation from the CPU to the SSRAM
-        // Eneble write operation
-        valueA[9] = 1;
+        // //* Perform some write operation from the CPU to the SSRAM
+        // // Eneble write operation
+        // valueA[9] = 1;
 
-        repeat(5) begin
-            start = 1'b1; 
-            valueA = valueA + 1;
-            valueB[7:0] = $random;
-            #10;
-            start = 1'b0; 
-            #10;
-            $display("[W_CPU] Write value %0d to address %0d", valueB, valueA[8:0]);
-        end
+        // repeat(5) begin
+        //     start = 1'b1; 
+        //     valueA = valueA + 1;
+        //     valueB[7:0] = $random;
+        //     #10;
+        //     start = 1'b0; 
+        //     #10;
+        //     $display("[W_CPU] Write value %0d to address %0d", valueB, valueA[8:0]);
+        // end
 
-        //* Wait 2 clock cycles
-        `WAIT2CYCLES;
-        $display("\n");
+        // //* Wait 2 clock cycles
+        // `WAIT2CYCLES;
+        // $display("\n");
 
-        //* Perform some read operation from the CPU to the SSRAM
-        // Disable write operation
-        valueA = 0;
+        // //* Perform some read operation from the CPU to the SSRAM
+        // // Disable write operation
+        // valueA = 0;
 
-        repeat(5) begin
-            start = 1'b1; 
-            valueA = valueA + 1;
-            #20;
-            start = 1'b0;             
-            $display("[R_CPU] Read value %0d from address %0d", result, valueA[8:0]);
-            #10;
-        end
+        // repeat(5) begin
+        //     start = 1'b1; 
+        //     valueA = valueA + 1;
+        //     #20;
+        //     start = 1'b0;             
+        //     $display("[R_CPU] Read value %0d from address %0d", result, valueA[8:0]);
+        //     #10;
+        // end
 
-        //* Wait 2 clock cycles
-        `WAIT2CYCLES;
-        $display("\n");
+        // //* Wait 2 clock cycles
+        // `WAIT2CYCLES;
+        // $display("\n");
 
         //* Test the DMA setup
         $display("[DMA_SETUP] Setting up the DMA controller\n");
         
         set_bus_start_address(32'd5);
-        `WAIT2CYCLES;
+        //`WAIT2CYCLES;
         //read_bus_start_address();
         //`WAIT2CYCLES;
+        @ (posedge clock);
+
+        $display("\n");
+        
+        set_bus_start_address(32'd6);
+        //`WAIT2CYCLES;
+        //read_bus_start_address();
+        //`WAIT2CYCLES;
+        @ (posedge clock);
 
         $display("\n");
 
         set_memory_start_address(9'd220);
-        `WAIT2CYCLES;
+        //`WAIT2CYCLES;
         //read_memory_start_address();
         //`WAIT2CYCLES;   
 

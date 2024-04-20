@@ -57,7 +57,8 @@ reg [1:0]       control_register = 0;
 reg [1:0]       status_register = 0;
 
 /// Set the registers
-always @* begin
+always @(posedge clock)
+    bus_start_address = data_valueB;
     case (state)
         RW_BUS_START_ADD: begin
             $display("RW_BUS_START_ADD state: %0d", state);
@@ -81,8 +82,6 @@ always @* begin
         end
     endcase
 
-end
-
 /// Output the control signals
 assign bus_start_address_out = bus_start_address;
 assign memory_start_address_out = memory_start_address;
@@ -100,7 +99,5 @@ assign status_register_out = status_register;
 //     end
 
 // end
-
-
     
 endmodule

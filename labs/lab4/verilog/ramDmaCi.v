@@ -53,12 +53,12 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
     reg             read_done = 0;
 
     /// DMA control signals
-    wire [31:0]      bus_start_address = 0;
-    wire [8:0]       memory_start_address = 0;
-    wire [9:0]       block_size = 0;
-    wire [7:0]       burst_size = 0;
-    wire [1:0]       control_register = 0;
-    wire [1:0]       status_register = 0;
+    wire [31:0]      bus_start_address;
+    wire [8:0]       memory_start_address;
+    wire [9:0]       block_size;
+    wire [7:0]       burst_size;
+    wire [1:0]       control_register;
+    wire [1:0]       status_register;
     // reg [8:0]       memory_address = 0;
     // reg             write_enable = 0;
 
