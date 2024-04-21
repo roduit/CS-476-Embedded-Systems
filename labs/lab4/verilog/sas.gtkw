@@ -1,21 +1,21 @@
 [*]
-[*] GTKWave Analyzer v3.3.118 (w)1999-2023 BSI
-[*] Sun Apr 21 08:04:37 2024
+[*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
+[*] Sun Apr 21 09:58:37 2024
 [*]
-[dumpfile] "/home/filoquadro/Nextcloud/EPFL/MA2/Embedded Systems/CS-476-Embedded-Systems/labs/lab4/verilog/dma_tb.vcd"
-[dumpfile_mtime] "Sun Apr 21 07:58:22 2024"
-[dumpfile_size] 7170
-[savefile] "/home/filoquadro/Nextcloud/EPFL/MA2/Embedded Systems/CS-476-Embedded-Systems/labs/lab4/verilog/sas.gtkw"
-[timestart] 4
-[size] 1920 1001
+[dumpfile] "/Users/vincentroduit/Documents/document_vincent/epfl/master/ma2/embedded_system/CS-476-Embedded-Systems/labs/lab4/verilog/dma_tb.vcd"
+[dumpfile_mtime] "Sun Apr 21 09:57:36 2024"
+[dumpfile_size] 8507
+[savefile] "/Users/vincentroduit/Documents/document_vincent/epfl/master/ma2/embedded_system/CS-476-Embedded-Systems/labs/lab4/verilog/sas.gtkw"
+[timestart] 0
+[size] 1920 1200
 [pos] -1 -1
-*-6.144858 51 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-6.829565 698 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] DMATestBench.
 [treeopen] DMATestBench.DUT.
 [sst_width] 273
 [signals_width] 316
 [sst_expanded] 1
-[sst_vpaned_height] 296
+[sst_vpaned_height] 688
 @24
 DMATestBench.DUT.clock
 @200
@@ -29,11 +29,8 @@ DMATestBench.DUT.valueB[31:0]
 @24
 DMATestBench.DUT.start
 DMATestBench.DUT.done
-DMATestBench.DUT.read_b
-DMATestBench.DUT.read_done
-@204
--
 @200
+-
 -Results
 @24
 DMATestBench.DUT.result[31:0]
@@ -73,11 +70,12 @@ DMATestBench.DUT.resultSRAM_DMA[31:0]
 (29)DMATestBench.DUT.resultSRAM_DMA[31:0]
 (30)DMATestBench.DUT.resultSRAM_DMA[31:0]
 (31)DMATestBench.DUT.resultSRAM_DMA[31:0]
-@1401204
+@1401200
 -group_end
-@204
--
+@23
+DMATestBench.DUT.resultController[31:0]
 @200
+-
 -ramDMA_CI
 @24
 DMATestBench.DUT.bus_start_address[31:0]
@@ -104,7 +102,6 @@ DMATestBench.DUT.status_register[1:0]
 -BusRequest
 @28
 DMATestBench.DUT.DMA.busOut_request
-@29
 DMATestBench.DUT.DMA.busIn_grants
 @200
 -
