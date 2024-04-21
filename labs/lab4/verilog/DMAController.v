@@ -4,6 +4,7 @@
 module DMAController (
     // State signal
     input wire [2:0]    state,
+    input wire          write,
     input wire [31:0]   data_valueB,
     input wire          clock,
     
@@ -34,7 +35,10 @@ module DMAController (
     output wire         busOut_end_transaction,
     output wire         busOut_data_valid,
     output wire         busOut_busy,
-    output wire         busOut_error
+    output wire         busOut_error,
+
+    // Result
+    output reg [31:0]  result
 );
 
 /// Local parameters
@@ -56,12 +60,14 @@ reg [7:0]       burst_size = 0;
 reg [1:0]       control_register = 0;
 reg [1:0]       status_register = 0;
 
+/// Sync flag
 reg sync_flag;
+reg prev_write = 0;
 reg [2:0] prev_state = 0;
 reg [31:0] prev_data_valueB = 0;
 
 always @(*) begin
-    sync_flag <= (state != prev_state) || (data_valueB != prev_data_valueB);
+    sync_flag <= (state != prev_state) || (data_valueB != prev_data_valueB) || (write != prev_write);
 end
 
 /// Set the registers
@@ -71,20 +77,28 @@ always @(*) begin
         prev_data_valueB <= data_valueB;
         case (state)
             RW_BUS_START_ADD: begin
-                bus_start_address <= data_valueB;
+                if (write) begin
+                    bus_start_address <= data_valueB;
+                    $display("bus_start_address: %0d", bus_start_address);
+                    $display("busIn_address_data: %0d", busIn_address_data);
+                end
+                else result <= bus_start_address;
             end
             RW_MEMORY_START_ADD: begin
-                $display("RW_MEMORY_START_ADD state: %0d", state);
-                memory_start_address <= {23'd0, data_valueB[8:0]};
+                if (write) memory_start_address <= {23'd0, data_valueB[8:0]};
+                else result <= memory_start_address;
             end
             RW_BLOCK_SIZE: begin
-                block_size <= {22'd0, data_valueB[9:0]};
+                if (write) block_size <= {22'd0, data_valueB[9:0]};
+                else result <= block_size;
             end
             RW_BURST_SIZE: begin
-                burst_size <= {24'd0, data_valueB[7:0]};
+                if (write) burst_size <= {24'd0, data_valueB[7:0]};
+                else result <= burst_size;
             end
             RW_STATUS_CTRL_REG: begin
-                control_register <= data_valueB[1:0];
+                if (write) control_register <= data_valueB[1:0];
+                else result <= status_register;
             end
             default: begin
                 $display("Default state: %0d", state);

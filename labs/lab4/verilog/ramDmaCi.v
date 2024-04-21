@@ -43,13 +43,14 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
     /// Global control signals
     wire            s_isMyCi = (ciN == customId) ? start : 1'b0;
     wire [2:0]      state = valueA[12:10];
-    wire            read_b = valueA[9];
+    wire            write = valueA[9];
     
     /// SRAM control signals
     wire            enWR_CPU = (valueA[31:10] == 0 && s_isMyCi); 
     wire            writeEnableA = valueA[9] && enWR_CPU;
     wire [31:0]     resultSRAM_CPU;
     wire [31:0]     resultSRAM_DMA;
+    wire [31:0]     resultController;
     reg             read_done = 0;
 
     /// DMA control signals
@@ -93,7 +94,8 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
     /// DMA Controller module
     DMAController #()
     DMA (
-        .state(read_b ? state : 3'b111),
+        .state(state),
+        .write(write),
         .data_valueB(valueB),
         .clock(clock),
         .busOut_request(busOut_request),
@@ -116,7 +118,8 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
         .busOut_end_transaction(busOut_end_transaction),
         .busOut_data_valid(busOut_data_valid),
         .busOut_busy(busOut_busy),
-        .busOut_error(busOut_error)
+        .busOut_error(busOut_error),
+        .result(resultController)
     );
 
 endmodule

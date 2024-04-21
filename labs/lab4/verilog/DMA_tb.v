@@ -158,44 +158,44 @@ module DMATestBench;
         #10;
         $display("[LOG] DUT reset complete at %0tps", $time);
 
-        // //* Wait 2 clock cycles
-        // `WAIT2CYCLES;
-        // $display("\n");
+        //* Wait 2 clock cycles
+        `WAIT2CYCLES;
+        $display("\n");
 
-        // //* Perform some write operation from the CPU to the SSRAM
-        // // Eneble write operation
-        // valueA[9] = 1;
+        //* Perform some write operation from the CPU to the SSRAM
+        // Eneble write operation
+        valueA[9] = 1;
 
-        // repeat(5) begin
-        //     start = 1'b1; 
-        //     valueA = valueA + 1;
-        //     valueB[7:0] = $random;
-        //     #10;
-        //     start = 1'b0; 
-        //     #10;
-        //     $display("[W_CPU] Write value %0d to address %0d", valueB, valueA[8:0]);
-        // end
+        repeat(5) begin
+            start = 1'b1; 
+            valueA = valueA + 1;
+            valueB[7:0] = $random;
+            #10;
+            start = 1'b0; 
+            #10;
+            $display("[W_CPU] Write value %0d to address %0d", valueB, valueA[8:0]);
+        end
 
-        // //* Wait 2 clock cycles
-        // `WAIT2CYCLES;
-        // $display("\n");
+        //* Wait 2 clock cycles
+        `WAIT2CYCLES;
+        $display("\n");
 
-        // //* Perform some read operation from the CPU to the SSRAM
-        // // Disable write operation
-        // valueA = 0;
+        //* Perform some read operation from the CPU to the SSRAM
+        // Disable write operation
+        valueA = 0;
 
-        // repeat(5) begin
-        //     start = 1'b1; 
-        //     valueA = valueA + 1;
-        //     #20;
-        //     start = 1'b0;             
-        //     $display("[R_CPU] Read value %0d from address %0d", result, valueA[8:0]);
-        //     #10;
-        // end
+        repeat(5) begin
+            start = 1'b1; 
+            valueA = valueA + 1;
+            #20;
+            start = 1'b0;             
+            $display("[R_CPU] Read value %0d from address %0d", result, valueA[8:0]);
+            #10;
+        end
 
-        // //* Wait 2 clock cycles
-        // `WAIT2CYCLES;
-        // $display("\n");
+        //* Wait 2 clock cycles
+        `WAIT2CYCLES;
+        $display("\n");
 
         //* Test the DMA setup
         $display("[DMA_SETUP] Setting up the DMA controller\n");
