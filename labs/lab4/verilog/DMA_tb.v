@@ -1,6 +1,6 @@
 `timescale 1ps/1ps // set the time-units for simulation
 
-`define WAIT2CYCLES repeat(2) @(posedge clock);
+`define WAIT2CYCLES repeat(1) @(posedge clock);
 
 `define DISPLAY_DMA_REGISTERS \
     $display("[DMA_SETUP] bus_start_address: \t%0d", DUT.DMA.bus_start_address_out);\
@@ -40,9 +40,7 @@ module DMATestBench;
     task set_bus_start_address;
         input [31:0] new_address;
         begin
-            valueA = 0;
-            valueA[12:10] = 3'b001;
-            valueA[9] = 1;
+            valueA = {19'b0, 3'b001, 1'b1, 9'b0};
             valueB = new_address;
             $display("[BUS_START] Setting bus_start_address to %0d", new_address);
         end
@@ -51,9 +49,7 @@ module DMATestBench;
     //* Read the bus start address
     task read_bus_start_address;
         begin
-            valueA = 0;
-            valueA[12:10] = 3'b001;
-            valueA[9] = 0;
+            valueA = {19'b0, 3'b001, 1'b0, 9'b0};
             @(posedge clock);
             $display("[BUS_START] Reading bus_start_address via resTemp = %0d", DUT.resTemp);
         end
@@ -63,9 +59,7 @@ module DMATestBench;
     task set_memory_start_address;
         input [8:0] new_address;
         begin
-            valueA = 0;
-            valueA[12:10] = 3'b010;
-            valueA[9] = 1;
+            valueA = {19'b0, 3'b010, 1'b1, 9'b0};
             valueB = new_address;
             $display("[MEMORY_START] Setting memory_start_address to %0d", new_address);
         end
@@ -74,9 +68,7 @@ module DMATestBench;
     //* Read the memory start address
     task read_memory_start_address;
         begin
-            valueA = 0;
-            valueA[12:10] = 3'b010;
-            valueA[9] = 0;
+            valueA = {19'b0, 3'b010, 1'b0, 9'b0};
             @(posedge clock);
             $display("[MEMORY_START] Reading memory_start_address via resTemp = %0d", DUT.resTemp);
         end
@@ -86,9 +78,7 @@ module DMATestBench;
     task set_block_size;
         input [9:0] new_block_size;
         begin
-            valueA = 0;
-            valueA[12:10] = 3'b011;
-            valueA[9] = 1;
+            valueA = {19'b0, 3'b011, 1'b1, 9'b0};
             valueB = new_block_size;
             $display("[BLOCK_SIZE] Setting block_size to %0d", new_block_size);
         end
@@ -97,9 +87,7 @@ module DMATestBench;
     //* Read the block size
     task read_block_size;
         begin
-            valueA = 0;
-            valueA[12:10] = 3'b011;
-            valueA[9] = 0;
+            valueA = {19'b0, 3'b011, 1'b0, 9'b0};
             @(posedge clock);
             $display("[BLOCK_SIZE] Reading block_size via resTemp = %0d", DUT.resTemp);
         end
@@ -109,9 +97,7 @@ module DMATestBench;
     task set_burst_size;
         input [7:0] new_burst_size;
         begin
-            valueA = 0;
-            valueA[12:10] = 3'b100;
-            valueA[9] = 1;
+            valueA = {19'b0, 3'b100, 1'b1, 9'b0};
             valueB = new_burst_size;
             $display("[BURST_SIZE] Setting burst_size to %0d", new_burst_size);
         end
@@ -120,9 +106,7 @@ module DMATestBench;
     //* Read the burst size
     task read_burst_size;
         begin
-            valueA = 0;
-            valueA[12:10] = 3'b100;
-            valueA[9] = 0;
+            valueA = {19'b0, 3'b100, 1'b0, 9'b0};
             @(posedge clock);
             $display("[BURST_SIZE] Reading burst_size via resTemp = %0d", DUT.resTemp);
         end
@@ -132,9 +116,7 @@ module DMATestBench;
     task set_control_register;
         input [1:0] new_control_register;
         begin
-            valueA = 0;
-            valueA[12:10] = 3'b101;
-            valueA[9] = 1;
+            valueA = {19'b0, 3'b101, 1'b1, 9'b0};
             valueB = new_control_register;
             $display("[CTRL_REG] Setting control_register to [%0b %0b]", new_control_register[1], new_control_register[0]);
         end
@@ -143,9 +125,10 @@ module DMATestBench;
     //* Read the control register
     task read_status_register;
         begin
-            valueA = 0;
-            valueA[12:10] = 3'b101;
-            valueA[9] = 0;
+            // valueA = 0;
+            // valueA[12:10] = 3'b101;
+            // valueA[9] = 0;
+            valueA = {19'b0, 3'b101, 1'b0, 9'b0};
             @(posedge clock);
             $display("[STAT_REG] Reading status_register via resTemp = [%0b %0b]", DUT.resTemp[1], DUT.resTemp[0]);
         end
@@ -221,23 +204,21 @@ module DMATestBench;
         $display("[DMA_SETUP] Setting up the DMA controller\n");
         
         set_bus_start_address(32'd5);
-        //`WAIT2CYCLES;
+        `WAIT2CYCLES;
         //read_bus_start_address();
         //`WAIT2CYCLES;
-        @ (posedge clock);
 
         $display("\n");
         
         set_bus_start_address(32'd6);
-        //`WAIT2CYCLES;
+        `WAIT2CYCLES;
         //read_bus_start_address();
         //`WAIT2CYCLES;
-        @ (posedge clock);
 
         $display("\n");
 
         set_memory_start_address(9'd220);
-        //`WAIT2CYCLES;
+        `WAIT2CYCLES;
         //read_memory_start_address();
         //`WAIT2CYCLES;   
 

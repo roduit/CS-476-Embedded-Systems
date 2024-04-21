@@ -56,31 +56,45 @@ reg [7:0]       burst_size = 0;
 reg [1:0]       control_register = 0;
 reg [1:0]       status_register = 0;
 
+reg sync_flag;
+reg [2:0] prev_state = 0;
+reg [31:0] prev_data_valueB = 0;
+
+always @(*) begin
+    sync_flag <= (state != prev_state) || (data_valueB != prev_data_valueB);
+end
+
 /// Set the registers
-always @(posedge clock)
-    bus_start_address = data_valueB;
-    case (state)
-        RW_BUS_START_ADD: begin
-            $display("RW_BUS_START_ADD state: %0d", state);
-            bus_start_address <= data_valueB;
-        end
-        RW_MEMORY_START_ADD: begin
-            $display("RW_MEMORY_START_ADD state: %0d", state);
-            memory_start_address <= {23'd0, data_valueB[8:0]};
-        end
-        RW_BLOCK_SIZE: begin
-            block_size <= {22'd0, data_valueB[9:0]};
-        end
-        RW_BURST_SIZE: begin
-            burst_size <= {24'd0, data_valueB[7:0]};
-        end
-        RW_STATUS_CTRL_REG: begin
-            control_register <= data_valueB[1:0];
-        end
-        default: begin
-            $display("Default state: %0d", state);
-        end
-    endcase
+always @(*) begin
+    // bus_start_address = data_valueB;
+    $display("[%0d] state: %0d", $time, state);
+    if (sync_flag) begin
+        prev_state <= state;
+        prev_data_valueB <= data_valueB;
+        case (state)
+            RW_BUS_START_ADD: begin
+                $display("RW_BUS_START_ADD state: %0d", state);
+                bus_start_address <= data_valueB;
+            end
+            RW_MEMORY_START_ADD: begin
+                $display("RW_MEMORY_START_ADD state: %0d", state);
+                memory_start_address <= {23'd0, data_valueB[8:0]};
+            end
+            RW_BLOCK_SIZE: begin
+                block_size <= {22'd0, data_valueB[9:0]};
+            end
+            RW_BURST_SIZE: begin
+                burst_size <= {24'd0, data_valueB[7:0]};
+            end
+            RW_STATUS_CTRL_REG: begin
+                control_register <= data_valueB[1:0];
+            end
+            default: begin
+                $display("Default state: %0d", state);
+            end
+        endcase
+    end
+end
 
 /// Output the control signals
 assign bus_start_address_out = bus_start_address;

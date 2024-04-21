@@ -42,12 +42,23 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
     
     /// Global control signals
     wire            s_isMyCi = (ciN == customId) ? start : 1'b0;
-    wire [2:0]      state = valueA[12:10];
+
+
+
+    // reg [31:0] data_valueA;
+    // reg [31:0] data_valueB;
+    // always @(posedge clock) begin
+    //     data_valueA <= valueA;
+    //     data_valueB <= valueB;
+    // end 
+    //! Changed to reg for testing
+    //reg [2:0]       state;
+    wire [2:0]       state = valueA[12:10];
     wire            read_b = valueA[9];
     
     /// SRAM control signals
-    wire            enWR = (valueA[31:10] == 0 && s_isMyCi); 
-    wire            writeEnableA = valueA[9] && enWR;
+    wire            enWR_CPU = (valueA[31:10] == 0 && s_isMyCi); 
+    wire            writeEnableA = valueA[9] && enWR_CPU;
     wire [31:0]     resultSRAM_CPU;
     wire [31:0]     resultSRAM_DMA;
     reg             read_done = 0;
@@ -67,11 +78,11 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
 
     /// Done and result signal
     always @(posedge clock) begin
-        read_done <= enWR;
+        read_done <= enWR_CPU;
     end
 
     //! To be modified to output the correct result
-    assign done     = ((writeEnableA | ~enWR) ? 1'b1 : read_done) && s_isMyCi;
+    assign done     = ((writeEnableA | ~enWR_CPU) ? 1'b1 : read_done) && s_isMyCi;
     assign result   = done ? resultSRAM_CPU : 32'b0;
 
     /// State transition and output logic
