@@ -44,13 +44,17 @@ module DMAController (
 /// Local parameters
 // localparam transfer_nb = (block_size + (burst_size + 1) - 1) / (burst_size + 1);
 
-/// Enumerated states
+/// Enumerated states for the control signals
 // parameter       RW_MEMORY = 3'b000;
 parameter       RW_BUS_START_ADD = 3'b001;
 parameter       RW_MEMORY_START_ADD = 3'b010;
 parameter       RW_BLOCK_SIZE = 3'b011;
 parameter       RW_BURST_SIZE = 3'b100;
 parameter       RW_STATUS_CTRL_REG = 3'b101;
+
+/// Enumerated states for the txn states
+localparam      IDLE = 3'b000;
+localparam      BUSY = 3'b001;
 
 /// DMA control signals
 reg [31:0]      bus_start_address = 0;
