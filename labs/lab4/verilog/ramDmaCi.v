@@ -63,15 +63,16 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
     wire [1:0]       control_register;
     wire [1:0]       status_register;
 
-    //! REVIEW: this will probably introduce an extra cycle of latency, keep it or not?
-    reg [31:0]      resTemp = 0;
+    /// DMA memory signals
+    wire [31:0]     DMA_memory_data;
+    wire [8:0]      DMA_memory_address;
+    wire            DMA_memory_write_enable;
 
     /// Done and result signal
     always @(posedge clock) begin
         read_done <= enWR_CPU || enWR_DMA;
     end
 
-    //! To be modified to output the correct result
     assign done     = (write ? 1'b1 : read_done) && s_isMyCi;
     assign result   = done ? (enWR_CPU ? resultSRAM_CPU : (enWR_DMA ? resultController : 32'b0)) : 32'b0;
     
@@ -84,11 +85,11 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
         .clockA(clock),
         .clockB(~clock),
         .writeEnableA(writeEnableA),
-        .writeEnableB(1'b0),
+        .writeEnableB(DMA_memory_write_enable),
         .addressA(valueA[8:0]),
-        .addressB(9'b0),
+        .addressB(DMA_memory_address),
         .dataInA(valueB),
-        .dataInB(0),
+        .dataInB(DMA_memory_data),
         .dataOutA(resultSRAM_CPU),
         .dataOutB(resultSRAM_DMA)
     );
@@ -96,10 +97,14 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
     /// DMA Controller module
     DMAController #()
     DMA (
+        .reset(reset),
         .state(state),
         .write(write),
         .data_valueB(valueB),
         .clock(clock),
+        .SRAM_write_enable(DMA_memory_write_enable),
+        .SRAM_address(DMA_memory_address),
+        .SRAM_data(DMA_memory_data),
         .busOut_request(busOut_request),
         .busIn_grants(busIn_grants),
         .bus_start_address_out(bus_start_address),

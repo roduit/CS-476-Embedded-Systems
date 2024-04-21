@@ -1,21 +1,21 @@
 [*]
-[*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
-[*] Sun Apr 21 09:58:37 2024
+[*] GTKWave Analyzer v3.3.118 (w)1999-2023 BSI
+[*] Sun Apr 21 16:57:23 2024
 [*]
-[dumpfile] "/Users/vincentroduit/Documents/document_vincent/epfl/master/ma2/embedded_system/CS-476-Embedded-Systems/labs/lab4/verilog/dma_tb.vcd"
-[dumpfile_mtime] "Sun Apr 21 09:57:36 2024"
-[dumpfile_size] 8507
-[savefile] "/Users/vincentroduit/Documents/document_vincent/epfl/master/ma2/embedded_system/CS-476-Embedded-Systems/labs/lab4/verilog/sas.gtkw"
-[timestart] 0
-[size] 1920 1200
-[pos] -1 -1
-*-6.829565 698 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[dumpfile] "/home/filoquadro/Nextcloud/EPFL/MA2/Embedded Systems/CS-476-Embedded-Systems/labs/lab4/verilog/dma_tb.vcd"
+[dumpfile_mtime] "Sun Apr 21 16:22:07 2024"
+[dumpfile_size] 12197
+[savefile] "/home/filoquadro/Nextcloud/EPFL/MA2/Embedded Systems/CS-476-Embedded-Systems/labs/lab4/verilog/sas.gtkw"
+[timestart] 151
+[size] 1920 1033
+[pos] -1895 -322
+*-6.829565 277 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] DMATestBench.
 [treeopen] DMATestBench.DUT.
 [sst_width] 273
 [signals_width] 316
 [sst_expanded] 1
-[sst_vpaned_height] 688
+[sst_vpaned_height] 363
 @24
 DMATestBench.DUT.clock
 @200
@@ -72,7 +72,7 @@ DMATestBench.DUT.resultSRAM_DMA[31:0]
 (31)DMATestBench.DUT.resultSRAM_DMA[31:0]
 @1401200
 -group_end
-@23
+@22
 DMATestBench.DUT.resultController[31:0]
 @200
 -
@@ -99,31 +99,52 @@ DMATestBench.DUT.control_register[1:0]
 DMATestBench.DUT.status_register[1:0]
 @200
 -
--BusRequest
+-Burst FSM
 @28
-DMATestBench.DUT.DMA.busOut_request
-DMATestBench.DUT.DMA.busIn_grants
+DMATestBench.DUT.DMA.clock
+@24
+DMATestBench.DUT.DMA.current_trans_state[2:0]
+DMATestBench.DUT.DMA.next_trans_state[2:0]
+@23
+DMATestBench.DUT.DMA.transfer_nb[9:0]
+@22
+DMATestBench.DUT.DMA.burst_counter[9:0]
 @200
 -
--BusIn
-@22
-DMATestBench.DUT.DMA.busIn_address_data[31:0]
+-Burst Internal Signal
+@24
+DMATestBench.DUT.DMA.SRAM_address[8:0]
+DMATestBench.DUT.DMA.SRAM_data[31:0]
+DMATestBench.DUT.DMA.SRAM_write_enable
+@200
+-
+-BusRequest
 @28
-DMATestBench.DUT.DMA.busIn_busy
-DMATestBench.DUT.DMA.busIn_data_valid
-DMATestBench.DUT.DMA.busIn_end_transaction
-DMATestBench.DUT.DMA.busIn_error
+DMATestBench.DUT.DMA.busIn_grants
+DMATestBench.DUT.DMA.busOut_request
 @200
 -
 -BusOut
-@22
+@24
 DMATestBench.DUT.DMA.busOut_address_data[31:0]
 DMATestBench.DUT.DMA.busOut_burst_size[7:0]
 @28
-DMATestBench.DUT.DMA.busOut_busy
+DMATestBench.DUT.DMA.busOut_read_n_write
+DMATestBench.DUT.DMA.butOut_begin_transaction
 DMATestBench.DUT.DMA.busOut_data_valid
+DMATestBench.DUT.DMA.busOut_busy
 DMATestBench.DUT.DMA.busOut_end_transaction
 DMATestBench.DUT.DMA.busOut_error
-DMATestBench.DUT.DMA.busOut_read_n_write
+@200
+-BusIn
+@24
+DMATestBench.DUT.DMA.busIn_address_data[31:0]
+@28
+DMATestBench.DUT.DMA.busIn_end_transaction
+DMATestBench.DUT.DMA.busIn_data_valid
+DMATestBench.DUT.DMA.busIn_busy
+DMATestBench.DUT.DMA.busIn_error
+@200
+-
 [pattern_trace] 1
 [pattern_trace] 0
