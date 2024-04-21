@@ -66,14 +66,11 @@ end
 
 /// Set the registers
 always @(*) begin
-    // bus_start_address = data_valueB;
-    $display("[%0d] state: %0d", $time, state);
     if (sync_flag) begin
         prev_state <= state;
         prev_data_valueB <= data_valueB;
         case (state)
             RW_BUS_START_ADD: begin
-                $display("RW_BUS_START_ADD state: %0d", state);
                 bus_start_address <= data_valueB;
             end
             RW_MEMORY_START_ADD: begin
@@ -103,15 +100,5 @@ assign block_size_out = block_size;
 assign burst_size_out = burst_size;
 assign control_register_out = control_register;
 assign status_register_out = status_register;
-
-// // Begin the transfer
-// always @(*) begin
-
-//     if (control_register[0] == 1'b1) begin
-//         //* Ask for the bus
-//         busOut_request = 1'b1;
-//     end
-
-// end
     
 endmodule

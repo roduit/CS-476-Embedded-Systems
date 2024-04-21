@@ -125,9 +125,6 @@ module DMATestBench;
     //* Read the control register
     task read_status_register;
         begin
-            // valueA = 0;
-            // valueA[12:10] = 3'b101;
-            // valueA[9] = 0;
             valueA = {19'b0, 3'b101, 1'b0, 9'b0};
             @(posedge clock);
             $display("[STAT_REG] Reading status_register via resTemp = [%0b %0b]", DUT.resTemp[1], DUT.resTemp[0]);
@@ -161,9 +158,9 @@ module DMATestBench;
         #10;
         $display("[LOG] DUT reset complete at %0tps", $time);
 
-        //* Wait 2 clock cycles
-        `WAIT2CYCLES;
-        $display("\n");
+        // //* Wait 2 clock cycles
+        // `WAIT2CYCLES;
+        // $display("\n");
 
         // //* Perform some write operation from the CPU to the SSRAM
         // // Eneble write operation
@@ -205,43 +202,43 @@ module DMATestBench;
         
         set_bus_start_address(32'd5);
         `WAIT2CYCLES;
-        //read_bus_start_address();
-        //`WAIT2CYCLES;
+        read_bus_start_address();
+        `WAIT2CYCLES;
 
         $display("\n");
         
         set_bus_start_address(32'd6);
         `WAIT2CYCLES;
-        //read_bus_start_address();
-        //`WAIT2CYCLES;
+        read_bus_start_address();
+        `WAIT2CYCLES;
 
         $display("\n");
 
         set_memory_start_address(9'd220);
         `WAIT2CYCLES;
-        //read_memory_start_address();
-        //`WAIT2CYCLES;   
+        read_memory_start_address();
+        `WAIT2CYCLES;   
 
         $display("\n");
 
         set_block_size(10'd100);
         `WAIT2CYCLES;
-        //read_block_size();
-        //`WAIT2CYCLES;
+        read_block_size();
+        `WAIT2CYCLES;
 
         $display("\n");
 
         set_burst_size(8'd10);
         `WAIT2CYCLES;
-        //read_burst_size();
-        //`WAIT2CYCLES;
+        read_burst_size();
+        `WAIT2CYCLES;
 
         $display("\n");
 
         set_control_register(2'b11);
         `WAIT2CYCLES;
-        //read_status_register();
-        //`WAIT2CYCLES;
+        read_status_register();
+        `WAIT2CYCLES;
 
         $display("\n");
 

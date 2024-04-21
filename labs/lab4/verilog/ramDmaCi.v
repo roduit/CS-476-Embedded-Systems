@@ -23,8 +23,8 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
 
                     // BusIn interface 
                     //! Need to be flopped
-                    input wire [31:0]    busIn_address_data,
-                    input wire           busIn_end_transaction,
+                    input wire [31:0]   busIn_address_data,
+                    input wire          busIn_end_transaction,
                                         busIn_data_valid,
                                         busIn_busy,
                                         busIn_error,
@@ -42,18 +42,7 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
     
     /// Global control signals
     wire            s_isMyCi = (ciN == customId) ? start : 1'b0;
-
-
-
-    // reg [31:0] data_valueA;
-    // reg [31:0] data_valueB;
-    // always @(posedge clock) begin
-    //     data_valueA <= valueA;
-    //     data_valueB <= valueB;
-    // end 
-    //! Changed to reg for testing
-    //reg [2:0]       state;
-    wire [2:0]       state = valueA[12:10];
+    wire [2:0]      state = valueA[12:10];
     wire            read_b = valueA[9];
     
     /// SRAM control signals
@@ -70,8 +59,6 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
     wire [7:0]       burst_size;
     wire [1:0]       control_register;
     wire [1:0]       status_register;
-    // reg [8:0]       memory_address = 0;
-    // reg             write_enable = 0;
 
     //! REVIEW: this will probably introduce an extra cycle of latency, keep it or not?
     reg [31:0]      resTemp = 0;
@@ -84,70 +71,6 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
     //! To be modified to output the correct result
     assign done     = ((writeEnableA | ~enWR_CPU) ? 1'b1 : read_done) && s_isMyCi;
     assign result   = done ? resultSRAM_CPU : 32'b0;
-
-    /// State transition and output logic
-    // always @(*) begin
-    //     case(state)
-    //         //! What to do when the state is RW_MEMORY? I would say anything because we have already the connection
-    //         //! with the SRAM module
-    //         // RW_MEMORY: begin
-    //         //     if (read) begin
-    //         //         //* Read from memory location A[8:0]
-    //         //         memory_start_address = valueA[8:0];
-    //         //         write_enable = 0;
-    //         //     end else begin
-    //         //         //* Write to memory location A[8:0]
-    //         //         memory_start_address = valueA[8:0];
-    //         //         write_enable = 1;
-    //         //     end
-    //         // end
-    //         RW_BUS_START_ADD: begin
-    //             if (read_b == 0) begin
-    //                 //* Read the bus start address of the DMA transfer
-    //                 resTemp = bus_start_address;
-    //             end else begin
-    //                 //* Write the bus start address of the DMA transfer B[31:0]
-    //                 bus_start_address = valueB;
-    //             end
-    //         end
-    //         RW_MEMORY_START_ADD: begin
-    //             if (read_b == 0) begin
-    //                 //* Read the memory start address of the DMA transfer
-    //                 resTemp = {23'b0, memory_start_address};
-    //             end else begin
-    //                 //* Write the memory start address of the DMA transfer B[8:0]
-    //                 memory_start_address = valueB[8:0];
-    //             end
-    //         end
-    //         RW_BLOCK_SIZE: begin
-    //             if (read_b == 0) begin
-    //                 //* Read block size (nb. of words) of the DMA transfer
-    //                 resTemp = {22'b0, block_size};
-    //             end else begin
-    //                 //* Write block size (nb. of words) of the DMA transfer B[9:0]
-    //                 block_size = valueB[9:0];
-    //             end
-    //         end
-    //         RW_BURST_SIZE: begin
-    //             if (read_b == 0) begin
-    //                 //* Read the burst size for the DMA transfer
-    //                 resTemp = {24'b0, burst_size};
-    //             end else begin
-    //                 //* Write the burst size for the DMA transfer B[7:0]
-    //                 burst_size = valueB[7:0];
-    //             end
-    //         end
-    //         RW_STATUS_CTRL_REG: begin
-    //             if (read_b == 0) begin
-    //                 //* Read the status register
-    //                 resTemp = {30'b0, status_register};
-    //             end else begin
-    //                 //* Write the control register
-    //                 control_register = valueB[1:0];
-    //             end
-    //         end       
-    //     endcase
-    // end
     
     
     /// SRAM module
