@@ -1,5 +1,5 @@
 //* DMAController module
-//* Author: Filippo Quadri & Vincent Roduit
+//* Authors: Filippo Quadri & Vincent Roduit
 
 // TODO:
 // [x] Update status register
@@ -25,6 +25,7 @@ module DMAController (
     output reg          SRAM_write_enable,
     output reg [8:0]    SRAM_address,
     output reg [31:0]   SRAM_data,
+    input wire [31:0]   SRAM_result,
 
     
     // Bus interfaces
@@ -50,7 +51,7 @@ module DMAController (
     output wire [31:0]  busOut_address_data,
     output wire [7:0]   busOut_burst_size,
     output wire         busOut_read_n_write,
-    output wire         butOut_begin_transaction,
+    output wire         busOut_begin_transaction,
     output wire         busOut_end_transaction,
     output wire         busOut_data_valid,
     output wire         busOut_busy,
@@ -76,8 +77,12 @@ localparam      IDLE = 3'b000;
 localparam      REQUEST_BUS = 3'b001;
 localparam      INIT_BURST = 3'b010;
 localparam      DO_BURST_READ = 3'b011;
-localparam      END_TRANSACTION = 3'b100;
-localparam      ERROR = 3'b101;
+localparam      DO_BURST_WRITE = 3'b100;
+localparam      END_TRANSACTION = 3'b101;
+localparam      ERROR = 3'b110;
+
+localparam      READ_STATE = 2'b01;
+localparam      WRITE_STATE = 2'b10;
 
 reg [2:0]       current_trans_state, next_trans_state = IDLE;
 
@@ -88,26 +93,14 @@ reg [9:0]       block_size = 0;
 reg [7:0]       burst_size = 0;
 reg [1:0]       control_register = 0;
 reg [1:0]       status_register = 0;
+reg [8:0]       word_counter = 0;
 
 reg [9:0]       transfer_nb = 0;
 reg [9:0]       burst_counter = 0;
-
-// /// Sync flag
-//! Check behavior if the signal is changed on the negedge
-// reg sync_flag;
-// reg prev_write = 0;
-// reg [2:0] prev_state = 0;
-// reg [31:0] prev_data_valueB = 0;
-
-// always @(*) begin
-//     sync_flag <= (state != prev_state) || (data_valueB != prev_data_valueB) || (write != prev_write);
-// end
+reg [31:0]      SRAM_result_reg = 0;
 
 /// Set the registers
 always @(*) begin
-    // if (sync_flag) begin
-    //     prev_state <= state;
-    //     prev_data_valueB <= data_valueB;
     if (reset) begin
         bus_start_address <= 0;
         memory_start_address <= 0;
@@ -154,10 +147,11 @@ always @(*) begin
     if (busIn_error) next_trans_state = ERROR;
     else
     case (current_trans_state)
-        IDLE            : next_trans_state <=   (control_register[0] == 1'b1 && burst_counter != transfer_nb) ? REQUEST_BUS : IDLE;
+        IDLE            : next_trans_state <=   ((control_register == READ_STATE || control_register == WRITE_STATE) && burst_counter != transfer_nb) ? REQUEST_BUS : IDLE;
         REQUEST_BUS     : next_trans_state <=   (busIn_grants == 1'b1) ? INIT_BURST : REQUEST_BUS;
-        INIT_BURST      : next_trans_state <=   DO_BURST_READ;
+        INIT_BURST      : next_trans_state <=   control_register == READ_STATE ? DO_BURST_READ : DO_BURST_WRITE;
         DO_BURST_READ   : next_trans_state <=   (busIn_end_transaction == 1) ? END_TRANSACTION : DO_BURST_READ;
+        DO_BURST_WRITE  : next_trans_state <=   (word_counter == burst_size + 1) ? END_TRANSACTION : DO_BURST_WRITE;
         END_TRANSACTION : next_trans_state <=   (burst_counter == transfer_nb) ?  IDLE : INIT_BURST;
         ERROR           : next_trans_state <=   IDLE;
         default         : next_trans_state <=   IDLE;
@@ -169,6 +163,9 @@ always @(posedge clock) begin
     
     /// Update the state
     current_trans_state = reset ? IDLE : next_trans_state;
+
+    /// Update the SRAM result
+    SRAM_result_reg <= SRAM_result;
     
     if (current_trans_state == ERROR) begin
         control_register[0] <= 1'b0;
@@ -184,16 +181,19 @@ always @(posedge clock) begin
 
         burst_counter       <=  reset ? 0 :  (current_trans_state == INIT_BURST) ? burst_counter + 1 : (next_trans_state == IDLE) ? 0 : burst_counter;
 
+        word_counter        <=  reset ? 0 :  (current_trans_state == DO_BURST_WRITE && word_counter != burst_size + 1 && ~busIn_busy) ? word_counter + 1 : (current_trans_state == END_TRANSACTION) ? 0 : word_counter;
+
 
         /// Update the SRAM control signals
         SRAM_data           <=  reset ? 0 :  busIn_address_data;
-        SRAM_address        <=  reset ? 0 :  (burst_counter == 1 && butOut_begin_transaction) ? memory_start_address : 
-                                             (current_trans_state == DO_BURST_READ && busIn_data_valid) ? SRAM_address + 1 : SRAM_address;
+        SRAM_address        <=  reset ? 0 :  ((burst_counter == 1 && busOut_begin_transaction && control_register == READ_STATE) || (current_trans_state == REQUEST_BUS && burst_counter == 0 && control_register == WRITE_STATE)) ? memory_start_address : 
+                                             ((current_trans_state == DO_BURST_READ && busIn_data_valid) || (current_trans_state == DO_BURST_WRITE && ~busIn_busy))? SRAM_address + 4 : SRAM_address;
         SRAM_write_enable   <=  reset ? 0 :  (next_trans_state == DO_BURST_READ && busIn_data_valid == 1'b1) ? 1'b1 : 1'b0;
 
         /// Update the bus start address
-        bus_start_address   <=  reset ? 0 :  (current_trans_state == DO_BURST_READ && busIn_data_valid == 1'b1) ? 
-                                             bus_start_address + 1 : bus_start_address;
+        bus_start_address   <=  reset ? 0 :  ((current_trans_state == DO_BURST_READ && busIn_data_valid) || (current_trans_state == DO_BURST_WRITE && ~busIn_busy)) ? 
+                                             bus_start_address + 4 : bus_start_address;
+                
     end
 
 end
@@ -201,14 +201,14 @@ end
 
 /// Bus interface
 assign busOut_request = (current_trans_state == REQUEST_BUS) ? 1'b1 : 1'b0;
-assign busOut_address_data = (current_trans_state == INIT_BURST) ? bus_start_address : 32'd0;
+assign busOut_address_data = (current_trans_state == INIT_BURST) ? bus_start_address : (current_trans_state == DO_BURST_WRITE && ~busIn_busy) ? SRAM_result_reg : 32'd0;
 assign busOut_burst_size = (current_trans_state == INIT_BURST) ? burst_size : 8'd0;
-assign busOut_read_n_write = (current_trans_state == INIT_BURST) ? 1'b1 : 1'b0;
-assign butOut_begin_transaction = (current_trans_state == INIT_BURST) ? 1'b1 : 1'b0;
+assign busOut_read_n_write = (current_trans_state == INIT_BURST && control_register == READ_STATE) ? 1'b1 : 1'b0;
+assign busOut_begin_transaction = (current_trans_state == INIT_BURST) ? 1'b1 : 1'b0;
 
-assign busOut_data_valid = 0;
+assign busOut_data_valid = (current_trans_state == DO_BURST_WRITE) ? 1'b1 : 1'b0;
 assign busOut_busy = 0;
-assign busOut_end_transaction = (current_trans_state == ERROR) ? 1'b1 : 1'b0;
+assign busOut_end_transaction = (current_trans_state == ERROR || (current_trans_state == END_TRANSACTION && control_register == WRITE_STATE)) ? 1'b1 : 1'b0;
 assign busOut_error = 0;
 
 /// Output the control signals

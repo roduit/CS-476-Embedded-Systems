@@ -207,7 +207,7 @@ module DMATestBench;
         $display("[LOG] DUT reset complete at %0tps", $time);
 
         /// Setup the DMA for the first transaction
-        set_bus_start_address(32'd8);
+        set_bus_start_address(32'd12);
         set_memory_start_address(9'd8);
         set_block_size(10'd32);
         set_burst_size(8'd7);
@@ -283,16 +283,39 @@ module DMATestBench;
         #50;
 
         // //* Check if the burst transaction was successful
-        // valueA = memory_start_address;
+        valueA = memory_start_address;
+        `WAITCYCLE;
+
+        repeat(block_size) begin
+            start = 1'b1; 
+            `WAIT2CYCLES;
+            start = 1'b0;             
+            $display("[R_CPU] Read value %0d from address %0d", result, valueA[8:0]);
+            valueA = valueA + 4;
+        end
+
+        //* Begin Write txn
+        set_bus_start_address(32'd12);
+        set_memory_start_address(9'd8);
+        set_block_size(10'd32);
+        set_burst_size(8'd7);
+
+        `WAIT2CYCLES;
+
+        set_control_register(2'b10);
+
+        `WAIT2CYCLES;
+
+        busGrants = 1'b1;
+        @(posedge clock);
+        busGrants = 1'b0;
         `WAITHALFCYCLE;
 
-        // repeat(block_size) begin
-        //     start = 1'b1; 
-        //     `WAIT2CYCLES;
-        //     start = 1'b0;             
-        //     $display("[R_CPU] Read value %0d from address %0d", result, valueA[8:0]);
-        //     valueA = valueA + 1;
-        // end
+        valueA = 0;
+
+        #500;
+
+
 
         $finish;
 
