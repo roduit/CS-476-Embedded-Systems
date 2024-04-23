@@ -98,6 +98,8 @@ reg [8:0]       word_counter = 0;
 reg [9:0]       transfer_nb = 0;
 reg [9:0]       burst_counter = 0;
 reg [31:0]      SRAM_result_reg = 0;
+reg [7:0]       burst_size_effective = 0;
+reg [9:0]       remaining_words= 0;
 
 /// Set the registers
 always @(*) begin
@@ -106,6 +108,7 @@ always @(*) begin
         memory_start_address <= 0;
         block_size <= 0;
         burst_size <= 0;
+        word_counter <= 0;
         result <= 0;
     end 
     else begin
@@ -151,8 +154,8 @@ always @(*) begin
         REQUEST_BUS     : next_trans_state <=   (busIn_grants == 1'b1) ? INIT_BURST : REQUEST_BUS;
         INIT_BURST      : next_trans_state <=   control_register == READ_STATE ? DO_BURST_READ : DO_BURST_WRITE;
         DO_BURST_READ   : next_trans_state <=   (busIn_end_transaction == 1) ? END_TRANSACTION : DO_BURST_READ;
-        DO_BURST_WRITE  : next_trans_state <=   (word_counter == burst_size + 1) ? END_TRANSACTION : DO_BURST_WRITE;
-        END_TRANSACTION : next_trans_state <=   (burst_counter == transfer_nb) ?  IDLE : INIT_BURST;
+        DO_BURST_WRITE  : next_trans_state <=   ((word_counter%(burst_size+1)) == 0) ? END_TRANSACTION : DO_BURST_WRITE;
+        END_TRANSACTION : next_trans_state <=   (burst_counter == transfer_nb) ?  IDLE : REQUEST_BUS;
         ERROR           : next_trans_state <=   IDLE;
         default         : next_trans_state <=   IDLE;
     endcase
@@ -172,6 +175,7 @@ always @(posedge clock) begin
         status_register <= 2'b10;
         burst_counter <= 0;
         SRAM_write_enable <= 0;
+        word_counter <= 0;
     end else begin
 
         /// Update the status register and reset control register
@@ -181,7 +185,9 @@ always @(posedge clock) begin
 
         burst_counter       <=  reset ? 0 :  (current_trans_state == INIT_BURST) ? burst_counter + 1 : (next_trans_state == IDLE) ? 0 : burst_counter;
 
-        word_counter        <=  reset ? 0 :  (current_trans_state == DO_BURST_WRITE && word_counter != burst_size + 1 && ~busIn_busy) ? word_counter + 1 : (current_trans_state == END_TRANSACTION) ? 0 : word_counter;
+        word_counter        <=  reset ? 0 :  ((current_trans_state == DO_BURST_WRITE || current_trans_state == DO_BURST_READ) && ~busIn_busy) ? word_counter + 1 : ((current_trans_state == END_TRANSACTION) &&  (transfer_nb == burst_counter)) ? 0 : word_counter;
+
+        burst_size          <=  reset ? 0 :  (current_trans_state == INIT_BURST && burst_counter == transfer_nb - 1) 
 
 
         /// Update the SRAM control signals

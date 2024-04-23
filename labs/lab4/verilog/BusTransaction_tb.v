@@ -209,7 +209,7 @@ module DMATestBench;
         /// Setup the DMA for the first transaction
         set_bus_start_address(32'd12);
         set_memory_start_address(9'd8);
-        set_block_size(10'd32);
+        set_block_size(10'd35);
         set_burst_size(8'd7);
 
         `WAIT2CYCLES;
@@ -252,8 +252,13 @@ module DMATestBench;
         `WAITCYCLE
 
         //* Send the other bursts
-        repeat(nb_transfers - 2) begin
+        repeat(nb_transfers - 1) begin
             $display("[LOG] Sending burst %0d", burst_counter);
+            `WAIT2CYCLES;
+            busGrants = 1'b1;
+            @(posedge clock);
+            busGrants = 1'b0;
+            `WAITHALFCYCLE;
             busIn_data_valid = 1'b1;
             repeat(burst_size + 1) begin
                 busIn_address_data = busIn_address_data + 1;
@@ -269,18 +274,23 @@ module DMATestBench;
             `WAITCYCLE
         end
         
-        //* Send the last burst with error
-        $display("[LOG] Sending burst %0d", burst_counter);
-        busIn_data_valid = 1'b1;
-        repeat(burst_size >> 1) begin
-            busIn_address_data = busIn_address_data + 1;
-            `WAITCYCLE;
-        end
-        busIn_error = 1'b1;
-        busIn_data_valid = 1'b0;
-        `WAITCYCLE;
-        busIn_error = 1'b0;
-        #50;
+        // //* Send the last burst with error
+        // $display("[LOG] Sending burst %0d", burst_counter);
+        // busIn_data_valid = 1'b1;
+        // `WAIT2CYCLES;
+        // busGrants = 1'b1;
+        // @(posedge clock);
+        // busGrants = 1'b0;
+        // `WAITHALFCYCLE;
+        // repeat(burst_size >> 1) begin
+        //     busIn_address_data = busIn_address_data + 1;
+        //     `WAITCYCLE;
+        // end
+        // busIn_error = 1'b1;
+        // busIn_data_valid = 1'b0;
+        // `WAITCYCLE;
+        // busIn_error = 1'b0;
+        // #50;
 
         // //* Check if the burst transaction was successful
         valueA = memory_start_address;
