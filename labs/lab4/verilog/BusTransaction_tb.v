@@ -209,8 +209,8 @@ module DMATestBench;
         /// Setup the DMA for the first transaction
         set_bus_start_address(32'd12);
         set_memory_start_address(9'd8);
-        set_block_size(10'd35);
-        set_burst_size(8'd7);
+        set_block_size(10'd50);
+        set_burst_size(8'd9);
 
         `WAIT2CYCLES;
         `DISPLAY_DMA_REGISTERS;
@@ -262,7 +262,6 @@ module DMATestBench;
             
             $display("[LOG] Sending burst %0d", burst_counter);
             busIn_data_valid = 1'b1;
-            $display("Equation de merde : %0d", block_size - burst_counter * (burst_size + 1));
             repeat(block_size - burst_counter * (burst_size + 1) >= burst_size ? burst_size + 1 : block_size - burst_counter * (burst_size + 1)) begin
                 busIn_address_data = busIn_address_data + 1;
                 `WAITCYCLE;
@@ -305,7 +304,7 @@ module DMATestBench;
         //* Begin Write txn
         set_bus_start_address(32'd12);
         set_memory_start_address(9'd8);
-        set_block_size(10'd32);
+        set_block_size(10'd50);
         set_burst_size(8'd7);
 
         `WAIT2CYCLES;
@@ -320,8 +319,13 @@ module DMATestBench;
         `WAITHALFCYCLE;
 
         valueA = 0;
-
-        #500;
+        repeat(nb_transfers) begin
+            busGrants = 1'b1;
+            @(posedge clock);
+            busGrants = 1'b0;
+            `WAITHALFCYCLE;
+            #200;
+        end
 
 
 
