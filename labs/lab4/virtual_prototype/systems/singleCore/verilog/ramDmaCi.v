@@ -22,7 +22,6 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
                     input wire          busIn_grants,
 
                     // BusIn interface 
-                    //! Need to be flopped
                     input wire [31:0]   busIn_address_data,
                     input wire          busIn_end_transaction,
                                         busIn_data_valid,
@@ -67,10 +66,28 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
     wire [31:0]     DMA_memory_data;
     wire [8:0]      DMA_memory_address;
     wire            DMA_memory_write_enable;
+    reg [8:0]      DMA_memory_address_reg;
+
+    /// Bus Registers
+    reg             busIn_grants_reg;
+    reg [31:0]      busIn_address_data_reg;
+    reg             busIn_end_transaction_reg,
+                    busIn_data_valid_reg,
+                    busIn_busy_reg,
+                    busIn_error_reg;
+
+
 
     /// Done and result signal
     always @(posedge clock) begin
         read_done <= enWR_CPU || enWR_DMA;
+        busIn_grants_reg <= busIn_grants;
+        busIn_address_data_reg <= busIn_address_data;
+        busIn_end_transaction_reg <= busIn_end_transaction;
+        busIn_data_valid_reg <= busIn_data_valid;
+        busIn_busy_reg <= busIn_busy;
+        busIn_error_reg <= busIn_error;
+        DMA_memory_address_reg <= DMA_memory_address;
     end
 
     assign done     = (write ? 1'b1 : read_done) && s_isMyCi;
@@ -87,7 +104,7 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
         .writeEnableA(writeEnableA),
         .writeEnableB(DMA_memory_write_enable),
         .addressA(valueA[8:0]),
-        .addressB(DMA_memory_address),
+        .addressB(DMA_memory_address_reg),
         .dataInA(valueB),
         .dataInB(DMA_memory_data),
         .dataOutA(resultSRAM_CPU),
@@ -107,18 +124,18 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
         .SRAM_data(DMA_memory_data),
         .SRAM_result(resultSRAM_DMA),
         .busOut_request(busOut_request),
-        .busIn_grants(busIn_grants),
+        .busIn_grants(busIn_grants_reg),
         .bus_start_address_out(bus_start_address),
         .memory_start_address_out(memory_start_address),
         .block_size_out(block_size),
         .burst_size_out(burst_size),
         .control_register_out(control_register),
         .status_register_out(status_register),
-        .busIn_address_data(busIn_address_data),
-        .busIn_end_transaction(busIn_end_transaction),
-        .busIn_data_valid(busIn_data_valid),
-        .busIn_busy(busIn_busy),
-        .busIn_error(busIn_error),
+        .busIn_address_data(busIn_address_data_reg),
+        .busIn_end_transaction(busIn_end_transaction_reg),
+        .busIn_data_valid(busIn_data_valid_reg),
+        .busIn_busy(busIn_busy_reg),
+        .busIn_error(busIn_error_reg),
         .busOut_address_data(busOut_address_data),
         .busOut_burst_size(busOut_burst_size),
         .busOut_read_n_write(busOut_read_n_write),
