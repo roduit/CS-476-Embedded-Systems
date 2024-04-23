@@ -56,3 +56,4 @@
 ../verilog/rgb565GrayscaleIse.v
 ../verilog/ramDmaCi.v
 ../verilog/dualPortSSRAM.v
+../verilog/DMAController.v

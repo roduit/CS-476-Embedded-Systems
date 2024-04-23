@@ -209,7 +209,7 @@ module DMATestBench;
         /// Setup the DMA for the first transaction
         set_bus_start_address(32'd12);
         set_memory_start_address(9'd8);
-        set_block_size(10'd50);
+        set_block_size(10'd20);
         set_burst_size(8'd9);
 
         `WAIT2CYCLES;
@@ -221,7 +221,7 @@ module DMATestBench;
         //* Return grant signal
         `WAIT2CYCLES
         busGrants = 1'b1;
-        @(posedge clock);
+        `WAIT2CYCLES;
         busGrants = 1'b0;
         `WAITHALFCYCLE;
 
@@ -254,9 +254,8 @@ module DMATestBench;
         //* Send the other bursts
         repeat(nb_transfers - 1) begin
             `WAIT2CYCLES;
-
             busGrants = 1'b1;
-            @(posedge clock);
+            `WAIT2CYCLES;
             busGrants = 1'b0;
             `WAITHALFCYCLE;
             
@@ -304,7 +303,7 @@ module DMATestBench;
         //* Begin Write txn
         set_bus_start_address(32'd12);
         set_memory_start_address(9'd8);
-        set_block_size(10'd50);
+        set_block_size(10'd20);
         set_burst_size(8'd7);
 
         `WAIT2CYCLES;
@@ -313,15 +312,10 @@ module DMATestBench;
 
         `WAIT2CYCLES;
 
-        busGrants = 1'b1;
-        @(posedge clock);
-        busGrants = 1'b0;
-        `WAITHALFCYCLE;
-
         valueA = 0;
         repeat(nb_transfers) begin
             busGrants = 1'b1;
-            @(posedge clock);
+            `WAIT2CYCLES;
             busGrants = 1'b0;
             `WAITHALFCYCLE;
             #200;

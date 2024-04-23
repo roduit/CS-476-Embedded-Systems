@@ -465,6 +465,7 @@ module or1420SingleCore ( input wire         clock12MHz,
         .ciN(s_cpu1CiN),
         .done(s_attachedMemoryDone), 
         .result(s_attachedMemoryResult));
+  
 
 
 
