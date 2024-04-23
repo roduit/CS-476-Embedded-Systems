@@ -253,14 +253,17 @@ module DMATestBench;
 
         //* Send the other bursts
         repeat(nb_transfers - 1) begin
-            $display("[LOG] Sending burst %0d", burst_counter);
             `WAIT2CYCLES;
+
             busGrants = 1'b1;
             @(posedge clock);
             busGrants = 1'b0;
             `WAITHALFCYCLE;
+            
+            $display("[LOG] Sending burst %0d", burst_counter);
             busIn_data_valid = 1'b1;
-            repeat(burst_size + 1) begin
+            $display("Equation de merde : %0d", block_size - burst_counter * (burst_size + 1));
+            repeat(block_size - burst_counter * (burst_size + 1) >= burst_size ? burst_size + 1 : block_size - burst_counter * (burst_size + 1)) begin
                 busIn_address_data = busIn_address_data + 1;
                 `WAITCYCLE;
             end
@@ -277,11 +280,6 @@ module DMATestBench;
         // //* Send the last burst with error
         // $display("[LOG] Sending burst %0d", burst_counter);
         // busIn_data_valid = 1'b1;
-        // `WAIT2CYCLES;
-        // busGrants = 1'b1;
-        // @(posedge clock);
-        // busGrants = 1'b0;
-        // `WAITHALFCYCLE;
         // repeat(burst_size >> 1) begin
         //     busIn_address_data = busIn_address_data + 1;
         //     `WAITCYCLE;
