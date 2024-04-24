@@ -456,7 +456,7 @@ module or1420SingleCore ( input wire         clock12MHz,
   * Here we define the CI attached memory
   *
   */
-  wire s_ramDmaBusError, s_ramDmaBusy, s_ramDmaDataValid, s_ramDmaEndTransaction, s_ramDmaReadNotWrite, s_ramDmaBeginTransaction;
+  wire s_ramDmaBusError, s_ramDmaBusy, s_ramDmaDataValid, s_ramDmaEndTransaction, s_ramDmaReadNotWrite, s_ramDmaBeginTransaction, s_ramDmaBusRequest, s_ramDmaBusGranted;
 
   wire [7:0] s_ramDmaBurstSize;
   wire [31:0] s_ramDmaAddressData;
@@ -470,8 +470,8 @@ module or1420SingleCore ( input wire         clock12MHz,
         .ciN(s_cpu1CiN),
         .done(s_attachedMemoryDone), 
         .result(s_attachedMemoryResult),
-        .busOut_request(s_cpu1DcacheRequestBus),
-        .busIn_grants(s_cpu1DcacheBusAccessGranted),
+        .busOut_request(s_ramDmaBusRequest),
+        .busIn_grants(s_ramDmaBusGranted),
         .busIn_address_data(s_cpu1AddressData),
         .busIn_end_transaction(s_cpu1EndTransaction),
         .busIn_data_valid(s_cpu1DataValid),
@@ -677,12 +677,14 @@ module or1420SingleCore ( input wire         clock12MHz,
  assign s_busRequests[30] = s_cpu1IcacheRequestBus;
  assign s_busRequests[29] = s_hdmiRequestBus;
  assign s_busRequests[28] =  s_camReqBus;
- assign s_busRequests[27:0] = 29'd0;
+ assign s_busRequests[27] = s_ramDmaBusRequest;
+ assign s_busRequests[27:0] = 28'd0;
  
  assign s_cpu1DcacheBusAccessGranted = s_busGrants[31];
  assign s_cpu1IcacheBusAccessGranted = s_busGrants[30];
  assign s_hdmiBusgranted             = s_busGrants[29];
  assign s_camAckBus                  = s_busGrants[28];
+ assign s_ramDmaBusGranted           = s_busGrants[27];
 
  busArbiter arbiter ( .clock(s_systemClock),
                       .reset(s_reset),
