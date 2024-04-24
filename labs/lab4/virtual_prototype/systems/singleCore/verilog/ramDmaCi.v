@@ -80,18 +80,18 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
 
     /// Done and result signal
     always @(posedge clock) begin
-        read_done <= enWR_CPU || enWR_DMA;
-        busIn_grants_reg <= busIn_grants;
-        busIn_address_data_reg <= busIn_address_data;
-        busIn_end_transaction_reg <= busIn_end_transaction;
-        busIn_data_valid_reg <= busIn_data_valid;
-        busIn_busy_reg <= busIn_busy;
-        busIn_error_reg <= busIn_error;
-        DMA_memory_address_reg <= DMA_memory_address;
+        read_done <= reset ? 0: enWR_CPU || enWR_DMA;
+        busIn_grants_reg <= reset ? 0: busIn_grants;
+        busIn_address_data_reg <= reset ? 0: busIn_address_data;
+        busIn_end_transaction_reg <= reset ? 0 : busIn_end_transaction;
+        busIn_data_valid_reg <= reset ? 0 : busIn_data_valid;
+        busIn_busy_reg <= reset ? 0 : busIn_busy;
+        busIn_error_reg <= reset ? 0 : busIn_error;
+        DMA_memory_address_reg <= reset ? 0 : DMA_memory_address;
     end
 
-    assign done     = (write ? 1'b1 : read_done) && s_isMyCi;
-    assign result   = done ? (enWR_CPU ? resultSRAM_CPU : (enWR_DMA ? resultController : 32'b0)) : 32'b0;
+    assign done     = reset ? 0 : (write ? 1'b1 : read_done) && s_isMyCi;
+    assign result   = reset ? 0 : done ? (enWR_CPU ? resultSRAM_CPU : (enWR_DMA ? resultController : 32'b0)) : 32'b0;
     
     
     /// SRAM module

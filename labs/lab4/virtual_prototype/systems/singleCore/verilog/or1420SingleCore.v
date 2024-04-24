@@ -439,17 +439,17 @@ module or1420SingleCore ( input wire         clock12MHz,
    * A profile ISE
    *
    */
-  profileCi #(.customId(8'd12)) profiler
-             (.start(s_cpu1CiStart),
-              .clock(s_systemClock),
-              .reset(s_cpuReset),
-              .stall(s_stall),
-              .busIdle(s_busIdle),
-              .valueA(s_cpu1CiDataA),
-              .valueB(s_cpu1CiDataB),
-              .ciN(s_cpu1CiN),
-              .done(s_profileDone),
-              .result(s_profileResult) );
+  // profileCi #(.customId(8'd12)) profiler
+  //            (.start(s_cpu1CiStart),
+  //             .clock(s_systemClock),
+  //             .reset(s_cpuReset),
+  //             .stall(s_stall),
+  //             .busIdle(s_busIdle),
+  //             .valueA(s_cpu1CiDataA),
+  //             .valueB(s_cpu1CiDataB),
+  //             .ciN(s_cpu1CiN),
+  //             .done(s_profileDone),
+  //             .result(s_profileResult) );
 
   /*
   *
@@ -461,7 +461,7 @@ module or1420SingleCore ( input wire         clock12MHz,
   wire [7:0] s_ramDmaBurstSize;
   wire [31:0] s_ramDmaAddressData;
 
-  ramDmaCi #(.customId(8'd13)) attachedMemory (
+  ramDmaCi #(.customId(8'd12)) attachedMemory (
         .start(s_cpu1CiStart), 
         .clock(s_systemClock), 
         .reset(s_cpuReset), 
