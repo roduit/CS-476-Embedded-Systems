@@ -123,6 +123,8 @@ end
 always @(posedge clock) begin
 
     if (reset) begin
+        current_trans_state <= IDLE;
+        next_trans_state <= IDLE;
         bus_start_address <= 0;
         memory_start_address <= 0;
         block_size <= 0;
