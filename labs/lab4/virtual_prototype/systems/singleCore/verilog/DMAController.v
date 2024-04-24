@@ -102,8 +102,26 @@ reg [7:0]       effective_burst_size = 0;
 reg [31:0]      bus_address = 0;
 reg [31:0]      SRAM_result_reg = 0;
 
-/// Set the registers
+
+/// Burst transaction state machine
+always @(*) begin
+    if (busIn_error) next_trans_state = ERROR;
+    else
+    case (current_trans_state)
+        IDLE            : next_trans_state <=   ((control_register == READ_STATE || control_register == WRITE_STATE) && burst_counter != transfer_nb) ? REQUEST_BUS : IDLE;
+        REQUEST_BUS     : next_trans_state <=   (busIn_grants == 1'b1) ? INIT_BURST : REQUEST_BUS;
+        INIT_BURST      : next_trans_state <=   control_register == READ_STATE ? DO_BURST_READ : DO_BURST_WRITE;
+        DO_BURST_READ   : next_trans_state <=   (busIn_end_transaction == 1) ? END_TRANSACTION : DO_BURST_READ;
+        DO_BURST_WRITE  : next_trans_state <=   (word_counter == effective_burst_size + 1) ? END_TRANSACTION : DO_BURST_WRITE;
+        END_TRANSACTION : next_trans_state <=   (burst_counter == transfer_nb) ?  IDLE : REQUEST_BUS;
+        ERROR           : next_trans_state <=   IDLE;
+        default         : next_trans_state <=   IDLE;
+    endcase
+end
+
+
 always @(posedge clock) begin
+
     if (reset) begin
         bus_start_address <= 0;
         memory_start_address <= 0;
@@ -141,82 +159,61 @@ always @(posedge clock) begin
                 else result <= burst_size;
             end
             RW_STATUS_CTRL_REG: begin
-                if (write) control_register <= data_valueB[1:0];
+                if (write) begin 
+                    control_register = data_valueB[1:0];
+                end
                 else result <= status_register;
             end
             default: begin
                 // $display("Default state: %0d", state);
             end
         endcase
-        control_register <=  (reset || (current_trans_state == ERROR)) ? 2'b0 :  (current_trans_state == END_TRANSACTION && burst_counter == transfer_nb) ? 2'b0 : control_register;
-
-    end
-end
-
-
-/// Burst transaction state machine
-always @(*) begin
-    if (busIn_error) next_trans_state = ERROR;
-    else
-    case (current_trans_state)
-        IDLE            : next_trans_state <=   ((control_register == READ_STATE || control_register == WRITE_STATE) && burst_counter != transfer_nb) ? REQUEST_BUS : IDLE;
-        REQUEST_BUS     : next_trans_state <=   (busIn_grants == 1'b1) ? INIT_BURST : REQUEST_BUS;
-        INIT_BURST      : next_trans_state <=   control_register == READ_STATE ? DO_BURST_READ : DO_BURST_WRITE;
-        DO_BURST_READ   : next_trans_state <=   (busIn_end_transaction == 1) ? END_TRANSACTION : DO_BURST_READ;
-        DO_BURST_WRITE  : next_trans_state <=   (word_counter == effective_burst_size + 1) ? END_TRANSACTION : DO_BURST_WRITE;
-        END_TRANSACTION : next_trans_state <=   (burst_counter == transfer_nb) ?  IDLE : REQUEST_BUS;
-        ERROR           : next_trans_state <=   IDLE;
-        default         : next_trans_state <=   IDLE;
-    endcase
-end
-
-
-always @(posedge clock) begin
     
-    /// Update the state
-    current_trans_state = reset ? IDLE : next_trans_state; 
+        /// Update the state
+        current_trans_state = reset ? IDLE : next_trans_state; 
 
-    /// Update the SRAM result
-    SRAM_result_reg <= SRAM_result;
-    
-    if (current_trans_state == ERROR) begin
-        //control_register[0] <= 1'b0;
-        status_register <= 2'b10;
-        burst_counter <= 0;
-        SRAM_write_enable <= 0;
-    end else begin
-        if (current_trans_state == IDLE) begin
-            bus_address <= bus_start_address;
-            remaining_words <= block_size;
-            burst_counter <= 0;
-        end
-
-        /// Update the status register and reset control register
-        status_register[0]  <=  reset ? 1'b0 :  (current_trans_state == END_TRANSACTION && burst_counter == transfer_nb) ? 1'b0 : 
-                                                (current_trans_state == REQUEST_BUS) ? 1: status_register[0];
-        //control_register <=  (reset || (current_trans_state == ERROR)) ? 2'b0 :  (current_trans_state == END_TRANSACTION && burst_counter == transfer_nb) ? 2'b0 : control_register;
-
-        burst_counter       <=  reset ? 0 :  (current_trans_state == INIT_BURST) ? burst_counter + 1 : (next_trans_state == IDLE) ? 0 : burst_counter;
-
-        word_counter        <=  reset ? 0 :  (current_trans_state == DO_BURST_WRITE && word_counter != burst_size + 1 && ~busIn_busy) ? word_counter + 1 : (current_trans_state == END_TRANSACTION) ? 0 : word_counter;
-
-        remaining_words     <=  reset ? 0 :  (current_trans_state == END_TRANSACTION) ? (burst_counter == transfer_nb) ? 0 :  remaining_words - (burst_size + 1) : (current_trans_state == IDLE) ? block_size : remaining_words;
+        /// Update the SRAM result
+        SRAM_result_reg <= SRAM_result;
         
-        effective_burst_size <=  reset ? 0 :  (current_trans_state == REQUEST_BUS) ? (remaining_words < burst_size) ? remaining_words - 1 : burst_size : effective_burst_size;
+        if (current_trans_state == ERROR) begin
+            control_register[0] <= 1'b0;
+            status_register <= 2'b10;
+            burst_counter <= 0;
+            SRAM_write_enable <= 0;
+        end else begin
+            if (current_trans_state == IDLE) begin
+                bus_address <= bus_start_address;
+                remaining_words <= block_size;
+                burst_counter <= 0;
+            end
+
+            /// Update the status register and reset control register
+            status_register[0]  <=  reset ? 1'b0 :  (current_trans_state == END_TRANSACTION && burst_counter == transfer_nb) ? 1'b0 : 
+                                                    (current_trans_state == REQUEST_BUS) ? 1: status_register[0];
+
+            control_register =  reset ? 2'b0 :  (current_trans_state == END_TRANSACTION && burst_counter == transfer_nb) ? 2'b0 : control_register;
+
+            burst_counter       <=  reset ? 0 :  (current_trans_state == INIT_BURST) ? burst_counter + 1 : (next_trans_state == IDLE) ? 0 : burst_counter;
+
+            word_counter        <=  reset ? 0 :  (current_trans_state == DO_BURST_WRITE && word_counter != burst_size + 1 && ~busIn_busy) ? word_counter + 1 : (current_trans_state == END_TRANSACTION) ? 0 : word_counter;
+
+            remaining_words     <=  reset ? 0 :  (current_trans_state == END_TRANSACTION) ? (burst_counter == transfer_nb) ? 0 :  remaining_words - (burst_size + 1) : (current_trans_state == IDLE) ? block_size : remaining_words;
+            
+            effective_burst_size <=  reset ? 0 :  (current_trans_state == REQUEST_BUS) ? (remaining_words < burst_size) ? remaining_words - 1 : burst_size : effective_burst_size;
 
 
-        /// Update the SRAM control signals
-        SRAM_data           <=  reset ? 0 :  busIn_address_data;
-        SRAM_address        <=  reset ? 0 :  ((burst_counter == 1 && busOut_begin_transaction && control_register == READ_STATE) || (current_trans_state == REQUEST_BUS && burst_counter == 0 && control_register == WRITE_STATE)) ? memory_start_address : 
-                                             ((current_trans_state == DO_BURST_READ && busIn_data_valid) || (current_trans_state == DO_BURST_WRITE && ~busIn_busy))? SRAM_address + 4 : SRAM_address;
-        SRAM_write_enable   <=  reset ? 0 :  (next_trans_state == DO_BURST_READ && busIn_data_valid == 1'b1) ? 1'b1 : 1'b0;
+            /// Update the SRAM control signals
+            SRAM_data           <=  reset ? 0 :  busIn_address_data;
+            SRAM_address        <=  reset ? 0 :  ((burst_counter == 1 && busOut_begin_transaction && control_register == READ_STATE) || (current_trans_state == REQUEST_BUS && burst_counter == 0 && control_register == WRITE_STATE)) ? memory_start_address : 
+                                                ((current_trans_state == DO_BURST_READ && busIn_data_valid) || (current_trans_state == DO_BURST_WRITE && ~busIn_busy))? SRAM_address + 4 : SRAM_address;
+            SRAM_write_enable   <=  reset ? 0 :  (next_trans_state == DO_BURST_READ && busIn_data_valid == 1'b1) ? 1'b1 : 1'b0;
 
-        /// Update the bus start address
-        bus_address   <=  reset ? 0 :  ((current_trans_state == DO_BURST_READ && busIn_data_valid) || (current_trans_state == DO_BURST_WRITE && ~busIn_busy)) ? 
-                                             bus_address + 4 : bus_address;
-                
+            /// Update the bus start address
+            bus_address   <=  reset ? 0 :  ((current_trans_state == DO_BURST_READ && busIn_data_valid) || (current_trans_state == DO_BURST_WRITE && ~busIn_busy)) ? 
+                                                bus_address + 4 : bus_address;
+                    
+        end
     end
-
 end
     
 

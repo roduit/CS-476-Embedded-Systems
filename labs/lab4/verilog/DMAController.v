@@ -161,7 +161,6 @@ always @(posedge clock) begin
             RW_STATUS_CTRL_REG: begin
                 if (write) begin 
                     control_register = data_valueB[1:0];
-                    $display("Control register ******************************************: %b %b", control_register, write);
                 end
                 else result <= status_register;
             end
