@@ -99,6 +99,7 @@ reg [9:0]       transfer_nb = 0;
 reg [9:0]       burst_counter = 0;
 reg [9:0]       remaining_words = 0;
 reg [7:0]       effective_burst_size = 0;
+reg [31:0]      bus_address = 0;
 reg [31:0]      SRAM_result_reg = 0;
 
 /// Set the registers
@@ -113,7 +114,11 @@ always @(posedge clock) begin
     else begin
         case (state)
             RW_BUS_START_ADD: begin
-                if (write) bus_start_address <= data_valueB;
+                if (write) begin
+                    bus_start_address <= data_valueB;
+                    //bus_address <= data_valueB;
+                end
+
                 else result <= bus_start_address;
             end
             RW_MEMORY_START_ADD: begin
@@ -123,7 +128,7 @@ always @(posedge clock) begin
             RW_BLOCK_SIZE: begin
                 if (write) begin
                     block_size <= {22'd0, data_valueB[9:0]};
-                    remaining_words <= {22'd0, data_valueB[9:0]};
+                    //remaining_words <= {22'd0, data_valueB[9:0]};
                 end
                 else result <= block_size;
             end
@@ -131,7 +136,7 @@ always @(posedge clock) begin
                 if (write) begin
                     burst_size <= {24'd0, data_valueB[7:0]};
                     transfer_nb <= (block_size + (burst_size + 1) - 1) / (burst_size + 1);
-                    burst_counter <= 0;
+                    //burst_counter <= 0;
                 end
                 else result <= burst_size;
             end
@@ -167,7 +172,7 @@ end
 always @(posedge clock) begin
     
     /// Update the state
-    current_trans_state = reset ? IDLE : next_trans_state;
+    current_trans_state = reset ? IDLE : next_trans_state; 
 
     /// Update the SRAM result
     SRAM_result_reg <= SRAM_result;
@@ -178,6 +183,11 @@ always @(posedge clock) begin
         burst_counter <= 0;
         SRAM_write_enable <= 0;
     end else begin
+        if (current_trans_state == IDLE) begin
+            bus_address <= bus_start_address;
+            remaining_words <= block_size;
+            burst_counter <= 0;
+        end
 
         /// Update the status register and reset control register
         status_register[0]  <=  reset ? 1'b0 :  (current_trans_state == END_TRANSACTION && burst_counter == transfer_nb) ? 1'b0 : 
@@ -200,8 +210,8 @@ always @(posedge clock) begin
         SRAM_write_enable   <=  reset ? 0 :  (next_trans_state == DO_BURST_READ && busIn_data_valid == 1'b1) ? 1'b1 : 1'b0;
 
         /// Update the bus start address
-        bus_start_address   <=  reset ? 0 :  ((current_trans_state == DO_BURST_READ && busIn_data_valid) || (current_trans_state == DO_BURST_WRITE && ~busIn_busy)) ? 
-                                             bus_start_address + 4 : bus_start_address;
+        bus_address   <=  reset ? 0 :  ((current_trans_state == DO_BURST_READ && busIn_data_valid) || (current_trans_state == DO_BURST_WRITE && ~busIn_busy)) ? 
+                                             bus_address + 4 : bus_address;
                 
     end
 
@@ -210,7 +220,7 @@ end
 
 /// Bus interface
 assign busOut_request = (current_trans_state == REQUEST_BUS) ? 1'b1 : 1'b0;
-assign busOut_address_data = (current_trans_state == INIT_BURST) ? bus_start_address : (current_trans_state == DO_BURST_WRITE && ~busIn_busy) ? SRAM_result_reg : 32'd0;
+assign busOut_address_data = (current_trans_state == INIT_BURST) ? bus_address : (current_trans_state == DO_BURST_WRITE && ~busIn_busy) ? SRAM_result_reg : 32'd0;
 assign busOut_burst_size = (current_trans_state == INIT_BURST) ? effective_burst_size : 8'd0;
 assign busOut_read_n_write = (current_trans_state == INIT_BURST && control_register == READ_STATE) ? 1'b1 : 1'b0;
 assign busOut_begin_transaction = (current_trans_state == INIT_BURST) ? 1'b1 : 1'b0;
@@ -221,7 +231,7 @@ assign busOut_end_transaction = (current_trans_state == ERROR || (current_trans_
 assign busOut_error = 0;
 
 /// Output the control signals
-assign bus_start_address_out = bus_start_address;
+assign bus_start_address_out = bus_address;
 assign memory_start_address_out = memory_start_address;
 assign block_size_out = block_size;
 assign burst_size_out = burst_size;

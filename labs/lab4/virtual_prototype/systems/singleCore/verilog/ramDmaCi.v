@@ -66,7 +66,7 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
     wire [31:0]     DMA_memory_data;
     wire [8:0]      DMA_memory_address;
     wire            DMA_memory_write_enable;
-    reg [8:0]      DMA_memory_address_reg;
+    reg [8:0]       DMA_memory_address_reg;
 
     /// Bus Registers
     reg             busIn_grants_reg;
