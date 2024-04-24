@@ -148,6 +148,8 @@ always @(posedge clock) begin
                 // $display("Default state: %0d", state);
             end
         endcase
+        control_register <=  (reset || (current_trans_state == ERROR)) ? 2'b0 :  (current_trans_state == END_TRANSACTION && burst_counter == transfer_nb) ? 2'b0 : control_register;
+
     end
 end
 
@@ -178,7 +180,7 @@ always @(posedge clock) begin
     SRAM_result_reg <= SRAM_result;
     
     if (current_trans_state == ERROR) begin
-        control_register[0] <= 1'b0;
+        //control_register[0] <= 1'b0;
         status_register <= 2'b10;
         burst_counter <= 0;
         SRAM_write_enable <= 0;
@@ -192,7 +194,7 @@ always @(posedge clock) begin
         /// Update the status register and reset control register
         status_register[0]  <=  reset ? 1'b0 :  (current_trans_state == END_TRANSACTION && burst_counter == transfer_nb) ? 1'b0 : 
                                                 (current_trans_state == REQUEST_BUS) ? 1: status_register[0];
-        control_register <=  reset ? 2'b0 :  (current_trans_state == END_TRANSACTION && burst_counter == transfer_nb) ? 2'b0 : control_register;
+        //control_register <=  (reset || (current_trans_state == ERROR)) ? 2'b0 :  (current_trans_state == END_TRANSACTION && burst_counter == transfer_nb) ? 2'b0 : control_register;
 
         burst_counter       <=  reset ? 0 :  (current_trans_state == INIT_BURST) ? burst_counter + 1 : (next_trans_state == IDLE) ? 0 : burst_counter;
 
