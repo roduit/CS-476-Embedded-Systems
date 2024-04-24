@@ -192,6 +192,7 @@ always @(posedge clock) begin
         /// Update the status register and reset control register
         status_register[0]  <=  reset ? 1'b0 :  (current_trans_state == END_TRANSACTION && burst_counter == transfer_nb) ? 1'b0 : 
                                                 (current_trans_state == REQUEST_BUS) ? 1: status_register[0];
+
         control_register <=  reset ? 2'b0 :  (current_trans_state == END_TRANSACTION && burst_counter == transfer_nb) ? 2'b0 : control_register;
 
         burst_counter       <=  reset ? 0 :  (current_trans_state == INIT_BURST) ? burst_counter + 1 : (next_trans_state == IDLE) ? 0 : burst_counter;
