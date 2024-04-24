@@ -102,7 +102,7 @@ reg [7:0]       effective_burst_size = 0;
 reg [31:0]      SRAM_result_reg = 0;
 
 /// Set the registers
-always @(*) begin
+always @(posedge clock) begin
     if (reset) begin
         bus_start_address <= 0;
         memory_start_address <= 0;
