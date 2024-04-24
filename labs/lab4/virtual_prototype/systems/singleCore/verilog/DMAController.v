@@ -218,23 +218,23 @@ end
     
 
 /// Bus interface
-assign busOut_request = (current_trans_state == REQUEST_BUS) ? 1'b1 : 1'b0;
-assign busOut_address_data = (current_trans_state == INIT_BURST) ? bus_address : (current_trans_state == DO_BURST_WRITE && ~busIn_busy) ? SRAM_result_reg : 32'd0;
-assign busOut_burst_size = (current_trans_state == INIT_BURST) ? effective_burst_size : 8'd0;
-assign busOut_read_n_write = (current_trans_state == INIT_BURST && control_register == READ_STATE) ? 1'b1 : 1'b0;
-assign busOut_begin_transaction = (current_trans_state == INIT_BURST) ? 1'b1 : 1'b0;
+assign busOut_request =0;// (current_trans_state == REQUEST_BUS) ? 1'b1 : 1'b0;
+assign busOut_address_data =0;// (current_trans_state == INIT_BURST) ? bus_address : (current_trans_state == DO_BURST_WRITE && ~busIn_busy) ? SRAM_result_reg : 32'd0;
+assign busOut_burst_size =0;// (current_trans_state == INIT_BURST) ? effective_burst_size : 8'd0;
+assign busOut_read_n_write =0;// (current_trans_state == INIT_BURST && control_register == READ_STATE) ? 1'b1 : 1'b0;
+assign busOut_begin_transaction =0;// (current_trans_state == INIT_BURST) ? 1'b1 : 1'b0;
 
-assign busOut_data_valid = (current_trans_state == DO_BURST_WRITE) ? 1'b1 : 1'b0;
+assign busOut_data_valid = 0;//(current_trans_state == DO_BURST_WRITE) ? 1'b1 : 1'b0;
 assign busOut_busy = 0;
-assign busOut_end_transaction = (current_trans_state == ERROR || (current_trans_state == END_TRANSACTION && control_register == WRITE_STATE)) ? 1'b1 : 1'b0;
+assign busOut_end_transaction = 0;//(current_trans_state == ERROR || (current_trans_state == END_TRANSACTION && control_register == WRITE_STATE)) ? 1'b1 : 1'b0;
 assign busOut_error = 0;
 
 /// Output the control signals
-assign bus_start_address_out = bus_address;
-assign memory_start_address_out = memory_start_address;
-assign block_size_out = block_size;
-assign burst_size_out = burst_size;
-assign control_register_out = control_register;
-assign status_register_out = status_register;
+assign bus_start_address_out = 0;//bus_address;
+assign memory_start_address_out = 0; //memory_start_address;
+assign block_size_out = 0;//block_size;
+assign burst_size_out = 0;//burst_size;
+assign control_register_out = 0;//control_register;
+assign status_register_out = 0;//status_register;
     
 endmodule
