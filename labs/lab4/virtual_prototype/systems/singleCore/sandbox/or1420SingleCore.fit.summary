@@ -1,16 +1,16 @@
-Fitter Status : Successful - Mon Apr 15 18:31:51 2024
-Quartus Prime Version : 18.1.1 Build 646 04/11/2019 SJ Lite Edition
+Fitter Status : Successful - Tue Feb 13 10:05:25 2024
+Quartus Prime Version : 23.1std.0 Build 991 11/28/2023 SC Lite Edition
 Revision Name : or1420SingleCore
 Top-level Entity Name : or1420SingleCore
 Family : Cyclone IV E
 Device : EP4CE30F23C8
 Timing Models : Final
-Total logic elements : 13,563 / 28,848 ( 47 % )
-    Total combinational functions : 12,616 / 28,848 ( 44 % )
-    Dedicated logic registers : 6,176 / 28,848 ( 21 % )
-Total registers : 6176
+Total logic elements : 13,325 / 28,848 ( 46 % )
+    Total combinational functions : 12,343 / 28,848 ( 43 % )
+    Dedicated logic registers : 6,115 / 28,848 ( 21 % )
+Total registers : 6115
 Total pins : 81 / 329 ( 25 % )
 Total virtual pins : 0
-Total memory bits : 291,200 / 608,256 ( 48 % )
+Total memory bits : 274,560 / 608,256 ( 45 % )
 Embedded Multiplier 9-bit elements : 9 / 132 ( 7 % )
 Total PLLs : 1 / 4 ( 25 % )
