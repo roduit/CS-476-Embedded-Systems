@@ -461,7 +461,7 @@ module or1420SingleCore ( input wire         clock12MHz,
   wire [7:0] s_ramDmaBurstSize;
   wire [31:0] s_ramDmaAddressData;
 
-  ramDmaCi #(.customId(8'd11)) attachedMemory (
+  ramDmaCi #(.customId(8'd13)) attachedMemory (
         .start(s_cpu1CiStart), 
         .clock(s_systemClock), 
         .reset(s_cpuReset), 

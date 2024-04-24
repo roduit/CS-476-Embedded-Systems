@@ -1,5 +1,5 @@
 Flow report for or1420SingleCore
-Wed Apr 24 12:36:39 2024
+Wed Apr 24 12:57:16 2024
 Quartus Prime Version 18.1.1 Build 646 04/11/2019 SJ Lite Edition
 
 
@@ -41,15 +41,15 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------------------------------------------+
 ; Flow Summary                                                                     ;
 +------------------------------------+---------------------------------------------+
-; Flow Status                        ; Successful - Wed Apr 24 12:36:27 2024       ;
+; Flow Status                        ; Successful - Wed Apr 24 12:57:04 2024       ;
 ; Quartus Prime Version              ; 18.1.1 Build 646 04/11/2019 SJ Lite Edition ;
 ; Revision Name                      ; or1420SingleCore                            ;
 ; Top-level Entity Name              ; or1420SingleCore                            ;
 ; Family                             ; Cyclone IV E                                ;
 ; Device                             ; EP4CE30F23C8                                ;
 ; Timing Models                      ; Final                                       ;
-; Total logic elements               ; 14,642 / 28,848 ( 51 % )                    ;
-;     Total combinational functions  ; 13,687 / 28,848 ( 47 % )                    ;
+; Total logic elements               ; 14,560 / 28,848 ( 50 % )                    ;
+;     Total combinational functions  ; 13,643 / 28,848 ( 47 % )                    ;
 ;     Dedicated logic registers      ; 6,412 / 28,848 ( 22 % )                     ;
 ; Total registers                    ; 6412                                        ;
 ; Total pins                         ; 81 / 329 ( 25 % )                           ;
@@ -65,7 +65,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 04/24/2024 12:34:11 ;
+; Start date & time ; 04/24/2024 12:54:47 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; or1420SingleCore    ;
 +-------------------+---------------------+
@@ -76,7 +76,7 @@ https://fpgasoftware.intel.com/eula.
 +-----------------------+------------------------------+---------------+-------------+------------+
 ; Assignment Name       ; Value                        ; Default Value ; Entity Name ; Section Id ;
 +-----------------------+------------------------------+---------------+-------------+------------+
-; COMPILER_SIGNATURE_ID ; 345052337850.171395485109115 ; --            ; --          ; --         ;
+; COMPILER_SIGNATURE_ID ; 345052337850.171395608725526 ; --            ; --          ; --         ;
 +-----------------------+------------------------------+---------------+-------------+------------+
 
 
@@ -85,11 +85,11 @@ https://fpgasoftware.intel.com/eula.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:42     ; 1.0                     ; 1076 MB             ; 00:00:51                           ;
-; Fitter               ; 00:01:25     ; 1.1                     ; 1746 MB             ; 00:02:19                           ;
+; Analysis & Synthesis ; 00:00:40     ; 1.0                     ; 1087 MB             ; 00:00:48                           ;
+; Fitter               ; 00:01:28     ; 1.1                     ; 1743 MB             ; 00:02:23                           ;
 ; Assembler            ; 00:00:03     ; 1.0                     ; 843 MB              ; 00:00:02                           ;
-; Timing Analyzer      ; 00:00:11     ; 1.6                     ; 1076 MB             ; 00:00:12                           ;
-; Total                ; 00:02:21     ; --                      ; --                  ; 00:03:24                           ;
+; Timing Analyzer      ; 00:00:11     ; 1.6                     ; 1100 MB             ; 00:00:12                           ;
+; Total                ; 00:02:22     ; --                      ; --                  ; 00:03:25                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
