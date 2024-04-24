@@ -66,7 +66,7 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
     wire [31:0]     DMA_memory_data;
     wire [8:0]      DMA_memory_address;
     wire            DMA_memory_write_enable;
-    reg [8:0]      DMA_memory_address_reg;
+    reg [8:0]       DMA_memory_address_reg;
 
     /// Bus Registers
     reg             busIn_grants_reg;
@@ -96,8 +96,7 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
     
     /// SRAM module
     dualPortSSRAM #(.bitwidth(32), 
-                    .nrOfEntries(512), 
-                    .readAfterWrite(0))
+                    .nrOfEntries(512))
     SSRAM (
         .clockA(clock),
         .clockB(~clock),
@@ -112,8 +111,7 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
     );
 
     /// DMA Controller module
-    DMAController #()
-    DMA (
+    DMAController DMA (
         .reset(reset),
         .state(state),
         .write(write),
