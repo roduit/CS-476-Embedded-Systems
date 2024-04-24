@@ -297,7 +297,7 @@ module DMATestBench;
             `WAIT2CYCLES;
             start = 1'b0;             
             $display("[R_CPU] Read value %0d from address %0d", result, valueA[8:0]);
-            valueA = valueA + 4;
+            valueA = valueA + 1;
         end
 
         //* Begin Write txn
