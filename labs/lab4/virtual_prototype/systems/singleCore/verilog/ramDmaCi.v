@@ -73,7 +73,7 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
     reg [31:0]      busIn_address_data_reg;
     reg             busIn_end_transaction_reg,
                     busIn_data_valid_reg,
-                    busIn_busy_reg,
+                    //busIn_busy_reg,
                     busIn_error_reg;
 
 
@@ -85,9 +85,9 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
         busIn_address_data_reg <= reset ? 0: busIn_address_data;
         busIn_end_transaction_reg <= reset ? 0 : busIn_end_transaction;
         busIn_data_valid_reg <= reset ? 0 : busIn_data_valid;
-        busIn_busy_reg <= reset ? 0 : busIn_busy;
+        //busIn_busy_reg <= reset ? 0 : busIn_busy;
         busIn_error_reg <= reset ? 0 : busIn_error;
-        DMA_memory_address_reg <= reset ? 0 : DMA_memory_address;
+        //DMA_memory_address_reg <= reset ? 0 : DMA_memory_address; 
     end
 
     assign done     = reset ? 0 : (write ? 1'b1 : read_done) && s_isMyCi;
@@ -103,7 +103,7 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
         .writeEnableA(writeEnableA),
         .writeEnableB(DMA_memory_write_enable),
         .addressA(valueA[8:0]),
-        .addressB(DMA_memory_address_reg),
+        .addressB(DMA_memory_address),
         .dataInA(valueB),
         .dataInB(DMA_memory_data),
         .dataOutA(resultSRAM_CPU),
@@ -132,8 +132,8 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
         .busIn_address_data(busIn_address_data_reg),
         .busIn_end_transaction(busIn_end_transaction_reg),
         .busIn_data_valid(busIn_data_valid_reg),
-        .busIn_busy(busIn_busy_reg),
-        .busIn_error(busIn_error_reg),
+        .busIn_busy(busIn_busy),
+        .busIn_error(busIn_error),
         .busOut_address_data(busOut_address_data),
         .busOut_burst_size(busOut_burst_size),
         .busOut_read_n_write(busOut_read_n_write),
@@ -146,3 +146,7 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
     );
 
 endmodule
+
+
+// Busy and error not registers!!!!!
+// Check end transaction
