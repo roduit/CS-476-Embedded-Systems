@@ -74,8 +74,8 @@ localparam      RW_STATUS_CTRL_REG = 3'b101;
 
 //* Enumerated states for the txn states
 localparam      IDLE = 3'b000;
-localparam      REQUEST_BUS = 3'b010;
-localparam      INIT_BURST = 3'b001;
+localparam      REQUEST_BUS = 3'b001;
+localparam      INIT_BURST = 3'b010;
 localparam      DO_BURST_READ = 3'b011;
 localparam      DO_BURST_WRITE = 3'b100;
 localparam      END_TRANSACTION = 3'b101;
@@ -84,7 +84,7 @@ localparam      ERROR = 3'b110;
 localparam      READ_STATE = 2'b01;
 localparam      WRITE_STATE = 2'b10;
 
-reg [2:0]       current_trans_state, next_trans_state = END_TRANSACTION;
+reg [2:0]       current_trans_state, next_trans_state = IDLE;
 
 /// DMA control signals
 reg [31:0]      bus_start_address = 0;
@@ -110,7 +110,7 @@ always @(*) begin
     case (current_trans_state)
         IDLE            : next_trans_state <=   ((control_register == READ_STATE || control_register == WRITE_STATE) && burst_counter != transfer_nb) ? REQUEST_BUS : IDLE;
         REQUEST_BUS     : next_trans_state <=   (busIn_grants == 1'b1) ? INIT_BURST : REQUEST_BUS;
-        INIT_BURST      : next_trans_state <=   control_register == READ_STATE ? DO_BURST_READ : DO_BURST_WRITE;
+        INIT_BURST      : next_trans_state <=   (control_register == READ_STATE) ? DO_BURST_READ : DO_BURST_WRITE;
         DO_BURST_READ   : next_trans_state <=   (busIn_end_transaction == 1) ? END_TRANSACTION : DO_BURST_READ;
         DO_BURST_WRITE  : next_trans_state <=   (word_counter == effective_burst_size + 1) ? END_TRANSACTION : DO_BURST_WRITE;
         END_TRANSACTION : next_trans_state <=   (burst_counter == transfer_nb) ?  IDLE : REQUEST_BUS;
@@ -122,7 +122,7 @@ end
 
 always @(posedge clock) begin
 
-    if (reset || current_trans_state == END_TRANSACTION) begin
+    if (reset) begin
         current_trans_state = IDLE;
         //next_trans_state = IDLE;
         control_register = 2'b0;

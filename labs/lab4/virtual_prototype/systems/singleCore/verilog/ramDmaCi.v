@@ -41,8 +41,8 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
     
     /// Global control signals
     wire            s_isMyCi = (ciN == customId) ? start : 1'b0;
-    wire [2:0]      state = valueA[12:10];
-    wire            write = valueA[9];
+    wire [2:0]      state = s_isMyCi ? valueA[12:10] : 3'b111;
+    wire            write = s_isMyCi ? valueA[9] : 0;
     
     /// SRAM control signals
     wire            correctState = ((valueA[12] == 0 && valueA[10] == 1) || (valueA[12] == 0 && valueA[11] == 1) || (valueA[12] == 1 && valueA[11] == 0)) ? 1'b1 : 1'b0;
@@ -66,15 +66,15 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
     wire [31:0]     DMA_memory_data;
     wire [8:0]      DMA_memory_address;
     wire            DMA_memory_write_enable;
-    reg [8:0]       DMA_memory_address_reg;
+    reg [8:0]       DMA_memory_address_reg = 0;
 
     /// Bus Registers
-    reg             busIn_grants_reg;
-    reg [31:0]      busIn_address_data_reg;
-    reg             busIn_end_transaction_reg,
-                    busIn_data_valid_reg,
+    reg             busIn_grants_reg = 0;
+    reg [31:0]      busIn_address_data_reg = 0;
+    reg             busIn_end_transaction_reg = 0;
+    reg             busIn_data_valid_reg = 0;
                     //busIn_busy_reg,
-                    busIn_error_reg;
+    reg             busIn_error_reg = 0;
 
 
 

@@ -461,7 +461,7 @@ module or1420SingleCore ( input wire         clock12MHz,
   wire [7:0] s_ramDmaBurstSize;
   wire [31:0] s_ramDmaAddressData;
 
-  ramDmaCi #(.customId(8'd12)) attachedMemory (
+  ramDmaCi #(.customId(8'h12)) attachedMemory (
         .start(s_cpu1CiStart), 
         .clock(s_systemClock), 
         .reset(s_cpuReset), 
@@ -676,7 +676,7 @@ module or1420SingleCore ( input wire         clock12MHz,
  assign s_busRequests[31] = s_cpu1DcacheRequestBus;
  assign s_busRequests[30] = s_cpu1IcacheRequestBus;
  assign s_busRequests[29] = s_hdmiRequestBus;
- assign s_busRequests[28] =  s_camReqBus;
+ assign s_busRequests[28] = s_camReqBus;
  assign s_busRequests[27] = s_ramDmaBusRequest;
  assign s_busRequests[26:0] = 27'd0;
  

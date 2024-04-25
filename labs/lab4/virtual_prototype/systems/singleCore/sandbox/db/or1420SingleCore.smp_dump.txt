@@ -141,10 +141,10 @@ s_stateMachineReg.END_TRANS1 0 1 0 0 0 1
 s_stateMachineReg.END_TRANS2 1 0 0 0 0 1 
 
 State Machine - |or1420SingleCore|ramDmaCi:attachedMemory|DMAController:DMA|current_trans_state
-Name current_trans_state.ERROR current_trans_state.END_TRANSACTION current_trans_state.DO_BURST_WRITE current_trans_state.DO_BURST_READ current_trans_state.REQUEST_BUS current_trans_state.INIT_BURST current_trans_state.IDLE 
+Name current_trans_state.ERROR current_trans_state.END_TRANSACTION current_trans_state.DO_BURST_WRITE current_trans_state.DO_BURST_READ current_trans_state.INIT_BURST current_trans_state.REQUEST_BUS current_trans_state.IDLE 
 current_trans_state.IDLE 0 0 0 0 0 0 0 
-current_trans_state.INIT_BURST 0 0 0 0 0 1 1 
-current_trans_state.REQUEST_BUS 0 0 0 0 1 0 1 
+current_trans_state.REQUEST_BUS 0 0 0 0 0 1 1 
+current_trans_state.INIT_BURST 0 0 0 0 1 0 1 
 current_trans_state.DO_BURST_READ 0 0 0 1 0 0 1 
 current_trans_state.DO_BURST_WRITE 0 0 1 0 0 0 1 
 current_trans_state.END_TRANSACTION 0 1 0 0 0 0 1 
