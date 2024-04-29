@@ -66,12 +66,13 @@ module DMATestBench;
 
        //* Perform some write operation from the CPU to the SSRAM
         // Eneble write operation
-        valueA[9] = 1;
+        valueA[9] = 0;
         reset = 1;
         start = 0;
         `WAIT2CYCLES;
         reset = 0;
         `WAITCYCLE;
+        valueA[9] = 1;
 
         repeat(5) begin
             start = 1'b1; 
