@@ -42,7 +42,7 @@ int main () {
     address_and_wen += 1;
   }
 
-  printf("End writing");
+  printf("End writing\n");
   // Read
   address_and_wen = 0x00000008;
   value_to_test = 0x123;
