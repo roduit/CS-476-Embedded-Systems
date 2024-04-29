@@ -133,6 +133,7 @@ always @(posedge clock) begin
         block_size <= 0;
         burst_size <= 0;
         result <= 0;
+        SRAM_write_enable <= 0;
     end 
     else begin
         case (state)
