@@ -1,5 +1,5 @@
 Analysis & Synthesis report for or1420SingleCore
-Mon Apr 29 12:41:34 2024
+Mon Apr 29 14:12:30 2024
 Quartus Prime Version 18.1.1 Build 646 04/11/2019 SJ Lite Edition
 
 
@@ -144,13 +144,13 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +------------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Mon Apr 29 12:41:34 2024       ;
+; Analysis & Synthesis Status        ; Successful - Mon Apr 29 14:12:29 2024       ;
 ; Quartus Prime Version              ; 18.1.1 Build 646 04/11/2019 SJ Lite Edition ;
 ; Revision Name                      ; or1420SingleCore                            ;
 ; Top-level Entity Name              ; or1420SingleCore                            ;
 ; Family                             ; Cyclone IV E                                ;
-; Total logic elements               ; 14,092                                      ;
-;     Total combinational functions  ; 12,367                                      ;
+; Total logic elements               ; 14,089                                      ;
+;     Total combinational functions  ; 12,364                                      ;
 ;     Dedicated logic registers      ; 6,074                                       ;
 ; Total registers                    ; 6074                                        ;
 ; Total pins                         ; 81                                          ;
@@ -260,7 +260,7 @@ https://fpgasoftware.intel.com/eula.
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;   0.4%      ;
+;     Processor 2            ;   0.2%      ;
 ;     Processor 3            ;   0.2%      ;
 ;     Processor 4            ;   0.2%      ;
 +----------------------------+-------------+
@@ -364,16 +364,16 @@ https://fpgasoftware.intel.com/eula.
 +---------------------------------------------+---------------------------------------------------------------------+
 ; Resource                                    ; Usage                                                               ;
 +---------------------------------------------+---------------------------------------------------------------------+
-; Estimated Total logic elements              ; 14,092                                                              ;
+; Estimated Total logic elements              ; 14,089                                                              ;
 ;                                             ;                                                                     ;
-; Total combinational functions               ; 12367                                                               ;
+; Total combinational functions               ; 12364                                                               ;
 ; Logic element usage by number of LUT inputs ;                                                                     ;
-;     -- 4 input functions                    ; 7325                                                                ;
-;     -- 3 input functions                    ; 3830                                                                ;
-;     -- <=2 input functions                  ; 1212                                                                ;
+;     -- 4 input functions                    ; 7324                                                                ;
+;     -- 3 input functions                    ; 3825                                                                ;
+;     -- <=2 input functions                  ; 1215                                                                ;
 ;                                             ;                                                                     ;
 ; Logic elements by mode                      ;                                                                     ;
-;     -- normal mode                          ; 11416                                                               ;
+;     -- normal mode                          ; 11413                                                               ;
 ;     -- arithmetic mode                      ; 951                                                                 ;
 ;                                             ;                                                                     ;
 ; Total registers                             ; 6074                                                                ;
@@ -390,7 +390,7 @@ https://fpgasoftware.intel.com/eula.
 ;                                             ;                                                                     ;
 ; Maximum fan-out node                        ; altpll:altpll_component|test_altpll:auto_generated|wire_pll1_clk[0] ;
 ; Maximum fan-out                             ; 6214                                                                ;
-; Total fan-out                               ; 64733                                                               ;
+; Total fan-out                               ; 64721                                                               ;
 ; Average fan-out                             ; 3.42                                                                ;
 +---------------------------------------------+---------------------------------------------------------------------+
 
@@ -400,7 +400,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------------------------------------------------+--------------------+--------------+
 ; Compilation Hierarchy Node                      ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                  ; Entity Name        ; Library Name ;
 +-------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------------------------------------------------+--------------------+--------------+
-; |or1420SingleCore                               ; 12367 (434)         ; 6074 (5)                  ; 291200      ; 9            ; 3       ; 3         ; 81   ; 0            ; |or1420SingleCore                                                                                                                    ; or1420SingleCore   ; work         ;
+; |or1420SingleCore                               ; 12364 (434)         ; 6074 (5)                  ; 291200      ; 9            ; 3       ; 3         ; 81   ; 0            ; |or1420SingleCore                                                                                                                    ; or1420SingleCore   ; work         ;
 ;    |altpll:altpll_component|                    ; 1 (0)               ; 1 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|altpll:altpll_component                                                                                            ; altpll             ; work         ;
 ;       |test_altpll:auto_generated|              ; 1 (1)               ; 1 (1)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|altpll:altpll_component|test_altpll:auto_generated                                                                 ; test_altpll        ; work         ;
 ;    |bios:start|                                 ; 84 (84)             ; 103 (103)                 ; 65536       ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|bios:start                                                                                                         ; bios               ; work         ;
@@ -424,7 +424,7 @@ https://fpgasoftware.intel.com/eula.
 ;       |synchroFlop:usync|                       ; 3 (3)               ; 3 (3)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|delayIse:delayMicro|synchroFlop:usync                                                                              ; synchroFlop        ; work         ;
 ;    |i2cCustomInstr:i2cm|                        ; 94 (6)              ; 78 (26)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|i2cCustomInstr:i2cm                                                                                                ; i2cCustomInstr     ; work         ;
 ;       |i2cMaster:master|                        ; 88 (88)             ; 52 (52)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|i2cCustomInstr:i2cm|i2cMaster:master                                                                               ; i2cMaster          ; work         ;
-;    |or1420Top:cpu1|                             ; 8271 (76)           ; 3607 (32)                 ; 81920       ; 6            ; 0       ; 3         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1                                                                                                     ; or1420Top          ; work         ;
+;    |or1420Top:cpu1|                             ; 8268 (76)           ; 3607 (32)                 ; 81920       ; 6            ; 0       ; 3         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1                                                                                                     ; or1420Top          ; work         ;
 ;       |dCache:loadStore|                        ; 168 (168)           ; 129 (129)                 ; 65536       ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|dCache:loadStore                                                                                    ; dCache             ; work         ;
 ;          |dCacheSpm:spm|                        ; 0 (0)               ; 0 (0)                     ; 65536       ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|dCache:loadStore|dCacheSpm:spm                                                                      ; dCacheSpm          ; work         ;
 ;             |altsyncram:byteRam0_rtl_0|         ; 0 (0)               ; 0 (0)                     ; 16384       ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|dCache:loadStore|dCacheSpm:spm|altsyncram:byteRam0_rtl_0                                            ; altsyncram         ; work         ;
@@ -436,14 +436,14 @@ https://fpgasoftware.intel.com/eula.
 ;             |altsyncram:byteRam3_rtl_0|         ; 0 (0)               ; 0 (0)                     ; 16384       ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|dCache:loadStore|dCacheSpm:spm|altsyncram:byteRam3_rtl_0                                            ; altsyncram         ; work         ;
 ;                |altsyncram_9f81:auto_generated| ; 0 (0)               ; 0 (0)                     ; 16384       ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|dCache:loadStore|dCacheSpm:spm|altsyncram:byteRam3_rtl_0|altsyncram_9f81:auto_generated             ; altsyncram_9f81    ; work         ;
 ;       |decodeStage:decode|                      ; 306 (306)           ; 160 (160)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|decodeStage:decode                                                                                  ; decodeStage        ; work         ;
-;       |executeStage:exe|                        ; 1217 (612)          ; 174 (174)                 ; 0           ; 6            ; 0       ; 3         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|executeStage:exe                                                                                    ; executeStage       ; work         ;
+;       |executeStage:exe|                        ; 1219 (610)          ; 174 (174)                 ; 0           ; 6            ; 0       ; 3         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|executeStage:exe                                                                                    ; executeStage       ; work         ;
 ;          |adder:addSub|                         ; 163 (163)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|executeStage:exe|adder:addSub                                                                       ; adder              ; work         ;
 ;          |logicUnit:logicU|                     ; 92 (92)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|executeStage:exe|logicUnit:logicU                                                                   ; logicUnit          ; work         ;
 ;          |multiplier:mul|                       ; 28 (0)              ; 0 (0)                     ; 0           ; 6            ; 0       ; 3         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|executeStage:exe|multiplier:mul                                                                     ; multiplier         ; work         ;
 ;             |lpm_mult:Mult0|                    ; 28 (0)              ; 0 (0)                     ; 0           ; 6            ; 0       ; 3         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|executeStage:exe|multiplier:mul|lpm_mult:Mult0                                                      ; lpm_mult           ; work         ;
 ;                |mult_7dt:auto_generated|        ; 28 (28)             ; 0 (0)                     ; 0           ; 6            ; 0       ; 3         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|executeStage:exe|multiplier:mul|lpm_mult:Mult0|mult_7dt:auto_generated                              ; mult_7dt           ; work         ;
-;          |shifter:shift|                        ; 322 (322)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|executeStage:exe|shifter:shift                                                                      ; shifter            ; work         ;
-;       |fetchStage:fetch|                        ; 998 (998)           ; 882 (882)                 ; 16384       ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|fetchStage:fetch                                                                                    ; fetchStage         ; work         ;
+;          |shifter:shift|                        ; 326 (326)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|executeStage:exe|shifter:shift                                                                      ; shifter            ; work         ;
+;       |fetchStage:fetch|                        ; 993 (993)           ; 882 (882)                 ; 16384       ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|fetchStage:fetch                                                                                    ; fetchStage         ; work         ;
 ;          |altsyncram:s_dataMemory_rtl_0|        ; 0 (0)               ; 0 (0)                     ; 16384       ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|fetchStage:fetch|altsyncram:s_dataMemory_rtl_0                                                      ; altsyncram         ; work         ;
 ;             |altsyncram_nd81:auto_generated|    ; 0 (0)               ; 0 (0)                     ; 16384       ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|fetchStage:fetch|altsyncram:s_dataMemory_rtl_0|altsyncram_nd81:auto_generated                       ; altsyncram_nd81    ; work         ;
 ;       |memoryStage:mem|                         ; 40 (40)             ; 39 (39)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|memoryStage:mem                                                                                     ; memoryStage        ; work         ;
@@ -1380,7 +1380,7 @@ Encoding Type:  One-Hot
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
 ; Total registers                              ; 6074  ;
-; Number of registers using Synchronous Clear  ; 480   ;
+; Number of registers using Synchronous Clear  ; 481   ;
 ; Number of registers using Synchronous Load   ; 398   ;
 ; Number of registers using Asynchronous Clear ; 33    ;
 ; Number of registers using Asynchronous Load  ; 0     ;
@@ -4085,21 +4085,21 @@ Note: In order to hide this table in the UI and the text report file, please set
 ;     ENA SCLR          ; 170                         ;
 ;     ENA SCLR SLD      ; 144                         ;
 ;     ENA SLD           ; 150                         ;
-;     SCLR              ; 158                         ;
+;     SCLR              ; 159                         ;
 ;     SCLR SLD          ; 8                           ;
 ;     SLD               ; 96                          ;
-;     plain             ; 2732                        ;
+;     plain             ; 2731                        ;
 ; cycloneiii_io_obuf    ; 21                          ;
-; cycloneiii_lcell_comb ; 12367                       ;
+; cycloneiii_lcell_comb ; 12364                       ;
 ;     arith             ; 951                         ;
 ;         2 data inputs ; 608                         ;
 ;         3 data inputs ; 343                         ;
-;     normal            ; 11416                       ;
+;     normal            ; 11413                       ;
 ;         0 data inputs ; 10                          ;
 ;         1 data inputs ; 80                          ;
-;         2 data inputs ; 514                         ;
-;         3 data inputs ; 3487                        ;
-;         4 data inputs ; 7325                        ;
+;         2 data inputs ; 517                         ;
+;         3 data inputs ; 3482                        ;
+;         4 data inputs ; 7324                        ;
 ; cycloneiii_mac_mult   ; 6                           ;
 ; cycloneiii_mac_out    ; 6                           ;
 ; cycloneiii_pll        ; 1                           ;
@@ -4115,7 +4115,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:28     ;
+; Top            ; 00:00:27     ;
 +----------------+--------------+
 
 
@@ -4139,7 +4139,7 @@ Info: Running Quartus Prime Analysis & Synthesis
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Mon Apr 29 12:40:49 2024
+    Info: Processing started: Mon Apr 29 14:11:46 2024
 Info: Command: quartus_map --family="Cyclone IV E" or1420SingleCore
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
@@ -4969,19 +4969,19 @@ Info (17049): 150 registers lost all their fanouts during netlist optimizations.
 Info (144001): Generated suppressed messages file /home/vroduit/Desktop/myfiles/CS-476-Embedded-Systems/labs/pw4/part1/virtual_prototype/systems/singleCore/sandbox/or1420SingleCore.map.smsg
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 1 node(s), including 0 DDIO, 1 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 14873 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 14870 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 16 input pins
     Info (21059): Implemented 44 output pins
     Info (21060): Implemented 21 bidirectional pins
-    Info (21061): Implemented 14492 logic cells
+    Info (21061): Implemented 14489 logic cells
     Info (21064): Implemented 290 RAM segments
     Info (21065): Implemented 1 PLLs
     Info (21062): Implemented 9 DSP elements
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 31 warnings
-    Info: Peak virtual memory: 1084 megabytes
-    Info: Processing ended: Mon Apr 29 12:41:34 2024
-    Info: Elapsed time: 00:00:45
-    Info: Total CPU time (on all processors): 00:00:52
+    Info: Peak virtual memory: 1082 megabytes
+    Info: Processing ended: Mon Apr 29 14:12:30 2024
+    Info: Elapsed time: 00:00:44
+    Info: Total CPU time (on all processors): 00:00:51
 
 
 +------------------------------------------+
