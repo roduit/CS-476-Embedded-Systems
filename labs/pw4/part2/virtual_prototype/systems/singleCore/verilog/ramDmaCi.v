@@ -99,7 +99,7 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
         //DMA_memory_address_reg <= reset ? 0 : DMA_memory_address; 
     end
 
-    assign done     = (reset ? 0 : (writeEnableA || write) ? 1'b1 : read_done) && s_isMyCi_no_start;
+    assign done     = reset ? 0 : ((writeEnableA || write) ? 1'b1 : read_done) && s_isMyCi_no_start;
     assign result   = reset ? 0 : done ? (enWR_CPU ? resultSRAM_CPU : (enWR_DMA ? resultController : 32'b0)) : 32'b0;
     
     
