@@ -411,7 +411,7 @@ int main () {
   for (uint32_t reading_memory_address = memoryAddress;reading_memory_address < memoryAddress+blockSize+1;reading_memory_address++) {
     uint32_t read_value;
     asm volatile ("l.nios_rrr %[out1],%[in1],r0,0xD":[out1]"=r"(read_value):[in1]"r"(reading_memory_address));
-    printf("Value at SRAM memory location 0x%3x: 0x%8x\n",reading_memory_address,read_value);
+    printf("Value at SRAM memory location %d: %d\n",reading_memory_address,read_value);
   }
 
   // ===== Multiple bursts with block size (=7) > burst size + 1 (=5) =====
@@ -439,7 +439,7 @@ int main () {
   for (uint32_t reading_memory_address = memoryAddress;reading_memory_address < memoryAddress+blockSize+1;reading_memory_address++) {
     uint32_t read_value;
     asm volatile ("l.nios_rrr %[out1],%[in1],r0,0xD":[out1]"=r"(read_value):[in1]"r"(reading_memory_address));
-    printf("Value at SRAM memory location 0x%3x: 0x%8x\n",reading_memory_address,read_value);
+    printf("Value at SRAM memory location %d: %d\n",reading_memory_address,read_value);
   }
   asm volatile ("l.nios_rrr %[out1],%[in1],r0,0xD":[out1]"=r"(read_memory_start_address):[in1]"r"((0x4) << 9));
   printf("read memory address: %d", read_memory_start_address);
@@ -460,7 +460,6 @@ int main () {
   asm volatile ("l.nios_rrr r0,%[in1],%[in2],0xD"::[in1]"r"((0x7) << 9),[in2]"r"(blockSize)); // configure block size
   // burst size already configured
   printf("Status of bus before transfer\n");
-  printf("issi\n");
   // for (uint32_t array_element = element_to_write_to;array_element < element_to_write_to+blockSize+1;array_element++) {
   //   printf("Value at bus location %d: %d\n",array_element,swap_u32(memoryArray[array_element]));
   // }
