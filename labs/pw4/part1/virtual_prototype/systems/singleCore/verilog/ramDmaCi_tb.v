@@ -94,8 +94,9 @@ module DMATestBench;
         repeat(5) begin
             start = 1'b1; 
             valueA = valueA + 1;
-            #20;
-            start = 1'b0;             
+            `WAITCYCLE;
+            start = 1'b0;
+            `WAITCYCLE;             
             $display("[R_CPU] Read value %0d from address %0d", result, valueA[8:0]);
             `WAITCYCLE;
         end
