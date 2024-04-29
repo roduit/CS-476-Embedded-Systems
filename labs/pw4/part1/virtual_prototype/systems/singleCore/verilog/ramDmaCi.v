@@ -31,7 +31,7 @@ module ramDmaCi #(parameter [7:0] customId = 8'h00)
          .dataOutA(resultSRAM));
 
 always @(posedge clock) begin
-        read_done <= reset ? 0 : enWR;
+        read_done <= reset ? 0 : (enWR && ~writeEnableA);
     end
 assign done = (writeEnableA ? 1'b1 : read_done) && s_isCustom;
 assign result = done ? resultSRAM : 32'b0;
