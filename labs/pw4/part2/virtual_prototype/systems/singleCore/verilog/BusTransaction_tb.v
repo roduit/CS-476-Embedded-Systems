@@ -68,6 +68,7 @@ module DMATestBench;
             `WAITCYCLE;
             start = 1'b0;
             $display("[BUS_START] Setting bus_start_address to %0d", new_address);
+            `WAITCYCLE;
         end
     endtask
 
@@ -76,9 +77,10 @@ module DMATestBench;
         begin
             start = 1'b1;
             valueA = {19'b0, 3'b001, 1'b0, 9'b0};
-            `WAIT2CYCLES;
+            `WAITCYCLE;
             start = 1'b0;
             $display("[BUS_START] Reading bus_start_address via resTemp = %0d", DUT.result);
+            `WAITCYCLE;
         end
     endtask
 
@@ -93,6 +95,7 @@ module DMATestBench;
             start = 1'b0;
             $display("[MEMORY_START] Setting memory_start_address to %0d", new_address);
             memory_start_address = new_address;
+            `WAITCYCLE;
         end
     endtask
 
@@ -101,9 +104,10 @@ module DMATestBench;
         begin
             start = 1'b1;
             valueA = {19'b0, 3'b010, 1'b0, 9'b0};
-            `WAIT2CYCLES;
+            `WAITCYCLE;
             start = 1'b0;
             $display("[MEMORY_START] Reading memory_start_address via resTemp = %0d", DUT.result);
+            `WAITCYCLE;
         end
     endtask
 
@@ -118,6 +122,7 @@ module DMATestBench;
             start = 1'b0;
             $display("[BLOCK_SIZE] Setting block_size to %0d", new_block_size);
             block_size = new_block_size;
+            `WAITCYCLE;
         end
     endtask
 
@@ -129,6 +134,7 @@ module DMATestBench;
             `WAIT2CYCLES;
             start = 1'b0;
             $display("[BLOCK_SIZE] Reading block_size via resTemp = %0d", DUT.result);
+            `WAITCYCLE;
         end
     endtask
 
@@ -143,6 +149,7 @@ module DMATestBench;
             start = 1'b0;
             $display("[BURST_SIZE] Setting burst_size to %0d", new_burst_size);
             burst_size = new_burst_size;
+            `WAITCYCLE;
         end
     endtask
 
@@ -154,6 +161,7 @@ module DMATestBench;
             `WAIT2CYCLES;
             start = 1'b0;
             $display("[BURST_SIZE] Reading burst_size via resTemp = %0d", DUT.result);
+            `WAITCYCLE;
         end
     endtask
 
@@ -167,6 +175,7 @@ module DMATestBench;
             `WAITCYCLE
             start = 1'b0;
             $display("[CTRL_REG] Setting control_register to [%0b %0b]", new_control_register[1], new_control_register[0]);
+            `WAITCYCLE;
         end
     endtask
 
@@ -178,6 +187,7 @@ module DMATestBench;
             `WAIT2CYCLES;
             start = 1'b0;
             $display("[STAT_REG] Reading status_register via resTemp = [%0b %0b]", DUT.result[1], DUT.result[0]);
+            `WAITCYCLE;
         end
     endtask
 

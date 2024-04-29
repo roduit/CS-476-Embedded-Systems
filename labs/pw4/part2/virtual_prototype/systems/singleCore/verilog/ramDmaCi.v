@@ -50,7 +50,7 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
     wire            correctState = ((valueA[12] == 0 && valueA[10] == 1) || (valueA[12] == 0 && valueA[11] == 1) || (valueA[12] == 1 && valueA[11] == 0)) ? 1'b1 : 1'b0;
     wire            enWR_DMA = (correctState && s_isMyCi_no_start && valueA[31:13] == 0) ? 1'b1 : 1'b0;
     
-    wire            enWR_CPU = valueA[31:10] == 0 && s_isMyCi_no_start;
+    wire            enWR_CPU = valueA[31:10] == 0 && s_isMyCi;
     wire            writeEnableA = valueA[9] && enWR_CPU && start;
     
     wire [31:0]     resultSRAM_CPU;
@@ -88,7 +88,7 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
     always @(posedge clock) begin
         start_reg <= start;
         
-        read_done <= reset ? 0 : (writeEnableA || write || DMA_memory_write_enable) ? 1'b0 : s_isMyCi ? 1'b1 : 1'b0;
+        read_done <= reset ? 0 : (enWR_CPU && ~writeEnableA);
         
         busIn_grants_reg <= reset ? 0: busIn_grants;
         busIn_address_data_reg <= reset ? 0: busIn_address_data;
@@ -99,7 +99,7 @@ module ramDmaCi #(  parameter [7:0]     customId = 8'h00)
         //DMA_memory_address_reg <= reset ? 0 : DMA_memory_address; 
     end
 
-    assign done     = (reset ? 0 : (writeEnableA || DMA_memory_write_enable || write) ? 1'b1 : read_done) && s_isMyCi_no_start;
+    assign done     = (reset ? 0 : (writeEnableA || write) ? 1'b1 : read_done) && s_isMyCi_no_start;
     assign result   = reset ? 0 : done ? (enWR_CPU ? resultSRAM_CPU : (enWR_DMA ? resultController : 32'b0)) : 32'b0;
     
     
