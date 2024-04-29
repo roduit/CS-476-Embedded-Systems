@@ -15,16 +15,15 @@ Info: Running Quartus Prime Shell
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Mon Apr 29 21:53:55 2024
+    Info: Processing started: Mon Apr 29 22:52:43 2024
 Info: Command: quartus_sh --determine_smart_action or1420SingleCore
 Info: Quartus(args): or1420SingleCore
 Info (293032): Detected changes in source files.
     Info (293027): Source file: /home/vroduit/Desktop/myfiles/CS-476-Embedded-Systems/labs/pw4/part2/virtual_prototype/systems/singleCore/verilog/ramDmaCi.v has changed.
-    Info (293027): Source file: /home/vroduit/Desktop/myfiles/CS-476-Embedded-Systems/labs/pw4/part2/virtual_prototype/systems/singleCore/verilog/DMAController.v has changed.
 Info: SMART_ACTION = SOURCE
 Info (23030): Evaluation of Tcl script /opt/intelFPGA-lite/18.1/quartus/common/tcl/internal/qsh_smart.tcl was successful
 Info: Quartus Prime Shell was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 777 megabytes
-    Info: Processing ended: Mon Apr 29 21:53:55 2024
-    Info: Elapsed time: 00:00:00
+    Info: Peak virtual memory: 785 megabytes
+    Info: Processing ended: Mon Apr 29 22:52:44 2024
+    Info: Elapsed time: 00:00:01
     Info: Total CPU time (on all processors): 00:00:00
