@@ -357,7 +357,7 @@ int main () {
   uint32_t arraySize = 512;
   volatile uint32_t memoryArray[512];
   for (uint32_t i = 0 ; i < arraySize ; i++) {
-    memoryArray[i] = swap_u32(255);
+    memoryArray[i] = swap_u32(i+10);
   }
 
   // ===== Single burst with block size = burst size + 1 =====

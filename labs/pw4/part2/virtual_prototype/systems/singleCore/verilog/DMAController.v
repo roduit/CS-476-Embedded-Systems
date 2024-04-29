@@ -103,22 +103,20 @@ reg [7:0]       effective_burst_size = 0;
 reg [31:0]      bus_address = 0;
 reg [31:0]      SRAM_result_reg = 0;
 
-//reg [3:0]       cnt = 0;
-
 
 /// Burst transaction state machine
 always @(*) begin
     if (busIn_error) next_trans_state = ERROR;
     else
     case (current_trans_state)
-        IDLE            : next_trans_state =   ((control_register == READ_STATE || control_register == WRITE_STATE) && burst_counter != transfer_nb) ? REQUEST_BUS : IDLE;
-        REQUEST_BUS     : next_trans_state =   (busIn_grants == 1'b1) ? INIT_BURST : REQUEST_BUS;
-        INIT_BURST      : next_trans_state =   (control_register == READ_STATE) ? DO_BURST_READ : control_register == WRITE_STATE ? DO_BURST_WRITE : ERROR;
-        DO_BURST_READ   : next_trans_state =   (busIn_end_transaction == 1) ? END_TRANSACTION : DO_BURST_READ;
-        DO_BURST_WRITE  : next_trans_state =   (word_counter < effective_burst_size + 1) ? DO_BURST_WRITE : END_TRANSACTION;
-        END_TRANSACTION : next_trans_state =   (burst_counter == transfer_nb) ?  IDLE : REQUEST_BUS;
-        ERROR           : next_trans_state =   IDLE;
-        default         : next_trans_state =   IDLE;
+        IDLE            : next_trans_state <=   ((control_register == READ_STATE || control_register == WRITE_STATE) && burst_counter != transfer_nb) ? REQUEST_BUS : IDLE;
+        REQUEST_BUS     : next_trans_state <=   (busIn_grants == 1'b1) ? INIT_BURST : REQUEST_BUS;
+        INIT_BURST      : next_trans_state <=   control_register == READ_STATE ? DO_BURST_READ : control_register == WRITE_STATE ? DO_BURST_WRITE : ERROR;
+        DO_BURST_READ   : next_trans_state <=   (busIn_end_transaction == 1) ? END_TRANSACTION : DO_BURST_READ;
+        DO_BURST_WRITE  : next_trans_state <=   (word_counter < 1) ? DO_BURST_WRITE : ERROR;
+        END_TRANSACTION : next_trans_state <=   (burst_counter == transfer_nb) ?  IDLE : REQUEST_BUS;
+        ERROR           : next_trans_state <=   IDLE;
+        default         : next_trans_state <=   IDLE;
     endcase
 end
 
@@ -133,7 +131,6 @@ always @(posedge clock) begin
         block_size <= 0;
         burst_size <= 0;
         result <= 0;
-        SRAM_write_enable <= 0;
     end 
     else begin
         case (state)
@@ -182,8 +179,7 @@ always @(posedge clock) begin
         current_trans_state = reset ? IDLE : next_trans_state; 
 
         /// Update the SRAM result
-        //SRAM_result_reg = busIn_busy ? SRAM_result_reg : SRAM_result;
-        SRAM_result_reg = SRAM_result;
+        SRAM_result_reg <= SRAM_result;
         
         if (current_trans_state == ERROR) begin
             control_register = 2'b0;
@@ -197,10 +193,6 @@ always @(posedge clock) begin
                 burst_counter <= 0;
             end
 
-            // if (current_trans_state == DO_BURST_WRITE) begin
-            //     cnt <= cnt + 1;
-            // end
-
             /// Update the status register and reset control register
             status_register     =  reset ? 2'b0 :  (current_trans_state == END_TRANSACTION && burst_counter == transfer_nb) ? 2'b0 : 
                                                     (current_trans_state == REQUEST_BUS) ? 2'b01: status_register;
@@ -210,7 +202,7 @@ always @(posedge clock) begin
 
             burst_counter       <=  reset ? 0 :  (current_trans_state == INIT_BURST) ? burst_counter + 1 : (next_trans_state == IDLE) ? 0 : burst_counter;
 
-            word_counter        <=  reset ? 0 :  (current_trans_state == DO_BURST_WRITE && busIn_busy == 0) ? word_counter + 1 : (current_trans_state == END_TRANSACTION) ? 0 : word_counter;
+            word_counter        <=  reset ? 0 :  (current_trans_state == DO_BURST_WRITE && ~busIn_busy) ? word_counter + 1 : (current_trans_state == END_TRANSACTION) ? 0 : word_counter;
 
             remaining_words     <=  reset ? 0 :  (current_trans_state == END_TRANSACTION) ? (burst_counter == transfer_nb) ? 0 :  remaining_words - (burst_size + 1) : (current_trans_state == IDLE) ? block_size : remaining_words;
             
@@ -220,11 +212,11 @@ always @(posedge clock) begin
             /// Update the SRAM control signals
             SRAM_data           <=  reset ? 0 :  busIn_address_data;
             SRAM_address        <=  reset ? 0 :  ((burst_counter == 1 && busOut_begin_transaction && control_register == READ_STATE) || (current_trans_state == REQUEST_BUS && burst_counter == 0 && control_register == WRITE_STATE)) ? control_register == READ_STATE ? (memory_start_address - 1) : memory_start_address : 
-                                                ((current_trans_state == DO_BURST_READ && busIn_data_valid) || (current_trans_state == DO_BURST_WRITE && busIn_busy == 0))? SRAM_address + 1 : SRAM_address;
+                                                ((current_trans_state == DO_BURST_READ && busIn_data_valid) || (current_trans_state == DO_BURST_WRITE && ~busIn_busy))? SRAM_address + 1 : SRAM_address;
             SRAM_write_enable   <=  reset ? 0 :  (next_trans_state == DO_BURST_READ && busIn_data_valid == 1'b1) ? 1'b1 : 1'b0;
 
             /// Update the bus start address
-            bus_address   <=  reset ? 0 :  ((current_trans_state == DO_BURST_READ && busIn_data_valid) || (current_trans_state == DO_BURST_WRITE && busIn_busy == 0)) ? 
+            bus_address   <=  reset ? 0 :  ((current_trans_state == DO_BURST_READ && busIn_data_valid) || (current_trans_state == DO_BURST_WRITE && ~busIn_busy)) ? 
                                             bus_address + 4 : bus_address;
                     
         end
@@ -234,7 +226,7 @@ end
 
 /// Bus interface
 assign busOut_request = (current_trans_state == REQUEST_BUS) ? 1'b1 : 1'b0;
-assign busOut_address_data = (current_trans_state == INIT_BURST) ? bus_address : (current_trans_state == DO_BURST_WRITE) ? SRAM_result_reg : 32'd0;
+assign busOut_address_data = (current_trans_state == INIT_BURST) ? bus_address : (current_trans_state == DO_BURST_WRITE && ~busIn_busy) ? SRAM_result_reg : 32'd0;
 assign busOut_burst_size = (current_trans_state == INIT_BURST) ? effective_burst_size : 8'd0;
 assign busOut_read_n_write = (current_trans_state == INIT_BURST && control_register == READ_STATE) ? 1'b1 : 1'b0;
 assign busOut_begin_transaction = (current_trans_state == INIT_BURST) ? 1'b1 : 1'b0;
