@@ -11135,8 +11135,8 @@ Q <= s_states[2].DB_MAX_OUTPUT_PORT_TYPE
 
 
 |or1420SingleCore|ramDmaCi:attachedMemory
-start => comb.IN1
-clock => clock.IN1
+start => s_isMyCi.DATAB
+clock => clock.IN2
 reset => read_done.OUTPUTSELECT
 valueA[0] => valueA[0].IN1
 valueA[1] => valueA[1].IN1
@@ -11147,7 +11147,6 @@ valueA[5] => valueA[5].IN1
 valueA[6] => valueA[6].IN1
 valueA[7] => valueA[7].IN1
 valueA[8] => valueA[8].IN1
-valueA[9] => write.DATAB
 valueA[9] => comb.IN1
 valueA[10] => Equal1.IN31
 valueA[11] => Equal1.IN30

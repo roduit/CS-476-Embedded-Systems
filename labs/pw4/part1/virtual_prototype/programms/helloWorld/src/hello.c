@@ -42,12 +42,14 @@ int main () {
     address_and_wen += 1;
   }
 
+  printf("End writing");
   // Read
   address_and_wen = 0x00000008;
   value_to_test = 0x123;
   uint32_t read_value;
 
   for (int i = 0; i < 5; i++) {
+    printf("here");
     asm volatile ("l.nios_rrr %[out1],%[in1],r0,0x12":[out1]"=r"(read_value):[in1]"r"(address_and_wen));
     printf("Read value %d at address %d\n", read_value, address_and_wen);
     value_to_test += 1;
