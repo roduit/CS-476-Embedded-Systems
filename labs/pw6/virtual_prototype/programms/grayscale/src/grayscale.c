@@ -12,6 +12,17 @@ int main () {
   volatile unsigned int *vga = (unsigned int *) 0X50000020;
   camParameters camParams;
   vga_clear();
+
+  const uint32_t writeBit = 1<<9;
+  const uint32_t busStartAddress = 1 << 10;
+  const uint32_t memoryStartAddress = 2 << 10;
+  const uint32_t blockSize = 3 << 10;
+  const uint32_t burstSize = 4 << 10;
+  const uint32_t statusControl = 5 << 10;
+  const uint32_t usedCiRamAddress = 50;
+  const uint32_t usedBlocksize = 512;
+  const uint32_t usedBurstSize = 25;
+  uint32_t ramAddress, ramData;
   
   printf("Initialising camera (this takes up to 3 seconds)!\n" );
   camParams = initOv7670(VGA);
@@ -58,3 +69,11 @@ int main () {
     printf("nrOfCycles: %d %d %d\n", cycles, stall, idle);
   }
 }
+
+void dmaTransfer () {
+  printf("Initialising DMA registers\n");
+  asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(busStartAddress | writeBit),[in2] "r"((uint32_t) &memBuffer[0]));
+  asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(memoryStartAddress | writeBit),[in2] "r"(usedCiRamAddress));
+  asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(blockSize | writeBit),[in2] "r"(usedBlocksize));
+  asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(burstSize | writeBit),[in2] "r"(usedBurstSize));
+} 
