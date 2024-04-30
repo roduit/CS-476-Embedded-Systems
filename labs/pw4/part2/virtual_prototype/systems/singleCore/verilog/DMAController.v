@@ -113,7 +113,7 @@ always @(*) begin
         REQUEST_BUS     : next_trans_state <=   (busIn_grants == 1'b1) ? INIT_BURST : REQUEST_BUS;
         INIT_BURST      : next_trans_state <=   control_register == READ_STATE ? DO_BURST_READ : control_register == WRITE_STATE ? DO_BURST_WRITE : ERROR;
         DO_BURST_READ   : next_trans_state <=   (busIn_end_transaction == 1) ? END_TRANSACTION : DO_BURST_READ;
-        DO_BURST_WRITE  : next_trans_state <=   (word_counter < 1) ? DO_BURST_WRITE : ERROR;
+        DO_BURST_WRITE  : next_trans_state <=   (word_counter < effective_burst_size + 1) ? DO_BURST_WRITE : END_TRANSACTION;
         END_TRANSACTION : next_trans_state <=   (burst_counter == transfer_nb) ?  IDLE : REQUEST_BUS;
         ERROR           : next_trans_state <=   IDLE;
         default         : next_trans_state <=   IDLE;
