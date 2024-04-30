@@ -179,7 +179,7 @@ always @(posedge clock) begin
         current_trans_state = reset ? IDLE : next_trans_state; 
 
         /// Update the SRAM result
-        SRAM_result_reg <= SRAM_result;
+        SRAM_result_reg = busIn_busy ? SRAM_result_reg : SRAM_result;
         
         if (current_trans_state == ERROR) begin
             control_register = 2'b0;
@@ -226,7 +226,7 @@ end
 
 /// Bus interface
 assign busOut_request = (current_trans_state == REQUEST_BUS) ? 1'b1 : 1'b0;
-assign busOut_address_data = (current_trans_state == INIT_BURST) ? bus_address : (current_trans_state == DO_BURST_WRITE && ~busIn_busy) ? SRAM_result_reg : 32'd0;
+assign busOut_address_data = (current_trans_state == INIT_BURST) ? bus_address : (current_trans_state == DO_BURST_WRITE) ? SRAM_result_reg : 32'd0;
 assign busOut_burst_size = (current_trans_state == INIT_BURST) ? effective_burst_size : 8'd0;
 assign busOut_read_n_write = (current_trans_state == INIT_BURST && control_register == READ_STATE) ? 1'b1 : 1'b0;
 assign busOut_begin_transaction = (current_trans_state == INIT_BURST) ? 1'b1 : 1'b0;
