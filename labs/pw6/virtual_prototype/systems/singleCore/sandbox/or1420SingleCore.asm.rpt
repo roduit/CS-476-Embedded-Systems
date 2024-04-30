@@ -1,6 +1,6 @@
 Assembler report for or1420SingleCore
-Tue Feb 13 10:05:28 2024
-Quartus Prime Version 23.1std.0 Build 991 11/28/2023 SC Lite Edition
+Tue Apr 30 12:48:51 2024
+Quartus Prime Version 18.1.1 Build 646 04/11/2019 SJ Lite Edition
 
 
 ---------------------
@@ -18,7 +18,7 @@ Quartus Prime Version 23.1std.0 Build 991 11/28/2023 SC Lite Edition
 ----------------
 ; Legal Notice ;
 ----------------
-Copyright (C) 2023  Intel Corporation. All rights reserved.
+Copyright (C) 2019  Intel Corporation. All rights reserved.
 Your use of Intel Corporation's design tools, logic functions 
 and other software and tools, and any partner logic 
 functions, and any output files from any of the foregoing 
@@ -38,7 +38,7 @@ https://fpgasoftware.intel.com/eula.
 +---------------------------------------------------------------+
 ; Assembler Summary                                             ;
 +-----------------------+---------------------------------------+
-; Assembler Status      ; Successful - Tue Feb 13 10:05:28 2024 ;
+; Assembler Status      ; Successful - Tue Apr 30 12:48:51 2024 ;
 ; Revision Name         ; or1420SingleCore                      ;
 ; Top-level Entity Name ; or1420SingleCore                      ;
 ; Family                ; Cyclone IV E                          ;
@@ -79,13 +79,13 @@ https://fpgasoftware.intel.com/eula.
 +-----------------------------------------------------------------------------+----------------+----------------+
 
 
-+--------------------------------------------------------------------------------------------+
-; Assembler Generated Files                                                                  ;
-+--------------------------------------------------------------------------------------------+
-; File Name                                                                                  ;
-+--------------------------------------------------------------------------------------------+
-; /home/theo/Downloads/bla/virtual_prototype/systems/singleCore/sandbox/or1420SingleCore.sof ;
-+--------------------------------------------------------------------------------------------+
++----------------------------------------------------------------------------------------------------------------------------------+
+; Assembler Generated Files                                                                                                        ;
++----------------------------------------------------------------------------------------------------------------------------------+
+; File Name                                                                                                                        ;
++----------------------------------------------------------------------------------------------------------------------------------+
+; /home/vroduit/Desktop/myfiles/CS-476-Embedded-Systems/labs/pw6/virtual_prototype/systems/singleCore/sandbox/or1420SingleCore.sof ;
++----------------------------------------------------------------------------------------------------------------------------------+
 
 
 +------------------------------------------------+
@@ -93,8 +93,8 @@ https://fpgasoftware.intel.com/eula.
 +----------------+-------------------------------+
 ; Option         ; Setting                       ;
 +----------------+-------------------------------+
-; JTAG usercode  ; 0x00B0E44B                    ;
-; Checksum       ; 0x00B0E44B                    ;
+; JTAG usercode  ; 0x00B7877F                    ;
+; Checksum       ; 0x00B7877F                    ;
 +----------------+-------------------------------+
 
 
@@ -103,8 +103,8 @@ https://fpgasoftware.intel.com/eula.
 +--------------------+
 Info: *******************************************************************
 Info: Running Quartus Prime Assembler
-    Info: Version 23.1std.0 Build 991 11/28/2023 SC Lite Edition
-    Info: Copyright (C) 2023  Intel Corporation. All rights reserved.
+    Info: Version 18.1.1 Build 646 04/11/2019 SJ Lite Edition
+    Info: Copyright (C) 2019  Intel Corporation. All rights reserved.
     Info: Your use of Intel Corporation's design tools, logic functions 
     Info: and other software and tools, and any partner logic 
     Info: functions, and any output files from any of the foregoing 
@@ -118,15 +118,15 @@ Info: Running Quartus Prime Assembler
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Tue Feb 13 10:05:27 2024
+    Info: Processing started: Tue Apr 30 12:48:49 2024
 Info: Command: quartus_asm or1420SingleCore
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (115031): Writing out detailed assembly data for power analysis
 Info (115030): Assembler is generating device programming files
 Info: Quartus Prime Assembler was successful. 0 errors, 1 warning
-    Info: Peak virtual memory: 395 megabytes
-    Info: Processing ended: Tue Feb 13 10:05:28 2024
-    Info: Elapsed time: 00:00:01
-    Info: Total CPU time (on all processors): 00:00:01
+    Info: Peak virtual memory: 838 megabytes
+    Info: Processing ended: Tue Apr 30 12:48:51 2024
+    Info: Elapsed time: 00:00:02
+    Info: Total CPU time (on all processors): 00:00:02
 
 
