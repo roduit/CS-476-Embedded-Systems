@@ -62,12 +62,13 @@ Config of the transfer
 
 
 ![img_part2_3](./ressources/part2_3.png)
-![img_tb3](./ressources/tb_part3.png)
-
-The image of the testbench shows that the behavior in simulation corresponds to our expectations.
 
 ### Part 3
 The last part consists of writing from the SRAM to the bus. A testbench (The same as stated in part 2) shows the functionality of this part. Nevertheless, it has shown some difficulties when downloaded on the board. We expect an error on a condition involving the `busIn_busy signal`. When forcing the system to ignore the busy signal, the program managed to end. But with this busy signal, it enters a deadlock sequence and therefore cannot perform the write operation. This behavior can be observed using the same code as stated in part two and set the control register to 0x02.
+
+![img_tb3](./ressources/tb_part3.png)
+
+The image of the testbench shows that the behavior in simulation corresponds to our expectations.
 After several days of trying to debug this part, no solution has been found. It can also come from the fact that the testbench that we implemented does not fit perfectly the behavior of the real system and might explain the observed differences. 
 This phenomenum is presented in the picture below, where it can be seen that the transfer never ends.
 
