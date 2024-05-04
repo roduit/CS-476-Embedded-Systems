@@ -36,7 +36,7 @@ void DMAtransferBlocking () {
   uint32_t status;
   while (1) {
     asm volatile("l.nios_rrr %[out1],%[in1],r0,20":[out1]"=r"(status):[in1]"r"(statusControl));
-    printf("Status: %d\n", status);
+    //printf("Status: %d\n", status);
     if (status == 0) break;
   }
 
@@ -86,8 +86,8 @@ int main () {
     
     asm volatile ("l.nios_rrr r0,r0,%[in2],0xC"::[in2]"r"(15));
 
-    //DMAtransferBlocking();
-    printf("DMA transfer done\n");
+    DMAtransferBlocking();
+    //printf("DMA transfer done\n");
 
     asm volatile ("l.nios_rrr %[out1],r0,%[in2],0xC":[out1]"=r"(dmatime):[in2]"r"(1<<7)); 
 
