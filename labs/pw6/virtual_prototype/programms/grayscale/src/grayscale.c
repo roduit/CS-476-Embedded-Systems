@@ -115,7 +115,7 @@ int main () {
     asm volatile ("l.nios_rrr %[out1],r0,%[in2],0xC":[out1]"=r"(dmatime):[in2]"r"(1<<7)); 
     asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(stall):[in1]"r"(1),[in2]"r"(1<<9));
     asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(idle):[in1]"r"(2),[in2]"r"(1<<10));
-    asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(dmatime):[in1]"r"(2),[in2]"r"(1<<11));
+    asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(dmatime):[in1]"r"(3),[in2]"r"(1<<11));
     printf("nrOfCycles: %d %d %d\n", cycles, stall, idle);
     printf("DMA time: %d\n", dmatime);
     firstBlock = !firstBlock;
