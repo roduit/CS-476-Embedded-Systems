@@ -53,7 +53,7 @@ int main () {
   volatile uint16_t rgb565[640*480];
   volatile uint8_t grayscale[640*480];
   volatile uint32_t result, cycles,stall,idle,dmatime;
-  volatile uint32_t memoryStartAddressVal;
+  volatile uint32_t busStartAddressVal;
   volatile unsigned int *vga = (unsigned int *) 0X50000020;
   camParameters camParams;
   vga_clear();
@@ -77,8 +77,8 @@ int main () {
   vga[2] = swap_u32(2);
   vga[3] = swap_u32((uint32_t) &grayscale[0]);
   while(1) {
-    memoryStartAddressVal = (uint32_t) &rgb565[0];
-    takeSingleImageBlocking(memoryStartAddressVal);
+    busStartAddressVal = (uint32_t) &rgb565[0];
+    takeSingleImageBlocking(busStartAddressVal);
     
     uint32_t * gray = (uint32_t *) &grayscale[0];
 
@@ -86,28 +86,30 @@ int main () {
     asm volatile ("l.nios_rrr r0,r0,%[in2],0xC"::[in2]"r"(15));
 
     //* Start the DMA transfer
-    DMAsetup(memoryStartAddressVal, firstBlock ? firstRamPortionAddress : secondRamPortionAddress);
+    DMAsetup(busStartAddressVal, firstBlock ? firstRamPortionAddress : secondRamPortionAddress);
     DMAtransferBlocking();
     firstBlock = !firstBlock;
     
     asm volatile ("l.nios_rrr %[out1],r0,%[in2],0xC":[out1]"=r"(dmatime):[in2]"r"(1<<7)); 
 
     /// Performing the grayscale conversion with ping-pong buffer
-    for (int i = 0; i < 599; i++) {
-      uint32_t * gray = (uint32_t *) &grayscale[0];
-      memoryStartAddressVal += usedBlocksize;
-      DMAsetup(memoryStartAddressVal, firstBlock ? secondRamPortionAddress : firstRamPortionAddress);
-      DMAtransferNonBlocking();
+    for (int i = 0; i < 600; i++) {
+      busStartAddressVal += usedBlocksize;
+      
+      if (i < 599) {
+        DMAsetup(busStartAddressVal, firstBlock ? secondRamPortionAddress : firstRamPortionAddress);
+        DMAtransferNonBlocking();
+        printf("writing to %d\n", firstBlock ? secondRamPortionAddress : firstRamPortionAddress);
+      }
+      
       firstBlock = !firstBlock;
 
       uint32_t CIAddress, pixel1, pixel2;
       
-      gray = (uint32_t *) &grayscale[0];
-      
       for (int pixel = 0; pixel < usedBlocksize; pixel +=2) {
 
         CIAddress = firstBlock ? firstRamPortionAddress + pixel : secondRamPortionAddress + pixel;
-        printf("CIAddress: %d\n", CIAddress);
+        printf("reading from %d\n", CIAddress);
         
         asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(pixel1):[in1] "r"(CIAddress));
         asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(pixel2):[in1] "r"(CIAddress+1));
@@ -124,34 +126,8 @@ int main () {
         //printf("Status: %d\n", status);
         if (status == 0) break;
       }
-      printf("--------------------\n");
 
     }
-
-    uint32_t CIAddress, pixel1, pixel2;
-    firstBlock = !firstBlock;
-
-    for (int pixel = 0; pixel < usedBlocksize; pixel +=2) {
-
-      CIAddress = firstBlock ? firstRamPortionAddress + pixel : secondRamPortionAddress + pixel;
-      printf("CIAddress: %d\n", CIAddress);
-      
-      asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(pixel1):[in1] "r"(CIAddress));
-      asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(pixel2):[in1] "r"(CIAddress+1));
-
-
-      asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0x9":[out1]"=r"(grayPixels):[in1]"r"(pixel1),[in2]"r"(pixel2));
-      gray[0] = grayPixels;
-      gray++;
-    }
-
-    uint32_t status;
-    while (1) {
-      asm volatile("l.nios_rrr %[out1],%[in1],r0,20":[out1]"=r"(status):[in1]"r"(statusControl));
-      //printf("Status: %d\n", status);
-      if (status == 0) break;
-    }
-    printf("--------------------\n");
     
     asm volatile ("l.nios_rrr %[out1],r0,%[in2],0xC":[out1]"=r"(cycles):[in2]"r"(1<<8|7<<4));
     asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(stall):[in1]"r"(1),[in2]"r"(1<<9));
