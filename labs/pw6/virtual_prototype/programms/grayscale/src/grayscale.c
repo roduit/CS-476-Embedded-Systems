@@ -131,8 +131,6 @@ int main () {
         if (status == 0) break;
       }
 
-      firstBlock = !firstBlock;
-
     }
     
     asm volatile ("l.nios_rrr %[out1],r0,%[in2],0xC":[out1]"=r"(cycles):[in2]"r"(1<<8|7<<4));
