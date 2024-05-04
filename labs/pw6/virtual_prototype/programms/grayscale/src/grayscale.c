@@ -5,7 +5,6 @@
 
 #define __WITH_CI
 
-
 /// Define some global constants
 const uint32_t writeBit = 1<<9;
 const uint32_t busStartAddress = 1 << 10;
@@ -19,6 +18,29 @@ const uint32_t usedBurstSize = 0xff;
 
 const uint32_t firstRamPortionAddress = 0;
 const uint32_t secondRamPortionAddress = 256;
+
+void DMAsetup (uint32_t busAddress, uint32_t memoryAddress) {
+  asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(busStartAddress | writeBit),[in2] "r"(busAddress));
+  asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(memoryStartAddress | writeBit),[in2] "r"(memoryAddress));
+  asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(blockSize | writeBit),[in2] "r"(usedBlocksize));
+  asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(burstSize | writeBit),[in2] "r"(usedBurstSize));
+} 
+
+void DMAtransferBlocking () {
+  asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(statusControl | writeBit),[in2] "r"(1));
+  
+  uint32_t status;
+  while (1) {
+    asm volatile("l.nios_rrr %[out1],%[in1],r0,20":[out1]"=r"(status):[in1]"r"(statusControl));
+    printf("Status: %d\n", status);
+    if (status == 0) break;
+  }
+
+}
+
+void DMAtransferNonBlocking () {
+  asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(statusControl | writeBit),[in2] "r"(1));
+}
 
 /// Main function
 int main () {
@@ -85,27 +107,4 @@ int main () {
     printf("nrOfCycles: %d %d %d\n", cycles, stall, idle);
     firstBlock = !firstBlock;
   }
-}
-
-void DMAsetup (uint32_t busAddress, uint32_t memoryAddress) {
-  asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(busStartAddress | writeBit),[in2] "r"(busAddress));
-  asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(memoryStartAddress | writeBit),[in2] "r"(memoryAddress));
-  asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(blockSize | writeBit),[in2] "r"(usedBlocksize));
-  asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(burstSize | writeBit),[in2] "r"(usedBurstSize));
-} 
-
-void DMAtransferBlocking () {
-  asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(statusControl | writeBit),[in2] "r"(1));
-  
-  uint32_t status;
-  while (1) {
-    asm volatile("l.nios_rrr %[out1],%[in1],r0,20":[out1]"=r"(status):[in1]"r"(statusControl));
-    printf("Status: %d\n", status);
-    if (status == 0) break;
-  }
-
-}
-
-void DMAtransferNonBlocking () {
-  asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(statusControl | writeBit),[in2] "r"(1));
 }
