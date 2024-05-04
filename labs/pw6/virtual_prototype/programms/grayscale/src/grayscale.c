@@ -111,7 +111,7 @@ int main () {
 
         CIAddress = firstBlock ? firstRamPortionAddress + pixel : secondRamPortionAddress + pixel;
         
-        printf("reading from %d\n", CIAddress);
+        if (pixel == 0) ("reading from %d\n", CIAddress);
         
         asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(pixel1):[in1] "r"(CIAddress));
         asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(pixel2):[in1] "r"(CIAddress+1));
