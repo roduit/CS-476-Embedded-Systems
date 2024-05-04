@@ -117,7 +117,7 @@ int main () {
         asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(pixel2):[in1] "r"(CIAddress+1));
 
 
-        asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0x9":[out1]"=r"(grayPixels):[in1]"r"(swap_u16(pixel1)),[in2]"r"(swap_u16(pixel2));
+        asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0x9":[out1]"=r"(grayPixels):[in1]"r"(swap_u16(pixel1)),[in2]"r"(swap_u16(pixel2)));
         gray[0] = grayPixels;
         gray++;
       }
