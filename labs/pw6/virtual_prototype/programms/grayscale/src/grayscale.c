@@ -89,30 +89,29 @@ int main () {
     //* Start the DMA transfer
     DMAsetup(busStartAddressVal, firstBlock ? firstRamPortionAddress : secondRamPortionAddress);
     DMAtransferBlocking();
-    printf("firstBlock before: %d\n", firstBlock);
+    
     firstBlock = !firstBlock;
-    printf("firstBlock after: %d\n", firstBlock);
-
     
     asm volatile ("l.nios_rrr %[out1],r0,%[in2],0xC":[out1]"=r"(dmatime):[in2]"r"(1<<7)); 
 
     /// Performing the grayscale conversion with ping-pong buffer
     for (int i = 0; i < 600; i++) {
-      busStartAddressVal += usedBlocksize;
-      
       if (i < 599) {
-        DMAsetup(busStartAddressVal, firstBlock ? secondRamPortionAddress : firstRamPortionAddress);
+        busStartAddressVal += usedBlocksize;
+        DMAsetup(busStartAddressVal, firstBlock ? firstRamPortionAddress : secondRamPortionAddress);
         DMAtransferNonBlocking();
         //printf("writing to %d\n", firstBlock ? secondRamPortionAddress : firstRamPortionAddress);
       }
 
       uint32_t CIAddress, pixel1, pixel2;
+
+      firstBlock = !firstBlock;
       
       for (int pixel = 0; pixel < usedBlocksize; pixel +=2) {
 
         CIAddress = firstBlock ? firstRamPortionAddress + pixel : secondRamPortionAddress + pixel;
         
-        //if (pixel == 0) printf("reading from %d\n", CIAddress);
+        printf("reading from %d\n", CIAddress);
         
         asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(pixel1):[in1] "r"(CIAddress));
         asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(pixel2):[in1] "r"(CIAddress+1));
@@ -122,6 +121,8 @@ int main () {
         gray[0] = grayPixels;
         gray++;
       }
+
+      printf("--------------------\n");
 
       uint32_t status;
       while (1) {
