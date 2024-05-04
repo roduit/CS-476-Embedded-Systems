@@ -99,7 +99,7 @@ int main () {
       if (i < 599) {
         DMAsetup(busStartAddressVal, firstBlock ? secondRamPortionAddress : firstRamPortionAddress);
         DMAtransferNonBlocking();
-        printf("writing to %d\n", firstBlock ? secondRamPortionAddress : firstRamPortionAddress);
+        //printf("writing to %d\n", firstBlock ? secondRamPortionAddress : firstRamPortionAddress);
       }
 
       uint32_t CIAddress, pixel1, pixel2;
@@ -108,7 +108,7 @@ int main () {
 
         CIAddress = firstBlock ? firstRamPortionAddress + pixel : secondRamPortionAddress + pixel;
         
-        if (pixel == 0) printf("reading from %d\n", CIAddress);
+        //if (pixel == 0) printf("reading from %d\n", CIAddress);
         
         asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(pixel1):[in1] "r"(CIAddress));
         asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(pixel2):[in1] "r"(CIAddress+1));
