@@ -101,7 +101,9 @@ int main () {
       firstBlock = !firstBlock;
 
       uint32_t CIAddress, pixel1, pixel2;
-      uint32_t * gray = (uint32_t *) &grayscale[0];
+      
+      gray = (uint32_t *) &grayscale[0];
+      
       for (int pixel = 0; pixel < usedBlocksize; pixel +=2) {
 
         CIAddress = firstBlock ? firstRamPortionAddress + pixel : secondRamPortionAddress + pixel;
