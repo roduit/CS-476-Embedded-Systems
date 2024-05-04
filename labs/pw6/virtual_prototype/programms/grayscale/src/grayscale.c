@@ -14,7 +14,7 @@ const uint32_t burstSize = 4 << 10;
 const uint32_t statusControl = 5 << 10;
 const uint32_t usedCiRamAddress = 50;
 const uint32_t usedBlocksize = 256;
-const uint32_t usedBurstSize = 255;
+const uint32_t usedBurstSize = 2;
 
 const uint32_t firstRamPortionAddress = 0;
 const uint32_t secondRamPortionAddress = 256;
