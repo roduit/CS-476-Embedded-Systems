@@ -94,13 +94,14 @@ int main () {
 
     /// Performing the grayscale conversion with ping-pong buffer
     for (int i = 0; i < 599; i++) {
+      uint32_t * gray = (uint32_t *) &grayscale[0];
       memoryStartAddressVal += usedBlocksize;
       DMAsetup(memoryStartAddressVal, firstBlock ? secondRamPortionAddress : firstRamPortionAddress);
       DMAtransferNonBlocking();
       firstBlock = !firstBlock;
 
       uint32_t CIAddress, pixel1, pixel2;
-
+      uint32_t * gray = (uint32_t *) &grayscale[0];
       for (int pixel = 0; pixel < usedBlocksize; pixel +=2) {
 
         CIAddress = firstBlock ? firstRamPortionAddress + pixel : secondRamPortionAddress + pixel;
