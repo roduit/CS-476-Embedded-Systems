@@ -102,14 +102,15 @@ int main () {
         printf("writing to %d\n", firstBlock ? secondRamPortionAddress : firstRamPortionAddress);
       }
       
-      firstBlock = !firstBlock;
+      //firstBlock = !firstBlock;
 
       uint32_t CIAddress, pixel1, pixel2;
       
       for (int pixel = 0; pixel < usedBlocksize; pixel +=2) {
 
         CIAddress = firstBlock ? firstRamPortionAddress + pixel : secondRamPortionAddress + pixel;
-        printf("reading from %d\n", CIAddress);
+        
+        if (i == 0) printf("reading from %d\n", CIAddress);
         
         asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(pixel1):[in1] "r"(CIAddress));
         asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(pixel2):[in1] "r"(CIAddress+1));
