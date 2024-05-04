@@ -76,6 +76,7 @@ int main () {
   uint32_t grayPixels;
   vga[2] = swap_u32(2);
   vga[3] = swap_u32((uint32_t) &grayscale[0]);
+  
   while(1) {
     busStartAddressVal = (uint32_t) &rgb565[0];
     takeSingleImageBlocking(busStartAddressVal);
@@ -88,7 +89,10 @@ int main () {
     //* Start the DMA transfer
     DMAsetup(busStartAddressVal, firstBlock ? firstRamPortionAddress : secondRamPortionAddress);
     DMAtransferBlocking();
+    printf("firstBlock before: %d\n", firstBlock);
     firstBlock = !firstBlock;
+    printf("firstBlock after: %d\n", firstBlock);
+
     
     asm volatile ("l.nios_rrr %[out1],r0,%[in2],0xC":[out1]"=r"(dmatime):[in2]"r"(1<<7)); 
 
