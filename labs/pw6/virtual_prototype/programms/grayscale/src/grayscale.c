@@ -86,7 +86,7 @@ int main () {
     
     asm volatile ("l.nios_rrr r0,r0,%[in2],0xC"::[in2]"r"(15));
 
-    DMAtransferBlocking();
+    //DMAtransferBlocking();
 
     asm volatile ("l.nios_rrr %[out1],r0,%[in2],0xC":[out1]"=r"(dmatime):[in2]"r"(1<<7)); 
 
