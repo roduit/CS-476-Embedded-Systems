@@ -122,8 +122,6 @@ int main () {
         gray++;
       }
 
-      printf("--------------------\n");
-
       uint32_t status;
       while (1) {
         asm volatile("l.nios_rrr %[out1],%[in1],r0,20":[out1]"=r"(status):[in1]"r"(statusControl));
