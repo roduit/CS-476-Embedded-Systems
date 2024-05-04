@@ -13,11 +13,15 @@ const uint32_t blockSize = 3 << 10;
 const uint32_t burstSize = 4 << 10;
 const uint32_t statusControl = 5 << 10;
 const uint32_t usedCiRamAddress = 50;
-const uint32_t usedBlocksize = 256;
+const uint32_t usedBlocksize = 512;
 const uint32_t usedBurstSize = 0xff;
 
 const uint32_t firstRamPortionAddress = 0;
 const uint32_t secondRamPortionAddress = 256;
+
+// =============================================================================
+// ==== DMA functions ==========================================================
+// =============================================================================
 
 void DMAsetup (uint32_t busAddress, uint32_t memoryAddress) {
   asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(busStartAddress | writeBit),[in2] "r"(busAddress));
@@ -42,7 +46,11 @@ void DMAtransferNonBlocking () {
   asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(statusControl | writeBit),[in2] "r"(1));
 }
 
-/// Main function
+
+// =============================================================================
+// ==== Main function ==========================================================
+// =============================================================================
+
 int main () {
   volatile uint16_t rgb565[640*480];
   volatile uint8_t grayscale[640*480];
