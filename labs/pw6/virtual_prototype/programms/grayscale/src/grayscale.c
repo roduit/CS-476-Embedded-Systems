@@ -85,7 +85,6 @@ int main () {
     //* Start the DMA transfer
     asm volatile ("l.nios_rrr r0,r0,%[in2],0xC"::[in2]"r"(7));
     DMAtransferBlocking();
-    asm volatile ("l.nios_rrr %[out1],r0,%[in2],0xC":[out1]"=r"(cycles):[in2]"r"(1<<8|7<<4));
     
     #ifdef __WITH_CI
           uint32_t * rgb = (uint32_t *) &rgb565[0];
@@ -110,7 +109,7 @@ int main () {
         }
     #endif
     
-    
+    asm volatile ("l.nios_rrr %[out1],r0,%[in2],0xC":[out1]"=r"(cycles):[in2]"r"(1<<8|7<<4));
     asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(stall):[in1]"r"(1),[in2]"r"(1<<9));
     asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(idle):[in1]"r"(2),[in2]"r"(1<<10));
     printf("nrOfCycles: %d %d %d\n", cycles, stall, idle);
