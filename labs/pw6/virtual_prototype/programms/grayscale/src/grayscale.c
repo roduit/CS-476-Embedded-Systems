@@ -118,7 +118,9 @@ int main () {
 
 
         asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0x9":[out1]"=r"(grayPixels):[in1]"r"(pixel1),[in2]"r"(pixel2));
-        gray[0] = grayPixels;
+        gray[0] = pixel1;
+        gray++;
+        gray[0] = pixel2;
         gray++;
       }
 
