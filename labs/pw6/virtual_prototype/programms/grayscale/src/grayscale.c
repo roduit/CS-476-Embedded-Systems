@@ -121,18 +121,33 @@ int main () {
         //printf("Status: %d\n", status);
         if (status == 0) break;
       }
+      printf("--------------------\n");
 
     }
 
-    // uint32_t * rgb = (uint32_t *) &rgb565[0];
-    // uint32_t * gray = (uint32_t *) &grayscale[0];
-    // for (int pixel = 0; pixel < ((camParams.nrOfLinesPerImage*camParams.nrOfPixelsPerLine) >> 1); pixel +=2) {
-    //   uint32_t pixel1 = rgb[pixel];
-    //   uint32_t pixel2 = rgb[pixel+1];
-    //   asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0x9":[out1]"=r"(grayPixels):[in1]"r"(pixel1),[in2]"r"(pixel2));
-    //   gray[0] = grayPixels;
-    //   gray++;
-    // }
+    uint32_t CIAddress, pixel1, pixel2;
+
+    for (int pixel = 0; pixel < usedBlocksize; pixel +=2) {
+
+      CIAddress = firstBlock ? firstRamPortionAddress + pixel : secondRamPortionAddress + pixel;
+      printf("CIAddress: %d\n", CIAddress);
+      
+      asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(pixel1):[in1] "r"(CIAddress));
+      asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(pixel2):[in1] "r"(CIAddress+1));
+
+
+      asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0x9":[out1]"=r"(grayPixels):[in1]"r"(pixel1),[in2]"r"(pixel2));
+      gray[0] = grayPixels;
+      gray++;
+    }
+
+    uint32_t status;
+    while (1) {
+      asm volatile("l.nios_rrr %[out1],%[in1],r0,20":[out1]"=r"(status):[in1]"r"(statusControl));
+      //printf("Status: %d\n", status);
+      if (status == 0) break;
+    }
+    printf("--------------------\n");
     
     asm volatile ("l.nios_rrr %[out1],r0,%[in2],0xC":[out1]"=r"(cycles):[in2]"r"(1<<8|7<<4));
     asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(stall):[in1]"r"(1),[in2]"r"(1<<9));
