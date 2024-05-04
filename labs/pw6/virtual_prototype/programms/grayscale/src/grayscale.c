@@ -104,6 +104,7 @@ int main () {
       for (int pixel = 0; pixel < usedBlocksize; pixel +=2) {
 
         CIAddress = firstBlock ? firstRamPortionAddress + pixel : secondRamPortionAddress + pixel;
+        printf("CIAddress: %d\n", CIAddress);
         
         asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(pixel1):[in1] "r"(CIAddress));
         asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(pixel2):[in1] "r"(CIAddress+1));
