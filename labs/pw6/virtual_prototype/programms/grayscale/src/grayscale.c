@@ -72,7 +72,7 @@ int main () {
   while(1) {
     takeSingleImageBlocking((uint32_t) &rgb565[0]);
     
-    DMAsetup(&rgb565[0], firstBlock ? firstRamPortionAddress : secondRamPortionAddress);
+    DMAsetup((uint32_t) &rgb565[0], firstBlock ? firstRamPortionAddress : secondRamPortionAddress);
 
     //* Start the DMA transfer
     DMAtransferBlocking();
