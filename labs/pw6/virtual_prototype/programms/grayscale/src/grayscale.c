@@ -101,8 +101,6 @@ int main () {
         DMAtransferNonBlocking();
         printf("writing to %d\n", firstBlock ? secondRamPortionAddress : firstRamPortionAddress);
       }
-      
-      firstBlock = !firstBlock;
 
       uint32_t CIAddress, pixel1, pixel2;
       
@@ -127,6 +125,8 @@ int main () {
         //printf("Status: %d\n", status);
         if (status == 0) break;
       }
+
+      firstBlock = !firstBlock;
 
     }
     
