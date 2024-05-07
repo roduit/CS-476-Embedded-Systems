@@ -190,7 +190,7 @@ module camera #(parameter [7:0] customInstructionId = 8'd0,
   rgb565Grayscale pixel2 ( .rgb565({s_pixelWord1[31:16]}),
                            .grayscale(s_grayPixel2));
 
-  assign s_grayscalePixelWord = {s_grayPixel2[7:3],s_grayPixel2[7:2],s_grayPixel2[7:3],s_grayPixel1[7:3],s_grayPixel1[7:2],s_grayPixel1[7:3]};
+  assign s_grayscalePixelWord = {s_grayPixel1[7:3],s_grayPixel1[7:2],s_grayPixel1[7:3],s_grayPixel2[7:3],s_grayPixel2[7:2],s_grayPixel2[7:3]};
 
   
   dualPortRam2k lineBuffer ( .address1(s_pixelCountReg[10:2]),
