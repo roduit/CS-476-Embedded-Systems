@@ -4,6 +4,21 @@
 ### Part 1
 The first part can be found under the `part1` folder. The code `part1/virtual_prototype/programms/grayscale/src/grayscale.c` implements a solution for this task. In this file, the variable **\_\_DMA__** allows to use or not the DMA to do the transfer. It can be observed that using the DMA reduces the number of CPU cycles and also the stall and bus idle cycles. Furthermore, the frame transitions seems to be smoother than before.
 
+**With DMA transfer**
+| Type    | Frame 1 | Frame 2 | Frame 3 |
+| -------- | ------- | ------- | ------- |
+| CPU Cycles            | 3829152   | 2833998   | 3190411
+| Stall Cycles          | 461321    | 318893    | 369810
+| Bus Idle Cycles       | 726721    | 1081984   | 958706
+
+
+**Without DMA transfer**
+| Type    | Frame 1 | Frame 2 | Frame 3 |
+| --------              | ------- | ------- | ------- |
+| CPU Cycles            | 9802915       | 9803084   | 9803518
+| Stall Cycles          | 8266901       | 8267070   | 8267504
+| Bus Idle Cycles       | 3561826       | 3562080   | 3562148
+
 ### Part 2
 
 This part can be found under the `part2` folder. The code `part2/virtual_prototype/modules/camera/verilog/camera.v` implements the solution. For the grayscale conversion, we use the module **rgb565Grayscale**, the same used in PW2. 
