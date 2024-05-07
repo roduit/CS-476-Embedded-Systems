@@ -3,6 +3,8 @@
 #include <swap.h>
 #include <vga.h>
 
+#define __DMA__
+
 /// Define some global constants
 const uint32_t writeBit = 1<<9;
 const uint32_t busStartAddress = 1 << 10;
@@ -92,60 +94,61 @@ int main () {
     asm volatile ("l.nios_rrr r0,r0,%[in2],0xC"::[in2]"r"(15));
 
     //* Start the DMA transfer
-    DMAsetup(busStartAddressVal, firstBlock ? firstRamPortionAddress : secondRamPortionAddress, usedBlocksize, usedBurstSize);
-    DMAtransferBlocking();
+    #ifdef __DMA__
+      DMAsetup(busStartAddressVal, firstBlock ? firstRamPortionAddress : secondRamPortionAddress, usedBlocksize, usedBurstSize);
+      DMAtransferBlocking();
 
-    // Change the ping-pong buffer
-    firstBlock = !firstBlock;
-
-    for (int i = 0; i < 600; i += 1) {
-            
-      // Start the transfer from rgbVector to CI-memory
-      if (i < 599) {
-        busStartAddressVal += 4*usedBlocksize;
-        DMAsetup(busStartAddressVal, firstBlock ? firstRamPortionAddress : secondRamPortionAddress, usedBlocksize, usedBurstSize);
-        DMAtransferNonBlocking();
-      }
-
+      // Change the ping-pong buffer
       firstBlock = !firstBlock;
-      uint32_t CIAddress, pixel1, pixel2, status;
 
-      uint32_t writeAddr = firstBlock ? firstRamPortionAddress : secondRamPortionAddress;
+      for (int i = 0; i < 600; i += 1) {
+              
+        // Start the transfer from rgbVector to CI-memory
+        if (i < 599) {
+          busStartAddressVal += 4*usedBlocksize;
+          DMAsetup(busStartAddressVal, firstBlock ? firstRamPortionAddress : secondRamPortionAddress, usedBlocksize, usedBurstSize);
+          DMAtransferNonBlocking();
+        }
 
-      for (int pixel = 0; pixel < usedBlocksize; pixel += 2) {
-        CIAddress = firstBlock ? firstRamPortionAddress + pixel : secondRamPortionAddress + pixel;
+        firstBlock = !firstBlock;
+        uint32_t CIAddress, pixel1, pixel2, status;
 
-        asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(pixel1):[in1] "r"(CIAddress));
-        asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(pixel2):[in1] "r"(CIAddress+1));
+        uint32_t writeAddr = firstBlock ? firstRamPortionAddress : secondRamPortionAddress;
 
-        asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0x9":[out1]"=r"(grayPixels):[in1]"r"(swap_u32(pixel1)),[in2]"r"(swap_u32(pixel2)));
+        for (int pixel = 0; pixel < usedBlocksize; pixel += 2) {
+          CIAddress = firstBlock ? firstRamPortionAddress + pixel : secondRamPortionAddress + pixel;
 
-        asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(writeAddr | writeBit), [in2]"r"(swap_u32(grayPixels)));
+          asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(pixel1):[in1] "r"(CIAddress));
+          asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(pixel2):[in1] "r"(CIAddress+1));
 
-        writeAddr += 1;
-        //gray[0] = grayPixels;
-        //gray++;
+          asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0x9":[out1]"=r"(grayPixels):[in1]"r"(swap_u32(pixel1)),[in2]"r"(swap_u32(pixel2)));
+
+          asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(writeAddr | writeBit), [in2]"r"(swap_u32(grayPixels)));
+
+          writeAddr += 1;
+          //gray[0] = grayPixels;
+          //gray++;
+        }
+
+        while (1) {
+          asm volatile("l.nios_rrr %[out1],%[in1],r0,20":[out1]"=r"(status):[in1]"r"(statusControl));
+          if (status == 0) break;
+        }
+
+        DMAsetup((uint32_t) &gray[0], firstBlock ? firstRamPortionAddress: secondRamPortionAddress, (usedBlocksize >> 1), usedBurstSize >> 1);
+        DMAtransferBlocking2Mem();
+        gray += (usedBlocksize >> 1);
       }
-
-      while (1) {
-        asm volatile("l.nios_rrr %[out1],%[in1],r0,20":[out1]"=r"(status):[in1]"r"(statusControl));
-        if (status == 0) break;
+    #else
+      //* Without DMA
+      for (int pixel = 0; pixel < ((camParams.nrOfLinesPerImage*camParams.nrOfPixelsPerLine) >> 1); pixel +=2) {
+        uint32_t pixel1 = rgb[pixel];
+        uint32_t pixel2 = rgb[pixel+1];
+        asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0x9":[out1]"=r"(grayPixels):[in1]"r"(pixel1),[in2]"r"(pixel2));
+        gray[0] = grayPixels;
+        gray++;
       }
-
-      DMAsetup((uint32_t) &gray[0], firstBlock ? firstRamPortionAddress: secondRamPortionAddress, (usedBlocksize >> 1), usedBurstSize >> 1);
-      DMAtransferBlocking2Mem();
-      gray += (usedBlocksize >> 1);
-
-    }
-
-    //* Without DMA
-    // for (int pixel = 0; pixel < ((camParams.nrOfLinesPerImage*camParams.nrOfPixelsPerLine) >> 1); pixel +=2) {
-    //   uint32_t pixel1 = rgb[pixel];
-    //   uint32_t pixel2 = rgb[pixel+1];
-    //   asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0x9":[out1]"=r"(grayPixels):[in1]"r"(pixel1),[in2]"r"(pixel2));
-    //   gray[0] = grayPixels;
-    //   gray++;
-    // }
+    #endif
     
     asm volatile ("l.nios_rrr %[out1],r0,%[in2],0xC":[out1]"=r"(cycles):[in2]"r"(1<<8|7<<4));
     asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(stall):[in1]"r"(1),[in2]"r"(1<<9));
