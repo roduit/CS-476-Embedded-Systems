@@ -12,7 +12,7 @@
 // const uint32_t burstSize = 4 << 10;
 // const uint32_t statusControl = 5 << 10;
 // const uint32_t usedBlocksize = 256;
-// const uint32_t usedBurstSize = 8;
+// const uint32_t usedBurstSize = 128;
 
 // const uint32_t firstRamPortionAddress = 0;
 // const uint32_t secondRamPortionAddress = 256;
@@ -83,80 +83,81 @@
 // #ifdef __RGB565__
 //   vga[2] = swap_u32(1);
 //   vga[3] = swap_u32((uint32_t) &rgb565[0]);
-//   enableContinues((uint32_t) &rgb565[0]);
+  // enableContinues((uint32_t) &rgb565[0]);
 // #else
 //   vga[2] = swap_u32(2);
 //   vga[3] = swap_u32((uint32_t) &grayscale[0]);
-//   // enableContinues((uint32_t) &grayscale[0]);
-//   // enableContinues((uint32_t) &CPUbuffer[0]);
+//   enableContinues((uint32_t) &grayscale[0]);
+//   enableContinues((uint32_t) &CPUbuffer[0]);
 // #endif
 //   while(1) {
 //     uint32_t busStartAddressVal = (uint32_t) &CPUbuffer[0];
 //     takeSingleImageBlocking(busStartAddressVal);
 //     asm volatile ("l.nios_rrr r0,r0,%[in2],0xC"::[in2]"r"(7));
 
-//     uint32_t black = 0;
-//     gray = (uint32_t *) &grayscale[0];
-//     cpu = (uint32_t *) &CPUbuffer[0];
-//     for (int line = 0; line < camParams.nrOfLinesPerImage; line++) {
-//       if (line%32 == 0) black = !black;
-//       for (int pixel = 0; pixel < camParams.nrOfPixelsPerLine; pixel += 1) {
-//         //grayscale[line*camParams.nrOfPixelsPerLine+pixel] = CPUbuffer[line*camParams.nrOfPixelsPerLine+pixel];
-//         gray[0] = cpu[0];
-//         //else gray[0] = 0xffffffff;
-//         gray++;
-//         cpu++;
+//     // uint32_t black = 0;
+//     // gray = (uint32_t *) &grayscale[0];
+//     // cpu = (uint32_t *) &CPUbuffer[0];
+//     // for (int line = 0; line < camParams.nrOfLinesPerImage; line++) {
+//     //   if (line%32 == 0) black = !black;
+//     //   for (int pixel = 0; pixel < camParams.nrOfPixelsPerLine; pixel += 1) {
+//     //     //grayscale[line*camParams.nrOfPixelsPerLine+pixel] = CPUbuffer[line*camParams.nrOfPixelsPerLine+pixel];
+//     //     gray[0] = cpu[0];
+//     //     //else gray[0] = 0xffffffff;
+//     //     gray++;
+//     //     cpu++;
 
-//         //cpu++;
-//       }
-//     }
-
-//     // DMAsetup(busStartAddressVal, firstBlock ? firstRamPortionAddress : secondRamPortionAddress, usedBlocksize, usedBurstSize);
-//     // DMAtransferBlocking();
-
-//     // // Change the ping-pong buffer
-//     // firstBlock = !firstBlock;
-
-//     // for (int i = 0; i < 300; i++) {
-            
-//     //   // Start the transfer from rgbVector to CI-memory
-//     //   if (i < 299) {
-//     //     busStartAddressVal += 4*usedBlocksize;
-//     //     DMAsetup(busStartAddressVal, firstBlock ? firstRamPortionAddress : secondRamPortionAddress, usedBlocksize, usedBurstSize);
-//     //     DMAtransferNonBlocking();
+//     //     //cpu++;
 //     //   }
-
-//     //   firstBlock = !firstBlock;
-//     //   uint32_t CIAddress, pixel1;
-
-//     //   uint32_t writeAddr = firstBlock ? firstRamPortionAddress : secondRamPortionAddress;
-
-//     //   for (int pixel = 0; pixel < usedBlocksize; pixel++) {
-//     //     CIAddress = firstBlock ? firstRamPortionAddress + pixel : secondRamPortionAddress + pixel;
-
-//     //     asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(pixel1):[in1] "r"(CIAddress));
-//     //     // asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(pixel2):[in1] "r"(CIAddress+1));
-
-//     //     //asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0x9":[out1]"=r"(grayPixels):[in1]"r"(swap_u32(pixel1)),[in2]"r"(swap_u32(pixel2)));
-
-//     //     gray[0] = swap_u32(pixel1);
-//     //     gray += 1;
-
-//     //     // asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(writeAddr | writeBit), [in2]"r"(swap_u32(255 - pixel1)));
-
-//     //     // writeAddr += 1;
-//     //   }
-
-//       // while (1) {
-//       //   asm volatile("l.nios_rrr %[out1],%[in1],r0,20":[out1]"=r"(status):[in1]"r"(statusControl));
-//       //   if (status == 0) break;
-//       // }
-
-//       // DMAsetup((uint32_t) &gray[0], firstBlock ? firstRamPortionAddress: secondRamPortionAddress, (usedBlocksize >> 1), usedBurstSize >> 1);
-//       // DMAtransferBlocking2Mem();
-//       // gray += (usedBlocksize >> 1);
-
 //     // }
+
+//     DMAsetup(busStartAddressVal, firstBlock ? firstRamPortionAddress : secondRamPortionAddress, usedBlocksize, usedBurstSize);
+//     DMAtransferBlocking();
+
+//     // Change the ping-pong buffer
+//     firstBlock = !firstBlock;
+//     uint32_t status;
+
+//     for (int i = 0; i < 300; i++) {
+            
+//       // Start the transfer from rgbVector to CI-memory
+//       if (i < 299) {
+//         busStartAddressVal += 4*usedBlocksize;
+//         DMAsetup(busStartAddressVal, firstBlock ? firstRamPortionAddress : secondRamPortionAddress, usedBlocksize, usedBurstSize);
+//         DMAtransferNonBlocking();
+//       }
+
+//       firstBlock = !firstBlock;
+//       uint32_t CIAddress, pixel1;
+
+//       uint32_t writeAddr = firstBlock ? firstRamPortionAddress : secondRamPortionAddress;
+
+//       for (int pixel = 0; pixel < usedBlocksize; pixel++) {
+//         CIAddress = firstBlock ? firstRamPortionAddress + pixel : secondRamPortionAddress + pixel;
+
+//         asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(pixel1):[in1] "r"(CIAddress));
+//         // asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(pixel2):[in1] "r"(CIAddress+1));
+
+//         //asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0x9":[out1]"=r"(grayPixels):[in1]"r"(swap_u32(pixel1)),[in2]"r"(swap_u32(pixel2)));
+
+//         gray[0] = swap_u32(pixel1);
+//         gray += 1;
+
+//         // asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(writeAddr | writeBit), [in2]"r"(swap_u32(255 - pixel1)));
+
+//         // writeAddr += 1;
+//       }
+
+//       while (1) {
+//         asm volatile("l.nios_rrr %[out1],%[in1],r0,20":[out1]"=r"(status):[in1]"r"(statusControl));
+//         if (status == 0) break;
+//       }
+
+//       DMAsetup((uint32_t) &gray[0], firstBlock ? firstRamPortionAddress: secondRamPortionAddress, (usedBlocksize >> 1), usedBurstSize >> 1);
+//       DMAtransferBlocking2Mem();
+//       gray += (usedBlocksize >> 1);
+
+//     }
 //   }
 // }
 
@@ -173,7 +174,7 @@ const uint32_t blockSize = 3 << 10;
 const uint32_t burstSize = 4 << 10;
 const uint32_t statusControl = 5 << 10;
 const uint32_t usedBlocksize = 256;
-const uint32_t usedBurstSize = 8;
+const uint32_t usedBurstSize = 128;
 
 const uint32_t firstRamPortionAddress = 0;
 const uint32_t secondRamPortionAddress = 256;
@@ -284,21 +285,21 @@ int main () {
 
         // asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0x9":[out1]"=r"(grayPixels):[in1]"r"(swap_u32(pixel1)),[in2]"r"(swap_u32(pixel2)));
 
-        //asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(writeAddr | writeBit), [in2]"r"(swap_u32(255 - pixel1)));
+        asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(writeAddr | writeBit), [in2]"r"(pixel1));
 
-        //writeAddr += 1;
-        gray[0] = swap_u32(pixel1);
-        gray++;
+        writeAddr += 1;
+        // gray[0] = swap_u32(pixel1);
+        // gray++;
       }
 
-      // while (1) {
-      //   asm volatile("l.nios_rrr %[out1],%[in1],r0,20":[out1]"=r"(status):[in1]"r"(statusControl));
-      //   if (status == 0) break;
-      // }
+      while (1) {
+        asm volatile("l.nios_rrr %[out1],%[in1],r0,20":[out1]"=r"(status):[in1]"r"(statusControl));
+        if (status == 0) break;
+      }
 
-      // DMAsetup((uint32_t) &gray[0], firstBlock ? firstRamPortionAddress: secondRamPortionAddress, (usedBlocksize >> 1), usedBurstSize >> 1);
-      // DMAtransferBlocking2Mem();
-      // gray += (usedBlocksize >> 1);
+      DMAsetup((uint32_t) &gray[0], firstBlock ? firstRamPortionAddress: secondRamPortionAddress, usedBlocksize, usedBurstSize);
+      DMAtransferBlocking2Mem();
+      gray += (usedBlocksize);
 
     }
   }
