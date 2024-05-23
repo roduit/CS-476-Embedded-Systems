@@ -171,14 +171,13 @@ module camera #(parameter [7:0] customInstructionId = 8'd0,
   
   always @(posedge pclk)
     begin
-      s_byte3Reg <= (s_pixelCountReg[2:0] == 3'b000 && hsync == 1'b1) ? camData : s_byte3Reg;
-      s_byte2Reg <= (s_pixelCountReg[2:0] == 3'b001 && hsync == 1'b1) ? camData : s_byte2Reg;
-      s_byte1Reg <= (s_pixelCountReg[2:0] == 3'b010 && hsync == 1'b1) ? camData : s_byte1Reg;
-      
-      s_byte7Reg <= (s_pixelCountReg[2:0] == 3'b011 && hsync == 1'b1) ? camData : s_byte7Reg;
-      s_byte6Reg <= (s_pixelCountReg[2:0] == 3'b100 && hsync == 1'b1) ? camData : s_byte6Reg;
-      s_byte5Reg <= (s_pixelCountReg[2:0] == 3'b101 && hsync == 1'b1) ? camData : s_byte5Reg;
-      s_byte4Reg <= (s_pixelCountReg[2:0] == 3'b111 && hsync == 1'b1) ? camData : s_byte4Reg;
+      s_byte7Reg <= (s_pixelCountReg[2:0] == 3'b000 && hsync == 1'b1) ? camData : s_byte7Reg;
+      s_byte6Reg <= (s_pixelCountReg[2:0] == 3'b001 && hsync == 1'b1) ? camData : s_byte6Reg;
+      s_byte5Reg <= (s_pixelCountReg[2:0] == 3'b010 && hsync == 1'b1) ? camData : s_byte5Reg;
+      s_byte4Reg <= (s_pixelCountReg[2:0] == 3'b011 && hsync == 1'b1) ? camData : s_byte4Reg;
+      s_byte3Reg <= (s_pixelCountReg[2:0] == 3'b100 && hsync == 1'b1) ? camData : s_byte3Reg;
+      s_byte2Reg <= (s_pixelCountReg[2:0] == 3'b101 && hsync == 1'b1) ? camData : s_byte2Reg;
+      s_byte1Reg <= (s_pixelCountReg[2:0] == 3'b110 && hsync == 1'b1) ? camData : s_byte1Reg;
 
     end
 
@@ -191,13 +190,13 @@ module camera #(parameter [7:0] customInstructionId = 8'd0,
   wire [31:0] s_grayscalePixelWord;
   wire [7:0] s_grayPixel1, s_grayPixel2, s_grayPixel3, s_grayPixel4;
 
-  rgb565Grayscale pixel1 ( .rgb565({s_pixelWord1[15:0]}),
+  rgb565Grayscale pixel1 ( .rgb565({s_byte7Reg, s_byte6Reg}),
                            .grayscale(s_grayPixel1));
-  rgb565Grayscale pixel2 ( .rgb565({s_pixelWord1[31:16]}),
+  rgb565Grayscale pixel2 ( .rgb565({s_byte5Reg, s_byte4Reg}),
                            .grayscale(s_grayPixel2));
-  rgb565Grayscale pixel3 ( .rgb565({s_pixelWord2[15:0]}),
+  rgb565Grayscale pixel3 ( .rgb565({s_byte3Reg, s_byte2Reg}),
                            .grayscale(s_grayPixel3));
-  rgb565Grayscale pixel4 ( .rgb565({s_pixelWord2[31:16]}),
+  rgb565Grayscale pixel4 ( .rgb565({s_byte1Reg, camData}),
                            .grayscale(s_grayPixel4));
 
   assign s_grayscalePixelWord = {s_grayPixel4, s_grayPixel3, s_grayPixel2, s_grayPixel1};
