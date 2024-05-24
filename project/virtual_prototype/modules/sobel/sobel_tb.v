@@ -57,13 +57,13 @@ module sobel_tb;
     // Stimulus generation
         // Set the image
         start = 1'b1;
-        valueB = 0;
+        valueB = 1;
         valueA = {pixel3, pixel2, pixel1, pixel0};
         `WAITCYCLE;
         start = 1'b0;
         #10;
         start = 1'b1;
-        valueB = 1 + (threshold << 16) + (pixel8 << 8);
+        valueB = 2 + (threshold << 16) + (pixel8 << 8);
         valueA = {pixel7, pixel6, pixel5, pixel4};
         `WAITCYCLE;
         start = 1'b0;
