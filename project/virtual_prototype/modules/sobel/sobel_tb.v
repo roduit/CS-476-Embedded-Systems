@@ -3,7 +3,7 @@
 module sobel_tb;
 
     // Inputs
-    reg clk;
+    reg clk = 0;
     reg reset;
     
     // Create a test image
@@ -18,24 +18,22 @@ module sobel_tb;
     reg [7:0] pixel8 = 90;
 
     // Outputs
-    wire [7:0] edge_data;
+    wire [31:0] edge_data;
 
     reg [7:0] threshold = 128;
+    reg [31:0] valueA;
+    reg [31:0] valueB;
 
     // Instantiate the Sobel module
-    sobel sobel_inst (
-        .pixel0(pixel0),
-        .pixel1(pixel1),
-        .pixel2(pixel2),
-        .pixel3(pixel3),
-        .pixel4(pixel4),
-        .pixel5(pixel5),
-        .pixel6(pixel6),
-        .pixel7(pixel7),
-        .pixel8(pixel8),
-        .threshold(threshold),
-        .edge_val(edge_data)
-
+    edge_detection #(.customInstructionId(8'h00)) DUT
+    (
+        .start(1'b1),
+        .clock(clk),
+        .valueA(valueA),
+        .valueB(valueB),
+        .ciN(8'h00),
+        .done(),
+        .result(edge_data)
     );
 
     // Clock generation
@@ -49,31 +47,17 @@ module sobel_tb;
 
     // Stimulus generation
     initial begin
-        // Provide test image data
-        
-
-
-        // Wait for a few clock cycles
-        #20;
-
-        // Test 1
-
-        // Display the edge data
-        $display("Edge data: %0d", edge_data);
-
-        // Test 2
-        pixel1 = 1;
-        pixel0 = 2;
-        pixel2 = 3;
-        pixel3 = 4;
-        pixel4 = 5;
-        pixel5 = 6;
-        pixel6 = 7;
-        pixel7 = 8;
-        pixel8 = 9;
-
-        // Wait for a few clock cycles
+        $dumpfile("sobel.vcd");
+        $dumpvars(1, DUT);
+        $dumpvars(1, DUT.sobel_module);
+        // Set the image
+        valueB = 0;
+        valueA = {pixel3, pixel2, pixel1, pixel0};
         #10;
+        valueB = 1 + (threshold << 16) + (pixel8 << 8);
+        valueA = {pixel7, pixel6, pixel5, pixel4};
+        #10;
+
         $display("Edge data: %0d", edge_data);
 
         // Finish simulation
