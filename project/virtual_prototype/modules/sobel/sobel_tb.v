@@ -52,7 +52,7 @@ module sobel_tb;
         reset = 1'b1;
         `WAIT2CYCLES;
         reset = 1'b0;
-        `WAITHALFCYCLE;
+        `WAITCYCLE;
 
     // Stimulus generation
         // Set the image
