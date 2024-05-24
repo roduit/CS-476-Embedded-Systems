@@ -44,14 +44,12 @@ void edgeDetection( volatile uint8_t *grayscale,
       // sobelResult[line*width+pixel] = (result > threshold) ? 0xFF : 0;
       valueA = image[3] << 24 | image[2] << 16 | image[1] << 8 | image[0];
       valueB = 0;
-      printf("hello there");
       asm volatile ("l.nios_rrr r0,%[in1],%[in2],0xC"::[in1]"r"(valueA),[in2]"r"(valueB));
       valueA = image[7] << 24 | image[6] << 16 | image[5] << 8 | image[4];
       valueB = valueB | 0xFF;
       valueB = valueB | image[8] << 8 | threshold << 16; 
       asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(tmp_sobel_result):[in1]"r"(valueA),[in2]"r"(valueB));
       sobelResult[line*width+pixel] = tmp_sobel_result;
-      printf("hello guys");
     }
   }
 }

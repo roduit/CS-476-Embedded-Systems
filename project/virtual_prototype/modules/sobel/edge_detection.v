@@ -17,11 +17,13 @@ module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
     reg [7:0] image [0:8];
     reg [7:0] threshold;
 
+    reg done_reg;
+
     wire [7:0] edge_res;
 
     wire s_isMyIse = (ciN == customInstructionId) ? start : 1'b0;
   
-    assign done   = (s_isMyIse && start) ? 1'b1 : 1'b0;
+    assign done   = (s_isMyIse && start) ? valueB[7:0] == 0 ? 1 : done_reg;
     assign result = (s_isMyIse == 1'b1 && valueB[7:0] == 1) ? {24'd0, edge_res} : 32'd0;
 
     // Define Sobel edge detection module
@@ -52,9 +54,11 @@ module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
             image[7] <= 0;
             image[8] <= 0;
             threshold <= 0;
+            done_reg <= 0;
         end
         else
         if (s_isMyIse) begin
+            done_reg <= (s_isMyIse && start);
             case(valueB[7:0])
                 8'd0: begin
                     image[0] <= valueA[7:0];

@@ -1,10 +1,10 @@
-Analysis & Synthesis Status : Successful - Fri May 24 13:38:08 2024
+Analysis & Synthesis Status : Successful - Fri May 24 14:18:39 2024
 Quartus Prime Version : 18.1.1 Build 646 04/11/2019 SJ Lite Edition
 Revision Name : or1420SingleCore
 Top-level Entity Name : or1420SingleCore
 Family : Cyclone IV E
-Total logic elements : 15,273
-    Total combinational functions : 13,368
+Total logic elements : 15,286
+    Total combinational functions : 13,381
     Dedicated logic registers : 6,396
 Total registers : 6396
 Total pins : 113
