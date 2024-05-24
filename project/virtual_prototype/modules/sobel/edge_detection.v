@@ -13,16 +13,7 @@ module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
     // 1. valueB[7:0] = 0 => set image0 pixel 0-3
     // 2. valueB[7:0] = 1 => set image0 pixel 4-7 and valueB[15:8] = pixel 8 image0 and valueB[23:16] = threshold and compute the result
 
-    reg [7:0] pixel0;
-    reg [7:0] pixel1;
-    reg [7:0] pixel2;
-    reg [7:0] pixel3;
-    reg [7:0] pixel4;
-    reg [7:0] pixel5;
-    reg [7:0] pixel6;
-    reg [7:0] pixel7;
-    reg [7:0] pixel8;
-
+    reg [7:0] image [0:8];
     reg [7:0] threshold;
 
     wire [7:0] edge_res;
@@ -34,15 +25,15 @@ module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
 
     // Define Sobel edge detection module
     sobel sobel_module (
-        .pixel0(pixel0),
-        .pixel1(pixel1),
-        .pixel2(pixel2),
-        .pixel3(pixel3),
-        .pixel4(pixel4),
-        .pixel5(pixel5),
-        .pixel6(pixel6),
-        .pixel7(pixel7),
-        .pixel8(pixel8),
+        .pixel0(image[0]),
+        .pixel1(image[1]),
+        .pixel2(image[2]),
+        .pixel3(image[3]),
+        .pixel4(image[4]),
+        .pixel5(image[5]),
+        .pixel6(image[6]),
+        .pixel7(image[7]),
+        .pixel8(image[8]),
         .threshold(threshold),
         .edge_val(edge_res)
     );
@@ -52,18 +43,18 @@ module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
         if (s_isMyIse) begin
             case(valueB[7:0])
                 8'd0: begin
-                    pixel0 = valueA[7:0];
-                    pixel1 = valueA[15:8];
-                    pixel2 = valueA[23:16];
-                    pixel3 = valueA[31:24];
+                    image[0] <= valueA[7:0];
+                    image[1] <= valueA[15:8];
+                    image[2] <= valueA[23:16];
+                    image[3] <= valueA[31:24];
                 end
                 8'd1: begin
-                    pixel4 = valueA[7:0];
-                    pixel5 = valueA[15:8];
-                    pixel6 = valueA[23:16];
-                    pixel7 = valueA[31:24];
-                    pixel8 = valueB[15:8];
-                    threshold = valueB[23:16];
+                    image[4] <= valueA[7:0];
+                    image[5] <= valueA[15:8];
+                    image[6] <= valueA[23:16];
+                    image[7] <= valueA[31:24];
+                    image[8] <= valueB[15:8];
+                    threshold <= valueB[23:16];
                 end
             endcase
         end
