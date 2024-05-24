@@ -103,37 +103,37 @@ int main () {
     vga[2] = swap_u32(2);
     vga[3] = swap_u32((uint32_t) &floyd[0]);
     asm volatile ("l.nios_rrr r0,%[in1],%[in2],0x6"::[in1]"r"(5000000),[in2]"r"(1)); // set 5 seconds
-    do {
-      takeSingleImageBlocking((uint32_t) &rgb565[0]);
-      // for (int line = 0; line < camParams.nrOfLinesPerImage; line++) {
-      //   for (int pixel = 0; pixel < camParams.nrOfPixelsPerLine; pixel++) {
-      //     uint16_t rgb = swap_u16(rgb565[line*camParams.nrOfPixelsPerLine+pixel]);
-      //     uint32_t red1 = ((rgb >> 11) & 0x1F) << 3;
-      //     uint32_t green1 = ((rgb >> 5) & 0x3F) << 2;
-      //     uint32_t blue1 = (rgb & 0x1F) << 3;
-      //     uint32_t gray = ((red1*54+green1*183+blue1*19) >> 8)&0xFF;
-      //     grayscale[line*camParams.nrOfPixelsPerLine+pixel] = gray;
-      //   }
-      // }
-      floyd_steinberg(rgb565, camParams.nrOfPixelsPerLine, camParams.nrOfLinesPerImage, floyd, error_array);
-      asm volatile ("l.nios_rrr %[out1],r0,%[in2],0x6":[out1]"=r"(result):[in2]"r"(3));
-    } while (result != 0);
-    asm volatile ("l.nios_rrr r0,%[in1],%[in2],0x6"::[in1]"r"(5000000),[in2]"r"(1)); // set 5 seconds
-    do {
-      takeSingleImageBlocking((uint32_t) &rgb565[0]);
-      // for (int line = 0; line < camParams.nrOfLinesPerImage; line++) {
-      //   for (int pixel = 0; pixel < camParams.nrOfPixelsPerLine; pixel++) {
-      //     uint16_t rgb = swap_u16(rgb565[line*camParams.nrOfPixelsPerLine+pixel]);
-      //     uint32_t red1 = ((rgb >> 11) & 0x1F) << 3;
-      //     uint32_t green1 = ((rgb >> 5) & 0x3F) << 2;
-      //     uint32_t blue1 = (rgb & 0x1F) << 3;
-      //     uint32_t gray = ((red1*54+green1*183+blue1*19) >> 8)&0xFF;
-      //     grayscale[line*camParams.nrOfPixelsPerLine+pixel] = gray;
-      //   }
-      // }
-      edgeDetection(rgb565,floyd, camParams.nrOfPixelsPerLine, camParams.nrOfLinesPerImage,128);
-      asm volatile ("l.nios_rrr %[out1],r0,%[in2],0x6":[out1]"=r"(result):[in2]"r"(3));
-    } while (result != 0);
+    // do {
+    //   takeSingleImageBlocking((uint32_t) &rgb565[0]);
+    //   // for (int line = 0; line < camParams.nrOfLinesPerImage; line++) {
+    //   //   for (int pixel = 0; pixel < camParams.nrOfPixelsPerLine; pixel++) {
+    //   //     uint16_t rgb = swap_u16(rgb565[line*camParams.nrOfPixelsPerLine+pixel]);
+    //   //     uint32_t red1 = ((rgb >> 11) & 0x1F) << 3;
+    //   //     uint32_t green1 = ((rgb >> 5) & 0x3F) << 2;
+    //   //     uint32_t blue1 = (rgb & 0x1F) << 3;
+    //   //     uint32_t gray = ((red1*54+green1*183+blue1*19) >> 8)&0xFF;
+    //   //     grayscale[line*camParams.nrOfPixelsPerLine+pixel] = gray;
+    //   //   }
+    //   // }
+    //   floyd_steinberg(rgb565, camParams.nrOfPixelsPerLine, camParams.nrOfLinesPerImage, floyd, error_array);
+    //   asm volatile ("l.nios_rrr %[out1],r0,%[in2],0x6":[out1]"=r"(result):[in2]"r"(3));
+    // } while (result != 0);
+    // asm volatile ("l.nios_rrr r0,%[in1],%[in2],0x6"::[in1]"r"(5000000),[in2]"r"(1)); // set 5 seconds
+    // do {
+    //   takeSingleImageBlocking((uint32_t) &rgb565[0]);
+    //   // for (int line = 0; line < camParams.nrOfLinesPerImage; line++) {
+    //   //   for (int pixel = 0; pixel < camParams.nrOfPixelsPerLine; pixel++) {
+    //   //     uint16_t rgb = swap_u16(rgb565[line*camParams.nrOfPixelsPerLine+pixel]);
+    //   //     uint32_t red1 = ((rgb >> 11) & 0x1F) << 3;
+    //   //     uint32_t green1 = ((rgb >> 5) & 0x3F) << 2;
+    //   //     uint32_t blue1 = (rgb & 0x1F) << 3;
+    //   //     uint32_t gray = ((red1*54+green1*183+blue1*19) >> 8)&0xFF;
+    //   //     grayscale[line*camParams.nrOfPixelsPerLine+pixel] = gray;
+    //   //   }
+    //   // }
+    //   edgeDetection(rgb565,floyd, camParams.nrOfPixelsPerLine, camParams.nrOfLinesPerImage,128);
+    //   asm volatile ("l.nios_rrr %[out1],r0,%[in2],0x6":[out1]"=r"(result):[in2]"r"(3));
+    // } while (result != 0);
   }
 }
 

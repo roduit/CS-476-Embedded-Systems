@@ -13859,7 +13859,7 @@ D => s_states[0].ENA
 Q <= s_states[2].DB_MAX_OUTPUT_PORT_TYPE
 
 
-|or1420SingleCore|camera:camIf|rgb565Grayscale:gray1
+|or1420SingleCore|camera:camIf|rgb565Grayscale:pixel1
 rgb565[0] => Add2.IN13
 rgb565[0] => Add2.IN14
 rgb565[0] => Add3.IN19
@@ -13918,7 +13918,7 @@ grayscale[6] <= Add8.DB_MAX_OUTPUT_PORT_TYPE
 grayscale[7] <= Add8.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|or1420SingleCore|camera:camIf|rgb565Grayscale:gray2
+|or1420SingleCore|camera:camIf|rgb565Grayscale:pixel2
 rgb565[0] => Add2.IN13
 rgb565[0] => Add2.IN14
 rgb565[0] => Add3.IN19
@@ -13977,7 +13977,7 @@ grayscale[6] <= Add8.DB_MAX_OUTPUT_PORT_TYPE
 grayscale[7] <= Add8.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|or1420SingleCore|camera:camIf|rgb565Grayscale:gray3
+|or1420SingleCore|camera:camIf|rgb565Grayscale:pixel3
 rgb565[0] => Add2.IN13
 rgb565[0] => Add2.IN14
 rgb565[0] => Add3.IN19
@@ -14036,7 +14036,7 @@ grayscale[6] <= Add8.DB_MAX_OUTPUT_PORT_TYPE
 grayscale[7] <= Add8.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|or1420SingleCore|camera:camIf|rgb565Grayscale:gray4
+|or1420SingleCore|camera:camIf|rgb565Grayscale:pixel4
 rgb565[0] => Add2.IN13
 rgb565[0] => Add2.IN14
 rgb565[0] => Add3.IN19

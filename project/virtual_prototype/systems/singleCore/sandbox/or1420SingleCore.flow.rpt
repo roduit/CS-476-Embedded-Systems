@@ -1,5 +1,5 @@
 Flow report for or1420SingleCore
-Wed May 22 16:04:15 2024
+Fri May 24 09:14:51 2024
 Quartus Prime Version 18.1.1 Build 646 04/11/2019 SJ Lite Edition
 
 
@@ -41,15 +41,15 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------------------------------------------+
 ; Flow Summary                                                                     ;
 +------------------------------------+---------------------------------------------+
-; Flow Status                        ; Successful - Wed May 22 16:04:05 2024       ;
+; Flow Status                        ; Successful - Fri May 24 09:14:39 2024       ;
 ; Quartus Prime Version              ; 18.1.1 Build 646 04/11/2019 SJ Lite Edition ;
 ; Revision Name                      ; or1420SingleCore                            ;
 ; Top-level Entity Name              ; or1420SingleCore                            ;
 ; Family                             ; Cyclone IV E                                ;
 ; Device                             ; EP4CE30F23C8                                ;
 ; Timing Models                      ; Final                                       ;
-; Total logic elements               ; 14,402 / 28,848 ( 50 % )                    ;
-;     Total combinational functions  ; 13,435 / 28,848 ( 47 % )                    ;
+; Total logic elements               ; 14,444 / 28,848 ( 50 % )                    ;
+;     Total combinational functions  ; 13,434 / 28,848 ( 47 % )                    ;
 ;     Dedicated logic registers      ; 6,426 / 28,848 ( 22 % )                     ;
 ; Total registers                    ; 6426                                        ;
 ; Total pins                         ; 113 / 329 ( 34 % )                          ;
@@ -65,7 +65,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 05/22/2024 16:01:41 ;
+; Start date & time ; 05/24/2024 09:11:58 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; or1420SingleCore    ;
 +-------------------+---------------------+
@@ -76,7 +76,7 @@ https://fpgasoftware.intel.com/eula.
 +-----------------------+------------------------------+---------------+-------------+------------+
 ; Assignment Name       ; Value                        ; Default Value ; Entity Name ; Section Id ;
 +-----------------------+------------------------------+---------------+-------------+------------+
-; COMPILER_SIGNATURE_ID ; 345052339411.171638650106094 ; --            ; --          ; --         ;
+; COMPILER_SIGNATURE_ID ; 345052300035.171653471859576 ; --            ; --          ; --         ;
 +-----------------------+------------------------------+---------------+-------------+------------+
 
 
@@ -85,11 +85,11 @@ https://fpgasoftware.intel.com/eula.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:40     ; 1.0                     ; 1079 MB             ; 00:00:48                           ;
-; Fitter               ; 00:01:37     ; 1.1                     ; 1752 MB             ; 00:02:39                           ;
-; Assembler            ; 00:00:02     ; 1.0                     ; 844 MB              ; 00:00:02                           ;
-; Timing Analyzer      ; 00:00:08     ; 1.4                     ; 1042 MB             ; 00:00:10                           ;
-; Total                ; 00:02:27     ; --                      ; --                  ; 00:03:39                           ;
+; Analysis & Synthesis ; 00:00:43     ; 1.0                     ; 1080 MB             ; 00:00:52                           ;
+; Fitter               ; 00:01:50     ; 1.1                     ; 1758 MB             ; 00:02:44                           ;
+; Assembler            ; 00:00:02     ; 1.0                     ; 843 MB              ; 00:00:02                           ;
+; Timing Analyzer      ; 00:00:10     ; 1.5                     ; 1045 MB             ; 00:00:11                           ;
+; Total                ; 00:02:45     ; --                      ; --                  ; 00:03:49                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
@@ -98,10 +98,10 @@ https://fpgasoftware.intel.com/eula.
 +----------------------+------------------+----------------+------------+----------------+
 ; Module Name          ; Machine Hostname ; OS Name        ; OS Version ; Processor type ;
 +----------------------+------------------+----------------+------------+----------------+
-; Analysis & Synthesis ; ic-24MA-spr-004  ; Ubuntu 22.04.4 ; 22         ; x86_64         ;
-; Fitter               ; ic-24MA-spr-004  ; Ubuntu 22.04.4 ; 22         ; x86_64         ;
-; Assembler            ; ic-24MA-spr-004  ; Ubuntu 22.04.4 ; 22         ; x86_64         ;
-; Timing Analyzer      ; ic-24MA-spr-004  ; Ubuntu 22.04.4 ; 22         ; x86_64         ;
+; Analysis & Synthesis ; ic-24MA-spr-016  ; Ubuntu 22.04.4 ; 22         ; x86_64         ;
+; Fitter               ; ic-24MA-spr-016  ; Ubuntu 22.04.4 ; 22         ; x86_64         ;
+; Assembler            ; ic-24MA-spr-016  ; Ubuntu 22.04.4 ; 22         ; x86_64         ;
+; Timing Analyzer      ; ic-24MA-spr-016  ; Ubuntu 22.04.4 ; 22         ; x86_64         ;
 +----------------------+------------------+----------------+------------+----------------+
 
 
