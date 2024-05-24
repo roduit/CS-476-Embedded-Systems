@@ -1,6 +1,7 @@
 module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
 (
     input wire         start,
+    input wire         reset,
     input wire         clock,
     input wire [31:0]  valueA,
                        valueB,
@@ -20,7 +21,7 @@ module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
 
     wire s_isMyIse = (ciN == customInstructionId) ? start : 1'b0;
   
-    assign done   = (valueB[7:0] == 1) ? 1'b1 : 1'b0;
+    assign done   = (s_isMyIse && start) ? 1'b1 : 1'b0;
     assign result = (s_isMyIse == 1'b1 && valueB[7:0] == 1) ? {24'd0, edge_res} : 32'd0;
 
     // Define Sobel edge detection module
@@ -40,6 +41,19 @@ module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
 
     always @(posedge clock) 
     begin
+        if (reset) begin
+            image[0] <= 0;
+            image[1] <= 0;
+            image[2] <= 0;
+            image[3] <= 0;
+            image[4] <= 0;
+            image[5] <= 0;
+            image[6] <= 0;
+            image[7] <= 0;
+            image[8] <= 0;
+            threshold <= 0;
+        end
+        else
         if (s_isMyIse) begin
             case(valueB[7:0])
                 8'd0: begin

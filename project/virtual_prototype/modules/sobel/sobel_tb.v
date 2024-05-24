@@ -1,15 +1,20 @@
 `timescale 1ns/1ns
 
+`define WAITHALFCYCLE #5;
+`define WAITCYCLE #10;
+`define WAIT2CYCLES repeat(2) @(posedge clk);
+
 module sobel_tb;
 
     // Inputs
     reg clk = 0;
-    reg reset;
+    reg reset = 0;
+    reg start = 0;
     
     // Create a test image
     reg [7:0] pixel0 = 200;
     reg [7:0] pixel1 = 102;
-    reg [7:0] pixel2 = 103;
+    reg [7:8] pixel2 = 103;
     reg [7:0] pixel3 = 244;
     reg [7:0] pixel4 = 155;
     reg [7:0] pixel5 = 166;
@@ -25,10 +30,10 @@ module sobel_tb;
     reg [31:0] valueB;
 
     // Instantiate the Sobel module
-    edge_detection #(.customInstructionId(8'h00)) DUT
-    (
-        .start(1'b1),
+    edge_detection #(.customInstructionId(8'h00)) DUT (
+        .start(start),
         .clock(clk),
+        .reset(reset),
         .valueA(valueA),
         .valueB(valueB),
         .ciN(8'h00),
@@ -41,16 +46,17 @@ module sobel_tb;
 
     // Reset generation
     initial begin
-        reset = 1;
-        #10 reset = 0;
-    end
+        $dumpfile("sobel.vcd");
+        $dumpvars(0, sobel_tb); // Dump all variables in sobel_tb
+        start = 1'b0;
+        reset = 1'b1;
+        `WAIT2CYCLES;
+        reset = 1'b0;
+        `WAITHALFCYCLE;
 
     // Stimulus generation
-    initial begin
-        $dumpfile("sobel.vcd");
-        $dumpvars(1, DUT);
-        $dumpvars(1, DUT.sobel_module);
         // Set the image
+        start = 1'b1;
         valueB = 0;
         valueA = {pixel3, pixel2, pixel1, pixel0};
         #10;
