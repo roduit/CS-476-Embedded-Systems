@@ -55,10 +55,10 @@ module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
             image[7] <= 0;
             image[8] <= 0;
             threshold <= 0;
-            done_reg <= 0;
             s_isEdgReadReg <= 0;
         end
         else
+        begin
             s_isEdgReadReg <= s_isEdgRead;
             case(valueB[7:0])
                 8'd0: begin
