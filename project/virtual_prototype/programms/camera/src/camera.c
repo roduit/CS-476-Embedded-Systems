@@ -131,7 +131,7 @@ int main () {
       //     grayscale[line*camParams.nrOfPixelsPerLine+pixel] = gray;
       //   }
       // }
-      edgeDetection(rgb565,floyd, camParams.nrOfPixelsPerLine, camParams.nrOfLinesPerImage,128);
+      edgeDetection(rgb565,floyd, camParams.nrOfPixelsPerLine, camParams.nrOfLinesPerImage,200);
       asm volatile ("l.nios_rrr %[out1],r0,%[in2],0x6":[out1]"=r"(result):[in2]"r"(3));
     } while (result != 0);
   }
