@@ -14,7 +14,16 @@ module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
     // 1. valueB[7:0] = 0b01 => set image0 pixel 0-3
     // 2. valueB[7:0] = 0b10 => set image0 pixel 4-7 and valueB[15:8] = pixel 8 image0 and valueB[23:16] = threshold and compute the result
 
-    reg [7:0] image [8:0];
+    reg [7:0] pixel0;
+    reg [7:0] pixel1;
+    reg [7:0] pixel2;
+    reg [7:0] pixel3;
+    reg [7:0] pixel4;
+    reg [7:0] pixel5;
+    reg [7:0] pixel6;
+    reg [7:0] pixel7;
+    reg [7:0] pixel8;
+
     reg [7:0] threshold;
 
     wire [7:0] edge_result;
@@ -29,19 +38,19 @@ module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
   
     assign done   = (s_isMyEd && (valueB[1:0] == 2'b01)) ? 1'b1 : (s_doComputeReg) ? 1'b1 : 1'b0;
     // assign result = (s_doComputeReg == 1'b1) ? edge_result : 32'd0;
-    assign result = (s_doComputeReg == 1'b1) ? image[0] : 32'd0;
+    assign result = (s_doComputeReg == 1'b1) ? pixel0 : 32'd0;
 
     // Define Sobel edge detection module
     sobel sobel_module (
-        .pixel0(image[0]),
-        .pixel1(image[1]),
-        .pixel2(image[2]),
-        .pixel3(image[3]),
-        .pixel4(image[4]),
-        .pixel5(image[5]),
-        .pixel6(image[6]),
-        .pixel7(image[7]),
-        .pixel8(image[8]),
+        .pixel0(pixel0),
+        .pixel1(pixel1),
+        .pixel2(pixel2),
+        .pixel3(pixel3),
+        .pixel4(pixel4),
+        .pixel5(pixel5),
+        .pixel6(pixel6),
+        .pixel7(pixel7),
+        .pixel8(pixel8),
         .threshold(threshold),
         .edge_val(edge_result)
     );
@@ -50,15 +59,15 @@ module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
     begin
         // Reset the image and threshold
         if (reset) begin
-            image[0] <= 0;
-            image[1] <= 0;
-            image[2] <= 0;
-            image[3] <= 0;
-            image[4] <= 0;
-            image[5] <= 0;
-            image[6] <= 0;
-            image[7] <= 0;
-            image[8] <= 0;
+            pixel0 <= 8'd0;
+            pixel1 <= 8'd0;
+            pixel2 <= 8'd0;
+            pixel3 <= 8'd0;
+            pixel4 <= 8'd0;
+            pixel5 <= 8'd0;
+            pixel6 <= 8'd0;
+            pixel7 <= 8'd0;
+            pixel8 <= 8'd0;
             threshold <= 0;
             s_doComputeReg <= 0;
         end
@@ -68,18 +77,18 @@ module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
             s_doComputeReg <= s_doCompute;
             if (start) begin
                 case(valueB[7:0])
-                    8'd0: begin
-                        image[0] <= valueA[7:0];
-                        image[1] <= valueA[15:8];
-                        image[2] <= valueA[23:16];
-                        image[3] <= valueA[31:24];
-                    end
                     8'd1: begin
-                        image[4] <= valueA[7:0];
-                        image[5] <= valueA[15:8];
-                        image[6] <= valueA[23:16];
-                        image[7] <= valueA[31:24];
-                        image[8] <= valueB[15:8];
+                        pixel0 <= valueA[7:0];
+                        pixel1 <= valueA[15:8];
+                        pixel2 <= valueA[23:16];
+                        pixel3 <= valueA[31:24];
+                    end
+                    8'd2: begin
+                        pixel4 <= valueA[7:0];
+                        pixel5 <= valueA[15:8];
+                        pixel6 <= valueA[23:16];
+                        pixel7 <= valueA[31:24];
+                        pixel8 <= valueB[15:8];
                         threshold <= valueB[23:16];
                     end
                 endcase
