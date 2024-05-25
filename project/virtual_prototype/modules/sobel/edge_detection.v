@@ -26,7 +26,7 @@ module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
 
     reg [7:0] threshold;
 
-    wire [7:0] edge_result;
+    wire [31:0] edge_result;
 
     wire s_isMyEd = (ciN == customInstructionId) ? start : 1'b0;
 
@@ -37,8 +37,8 @@ module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
     // reg s_isEdgReadReg;
   
     assign done   = (s_isMyEd && (valueB[1:0] == 2'b01)) ? 1'b1 : (s_doComputeReg) ? 1'b1 : 1'b0;
+    // assign result = (s_doComputeReg == 1'b1) ? edge_result : 32'd0;
     assign result = (s_doComputeReg == 1'b1) ? edge_result : 32'd0;
-    //assign result = (s_doComputeReg == 1'b1) ? pixel0 : 32'd0;
 
     // Define Sobel edge detection module
     sobel sobel_module (
