@@ -39,17 +39,17 @@ void edgeDetection( volatile uint8_t *grayscale,
         for (int dy = -1; dy < 2; dy++) {
           uint32_t index = ((line+dx)*width)+dy+pixel;
           image[cnt] = grayscale[index];
-          //uint32_t gray = grayscale[index];
+          uint32_t gray = grayscale[index];
           cnt += 1;
-          // valueX += gray*gx_array[dx+1][dy+1];
-          // valueY += gray*gy_array[dx+1][dy+1];
+          valueX += gray*gx_array[dx+1][dy+1];
+          valueY += gray*gy_array[dx+1][dy+1];
         }
       }
-      // // printf("valueX: %d, valueY: %d \n", valueX, valueY);
-      // result = (valueX < 0) ? -valueX : valueX;
-      // result += (valueY < 0) ? -valueY : valueY;
-      // // printf("Result = %d\n", result);
-      // //result = (valueD < 0) ? -valueD : valueD;
+      // printf("valueX: %d, valueY: %d \n", valueX, valueY);
+      result = (valueX < 0) ? -valueX : valueX;
+      result += (valueY < 0) ? -valueY : valueY;
+      // printf("Result = %d\n", result);
+      //result = (valueD < 0) ? -valueD : valueD;
       // sobelResult[line*width+pixel] = (result > threshold) ? 0xff : 0;
       // // valueA = 0;
       // // valueB = 0;
@@ -59,10 +59,13 @@ void edgeDetection( volatile uint8_t *grayscale,
       asm volatile ("l.nios_rrr r0,%[in1],%[in2],0xC"::[in1]"r"(valueA),[in2]"r"(valueB));
       valueA = (image[7] << 24) | (image[6] << 16) | (image[5] << 8) | image[4];
       valueB = 2 | (image[8] << 8) | (threshold << 16); 
-      printf("image0 before: %d\n", valueA);
+      //printf("image0 before: %d\n", image[0]);
       asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(tmp_sobel_result):[in1]"r"(valueA),[in2]"r"(valueB));
-      printf("image0 after: %d\n", tmp_sobel_result);
+      //printf("image0 after: %d\n", tmp_sobel_result);
       //printf("%d\n", tmp_sobel_result); 
+      if (result != tmp_sobel_result) {
+        printf("Result: %d, Sobel: %d\n", result, tmp_sobel_result);
+      }
       sobelResult[line*width+pixel] = tmp_sobel_result > threshold ? 0xff : 0;
     }
   }
