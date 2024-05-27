@@ -7,6 +7,25 @@
 #include <floyd_steinberg.h>
 #include <sobel.h>
 
+#define BLACK       0x0000
+#define WHITE       0xFFFF
+#define RED         0xF800
+#define LIME        0x07E0
+#define BLUE        0x001F
+#define YELLOW      0xFFE0
+#define CYAN        0x07FF
+#define MAGENTA     0xF81F
+#define SILVER      0xC618
+#define GRAY        0x8410
+#define MAROON      0x8000
+#define OLIVE       0x8400
+#define GREEN       0x0400
+#define PURPLE      0x8010
+#define TEAL        0x0410
+#define NAVY        0x0010
+#define ORANGE      0xFD20
+#define PINK        0xF81F
+
 #define WIDTH 640
 #define HEIGHT 480
 #define SIZE (WIDTH * HEIGHT)
@@ -28,17 +47,29 @@ void delay(uint32_t milliseconds) {
 }
 
 
-void compare_arrays(uint8_t *new_image, uint8_t *old_image, uint8_t *result, int size) {
+void compare_arrays(uint8_t *new_image, uint8_t *old_image, uint16_t *result, int size) {
     for (int i = 0; i < size; i++) {
-      result[i] = (new_image[i] > old_image[i]) ? 255 : 0;
+      if (new_image[i] > old_image[i]) {
+        result[i] = swap_u16(RED);
+      }
+      else {
+        if (new_image[i] == 0) {
+            result[i] = swap_u16(BLACK);
+            }
+            else {
+            result[i] = swap_u16(WHITE);
+            
+        }
+      }
     }
+
 }
 
 int main() {
     volatile unsigned int *vga = (unsigned int *)0x50000020;
     int size = SIZE;
     camParameters camParams;
-    uint8_t result[SIZE];
+    uint16_t result[SIZE];
 
     vga_clear();
 
@@ -81,21 +112,13 @@ int main() {
         for (int i = 0; i < size; i++) {
           result[i] = 0;
         }
-        vga[2] = swap_u32(2);
+        vga[2] = swap_u32(1);
         vga[3] = swap_u32((uint32_t)&result[0]);
         do {
-            compare_arrays((uint8_t *)floyd, (uint8_t *)floyd2, (uint8_t *)result, size);
+            compare_arrays((uint8_t *)floyd, (uint8_t *)floyd2, (uint16_t *)result, size);
 
             for (int i = 0; i < size; i++) {
                 floyd2[i] = floyd[i];
-            }
-
-            for (int i = 0; i < size; i++) {
-                if (result[i] == 255) {
-                    vga[3] = swap_u32(0x00FFFFFF);
-                } else {
-                    vga[i + 4] = swap_u32(0x00000000);
-                }
             }
             
             printf("here edge comp\n");
