@@ -62,8 +62,13 @@ uint16_t grayscaleToRGB565(uint8_t grayscale) {
 
 
 void compare_arrays(uint8_t *new_image, uint8_t *old_image, uint8_t *grayscale, uint16_t *result, int size) {
+    uint16_t tmp_result;
+    uint32_t valueA, valueB = 0;
     for (int i = 0; i < size; i++) {
-        result[i] = swap_u16(grayscaleToRGB565(grayscale[i]));
+        valueA = grayscale[i];
+        asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xD":[out1]"=r"(tmp_result):[in1]"r"(valueA),[in2]"r"(valueB));
+        result[i] = swap_u16(tmp_result);
+        //result[i] = swap_u16(grayscaleToRGB565(grayscale[i]));
         if (i == 1) {
             printf("8bit %he\n", grayscale[i]);
             printf("16bit %he\n", result[i]);
@@ -140,7 +145,6 @@ int main() {
                 floyd2[i] = floyd[i];
             }
             
-            printf("here edge comp\n");
             delay(1000);
             break;
           } while (reg_result != 0);
