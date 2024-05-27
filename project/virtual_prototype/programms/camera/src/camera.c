@@ -64,6 +64,10 @@ uint16_t grayscaleToRGB565(uint8_t grayscale) {
 void compare_arrays(uint8_t *new_image, uint8_t *old_image, uint8_t *grayscale, uint16_t *result, int size) {
     for (int i = 0; i < size; i++) {
         result[i] = swap_u16(grayscaleToRGB565(grayscale[i]));
+        if (i == 1) {
+            printf("8bit %he\n", grayscale[i]);
+            printf("16bit %he\n", result[i]);
+        }
         if (new_image[i] > old_image[i]) {
             result[i] = swap_u16(RED);
         }
