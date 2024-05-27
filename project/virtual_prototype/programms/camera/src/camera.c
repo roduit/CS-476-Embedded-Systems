@@ -85,10 +85,17 @@ int main() {
         vga[3] = swap_u32((uint32_t)&result[0]);
         do {
             compare_arrays((uint8_t *)floyd, (uint8_t *)floyd2, (uint8_t *)result, size);
-            //memcpy((uint8_t *)floyd2, (uint8_t *)floyd, size * sizeof(uint8_t));
 
             for (int i = 0; i < size; i++) {
                 floyd2[i] = floyd[i];
+            }
+
+            for (int i = 0; i < size; i++) {
+                if (result[i] == 255) {
+                    vga[3] = swap_u32(0x00FFFFFF);
+                } else {
+                    vga[i + 4] = swap_u32(0x00000000);
+                }
             }
             
             printf("here edge comp\n");
