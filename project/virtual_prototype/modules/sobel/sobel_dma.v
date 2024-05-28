@@ -87,7 +87,7 @@ module sobel_dma #( parameter [7:0] customId = 8'h00 )
   wire [31:0] s_busRamData;
   
   dualPortSSRAM #( .bitwidth(32),
-                   .nrOfEntries(512)) memory
+                   .nrOfEntries(1024)) memory
                  ( .clockA(clock), 
                    .clockB(~clock),
                    .writeEnableA(s_isSramWrite), 
