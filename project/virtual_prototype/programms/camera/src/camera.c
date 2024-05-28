@@ -51,14 +51,18 @@ void delay(uint32_t milliseconds) {
 }
 
 void compare_arrays(uint8_t *new_image, uint8_t *old_image, uint8_t *grayscale, uint16_t *result, int size) {
-    uint16_t tmp_result;
+    uint32_t tmp_result;
     uint32_t valueA, valueB = 0;
-    for (int i = 0; i < size; i++) {
-        valueA = grayscale[i];
+    for (int i = 0; i < size; i = i + 2) {
+        valueA = (grayscale[i+1] << 8) | grayscale[i];
         asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xD":[out1]"=r"(tmp_result):[in1]"r"(valueA),[in2]"r"(valueB));
-        result[i] = swap_u16(tmp_result);
+        result[i] = swap_u16(tmp_result & 0xFFFF);
+        result[i+1] = swap_u16((tmp_result >> 16) & 0xFFFF);
         if (new_image[i] > old_image[i]) {
             result[i] = swap_u16(RED);
+        }
+        if (new_image[i+1] > old_image[i+1]) {
+            result[i+1] = swap_u16(RED);
         }
     }
 

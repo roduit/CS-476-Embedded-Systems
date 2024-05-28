@@ -15,7 +15,8 @@ module grayscale_conv_tb;
     wire [31:0] conversion;
     wire done;
 
-    reg [7:0] pixel_gray = 8'h00;
+    reg [7:0] pixel1_gray = 8'h23;
+    reg [7:0] pixel2_gray = 8'h43;
 
     reg [31:0] valueA;
     reg [31:0] valueB;
@@ -44,7 +45,7 @@ module grayscale_conv_tb;
         `WAIT2CYCLES;
         reset = 1'b0;
         start = 1'b1;
-        valueA = 32'h000000FF;
+        valueA = {16'h00,pixel2_gray, pixel1_gray};
         valueB = 32'h00000000;
         `WAITCYCLE;
         #10;

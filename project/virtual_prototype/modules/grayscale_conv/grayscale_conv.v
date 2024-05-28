@@ -10,26 +10,42 @@ module grayscale_conv #(parameter [7:0] customInstructionId = 8'd0)
     output wire [31:0] result
 );
 
-wire [15:0] pixelRGB;
-wire [7:0] pixelGray;
+wire [15:0] pixel1RGB;
+wire [15:0] pixel2RGB;
+wire [31:0] pixelsRGB;
 
-reg done_reg;
+wire [7:0] pixel1Gray;
+wire [7:0] pixel2Gray;
+
+wire [4:0] red_px1;
+wire [5:0] green_px1; 
+wire [4:0] blue_px1; 
+
+wire [4:0] red_px2;
+wire [5:0] green_px2;
+wire [4:0] blue_px2;
 
 wire s_isMyGrayscale = (ciN == customInstructionId) ? start : 1'b0;
 
-assign pixelGray = valueA[7:0];
+assign pixel1Gray = valueA[7:0];
+assign pixel2Gray = valueA[15:8];
 
 assign done = (s_isMyGrayscale && (valueB == 0)) ? 1'b1 : 1'b0;
-assign result = done ? pixelRGB : 32'd0;
+assign result = done ? pixelsRGB : 32'd0;
 
-wire [4:0] red;    // 5 bits for red
-wire [5:0] green;  // 6 bits for green
-wire [4:0] blue;   // 5 bits for blue
 
-assign red = (pixelGray[7:3] & 5'b11111);  // Mask with 0x1F for 5 bits
-assign green = (pixelGray[7:2] & 6'b111111); // Mask with 0x3F for 6 bits
-assign blue = (pixelGray[7:3] & 5'b11111);  // Mask with 0x1F for 5 bits
 
-assign pixelRGB = {red, green, blue};
+assign red_px1 = (pixel1Gray[7:3] & 5'b11111);  // Mask with 0x1F for 5 bits
+assign green_px1 = (pixel1Gray[7:2] & 6'b111111); // Mask with 0x3F for 6 bits
+assign blue_px1 = (pixel1Gray[7:3] & 5'b11111);  // Mask with 0x1F for 5 bits
+
+assign red_px2 = (pixel2Gray[7:3] & 5'b11111);  // Mask with 0x1F for 5 bits
+assign green_px2 = (pixel2Gray[7:2] & 6'b111111); // Mask with 0x3F for 6 bits
+assign blue_px2 = (pixel2Gray[7:3] & 5'b11111);  // Mask with 0x1F for 5 bits
+
+assign pixel1RGB = {red_px1, green_px1, blue_px1};
+assign pixel2RGB = {red_px2, green_px2, blue_px2};
+
+assign pixelsRGB = {pixel2RGB, pixel1RGB};
 
 endmodule
