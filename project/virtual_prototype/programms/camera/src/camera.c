@@ -15,6 +15,7 @@
 #define WIDTH 640
 #define HEIGHT 480
 #define SIZE (WIDTH * HEIGHT)
+#define THRESHOLD 100
 
 volatile uint8_t grayscaleImage[SIZE];
 volatile uint8_t newImageSobel[SIZE] = {0};
@@ -27,20 +28,6 @@ uint16_t result[SIZE];
 // ================================================================================
 
 int main() {
-
-    // ========================================
-    // =====     DMA Control Signals      =====
-    // ========================================
-
-    const uint32_t writeBit = 1<<10;
-    const uint32_t busStartAddress = 1 << 11;
-    const uint32_t memoryStartAddress = 2 << 11;
-    const uint32_t blockSize = 3 << 11;
-    const uint32_t burstSize = 4 << 11;
-    const uint32_t statusControl = 5 << 11;
-    const uint32_t usedCiRamAddress = 50;
-    const uint32_t usedBlocksize = 512;
-    const uint32_t usedBurstSize = 25;
 
     // ========================================
     // =====         Screen Init          =====
@@ -67,45 +54,13 @@ int main() {
     // =====    Sobel Motion Detection    =====
     // ========================================
 
-    vga[2] = swap_u32(1);
-    vga[3] = swap_u32((uint32_t)&result[0]);
+    vga[2] = swap_u32(2);
+    vga[3] = swap_u32((uint32_t)&newImageSobel[0]);
 
     while (1) {
-        //vga[3] = swap_u32((uint32_t)&grayscaleImage[0]);
-        //vga[2] = swap_u32(2);
-
-        asm volatile("l.nios_rrr r0,%[in1],%[in2],0x6" ::[in1] "r"(10000000), [in2] "r"(1)); // set 5 seconds
-        do {
-            takeSingleImageBlocking((uint32_t)&grayscaleImage[0]);
-            asm volatile("l.nios_rrr %[out1],r0,%[in2],0x6" : [out1] "=r"(reg_result) : [in2] "r"(3));
-        } while (reg_result != 0);
-
-        //vga[3] = swap_u32((uint32_t)&newImageSobel[0]);
-        //vga[2] = swap_u32(2);
-
-        //asm volatile("l.nios_rrr r0,%[in1],%[in2],0x6" ::[in1] "r"(5000000), [in2] "r"(1)); // set 5 seconds
-        do {
-            edgeDetection(grayscaleImage, newImageSobel, camParams.nrOfPixelsPerLine, camParams.nrOfLinesPerImage, 100);
-            asm volatile("l.nios_rrr %[out1],r0,%[in2],0x6" : [out1] "=r"(reg_result) : [in2] "r"(3));
-        } while (reg_result != 0);
-
-        // asm volatile("l.nios_rrr r0,%[in1],%[in2],0x6" ::[in1] "r"(5000000), [in2] "r"(1)); // set 5 seconds
-        // for (int i = 0; i < SIZE; i++) {
-        //   result[i] = 0;
-        // }
-        
-        // vga[2] = swap_u32(1);
-        // vga[3] = swap_u32((uint32_t)&result[0]);
-        //delay(1000);
-        asm volatile("l.nios_rrr r0,%[in1],%[in2],0x6" ::[in1] "r"(5000000), [in2] "r"(1)); // set 5 seconds
-        compare_arrays((uint8_t *) newImageSobel, (uint8_t *) oldImageSobel, (uint8_t *) grayscaleImage, (uint16_t *)result, SIZE);
-        //memcpy(oldImageSobel, newImageSobel, SIZE);
-
-        for (int i = 0; i < SIZE; i++) {
-            oldImageSobel[i] = newImageSobel[i];
-        }
-        
-        delay(1000);
+        takeSingleImageBlocking((uint32_t)&grayscaleImage[0]);
+        // edgeDetection(grayscaleImage, newImageSobel, camParams.nrOfPixelsPerLine, camParams.nrOfLinesPerImage, THRESHOLD);
+        compute_sobel_v1((uint32_t)&grayscaleImage[0], newImageSobel, camParams.nrOfPixelsPerLine, camParams.nrOfLinesPerImage, THRESHOLD);
     }
     return 0;
 }
