@@ -36,6 +36,10 @@ volatile uint8_t floyd[SIZE] = {0};
 volatile uint8_t floyd2[SIZE] = {0};
 volatile int16_t error_array[642 << 1];
 
+//=============================================================================
+// ========================== FUNCTIONS =======================================
+//=============================================================================
+
 void delay(uint32_t milliseconds) {
     // Assuming 1 cycle takes 1 microsecond
     volatile uint32_t cycles_per_millisecond = 1000; // Adjust this value based on your CPU frequency
@@ -46,21 +50,6 @@ void delay(uint32_t milliseconds) {
     }
 }
 
-uint16_t grayscaleToRGB565(uint8_t grayscale) {
-    // Scale the 8-bit grayscale value to the 5-bit red, 6-bit green, and 5-bit blue components
-    uint8_t red = (grayscale >> 3) & 0x1F;      // 5 bits for red
-    uint8_t green = (grayscale >> 2) & 0x3F;    // 6 bits for green
-    uint8_t blue = (grayscale >> 3) & 0x1F;     // 5 bits for blue
-
-    // Combine the components into a single 16-bit RGB565 value
-    uint16_t rgb565 = (red << 11) | (green << 5) | blue;
-    
-
-    return rgb565;
-}
-
-
-
 void compare_arrays(uint8_t *new_image, uint8_t *old_image, uint8_t *grayscale, uint16_t *result, int size) {
     uint16_t tmp_result;
     uint32_t valueA, valueB = 0;
@@ -68,26 +57,16 @@ void compare_arrays(uint8_t *new_image, uint8_t *old_image, uint8_t *grayscale, 
         valueA = grayscale[i];
         asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xD":[out1]"=r"(tmp_result):[in1]"r"(valueA),[in2]"r"(valueB));
         result[i] = swap_u16(tmp_result);
-        //result[i] = swap_u16(grayscaleToRGB565(grayscale[i]));
-        if (i == 1) {
-            printf("8bit %he\n", grayscale[i]);
-            printf("16bit %he\n", result[i]);
-        }
         if (new_image[i] > old_image[i]) {
             result[i] = swap_u16(RED);
         }
-    //   else {
-    //     if (new_image[i] == 0) {
-    //         result[i] = swap_u16(BLACK);
-    //         }
-    //         else {
-    //         result[i] = swap_u16(WHITE);
-            
-    //     }
-    //   }
     }
 
 }
+
+//=============================================================================
+// ============================= MAIN =========================================
+//=============================================================================
 
 int main() {
     volatile unsigned int *vga = (unsigned int *)0x50000020;
@@ -120,11 +99,6 @@ int main() {
 
         vga[2] = swap_u32(2);
         vga[3] = swap_u32((uint32_t)&floyd[0]);
-        // asm volatile("l.nios_rrr r0,%[in1],%[in2],0x6" ::[in1] "r"(5000000), [in2] "r"(1)); // set 5 seconds
-        // do {
-        //     floyd_steinberg(rgb565, camParams.nrOfPixelsPerLine, camParams.nrOfLinesPerImage, floyd, error_array);
-        //     asm volatile("l.nios_rrr %[out1],r0,%[in2],0x6" : [out1] "=r"(reg_result) : [in2] "r"(3));
-        // } while (reg_result != 0);
 
         asm volatile("l.nios_rrr r0,%[in1],%[in2],0x6" ::[in1] "r"(5000000), [in2] "r"(1)); // set 5 seconds
         do {
@@ -138,17 +112,13 @@ int main() {
         }
         vga[2] = swap_u32(1);
         vga[3] = swap_u32((uint32_t)&result[0]);
-        do {
-            compare_arrays((uint8_t *)floyd, (uint8_t *)floyd2, (uint8_t *) rgb565,  (uint16_t *)result, size);
+        compare_arrays((uint8_t *)floyd, (uint8_t *)floyd2, (uint8_t *) rgb565,  (uint16_t *)result, size);
 
-            for (int i = 0; i < size; i++) {
-                floyd2[i] = floyd[i];
-            }
-            
-            delay(1000);
-            break;
-          } while (reg_result != 0);
+        for (int i = 0; i < size; i++) {
+            floyd2[i] = floyd[i];
+        }
+        
+        delay(1000);
     }
-
     return 0;
 }
