@@ -75,6 +75,10 @@ void compare_arrays(uint8_t *new_image, uint8_t *old_image, uint8_t *grayscale, 
 
 }
 
+// ================================================================================
+// =====                            DMA Functions                             =====
+// ================================================================================
+
 void DMA_setupSize(uint32_t blockSizesas, uint32_t burstSizesas) {
     asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(blockSize | writeBit),[in2] "r"(blockSizesas));
     asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(burstSize | writeBit),[in2] "r"(burstSizesas));
@@ -95,69 +99,191 @@ void DMA_startTransferBlocking() {
     }
 }
 
+void DMA_writeCIMem(uint32_t memAddress, uint32_t data) {
+    asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(memAddress | writeBit), [in2]"r"(data));   
+}
+
+void DMA_readCIMem(uint32_t memAddress, uint32_t *data) {
+    asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(*data):[in1] "r"(memAddress)); 
+}
+
 // ================================================================================
 // =====                            Edge Detection                            =====
 // ================================================================================
 
 void compute_sobel_v1(uint32_t grayscaleAddr, volatile uint8_t * sobelImage, uint32_t cameraWidth, uint32_t cameraHeight, uint8_t threshold) {
     DMA_setupSize(usedBlocksize, usedBurstSize);
-    uint32_t tmp_result;
 
     for (int i = 0; i < cameraHeight; i++) {
         // DMA transfer
         DMA_setupAddr(grayscaleAddr + (i)*cameraWidth, usedCiRamAddress);
         DMA_startTransferBlocking();
-        
-        // for (int j = 0; j < cameraWidth; j+=4) {
-        for (int memAddr = 0; memAddr < cameraWidth; memAddr++) {
-            // Read pixel from memory
-            // Each address contains 4 pixels
-            // asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(tmp_result):[in1] "r"(memAddr));
-
+        uint32_t memAddress = 0;
+        for (int j = 0; j < cameraWidth; j++) {
             uint32_t image[3];
-            asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(image[0]):[in1] "r"(memAddr));
-            asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(image[1]):[in1] "r"(memAddr + cameraWidth / 4));
-            asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(image[2]):[in1] "r"(memAddr + 2 * cameraWidth / 4));
-
-
-            // int cnt = 0;
-            // for (int dx = -1; dx < 2; dx++) {
-            //     for (int dy = -1; dy < 2; dy++) {
-            //         uint32_t index = ((i+dx)*cameraWidth)+dy+j;
-            //         asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(image[cnt]):[in1] "r"(index));
-            //         cnt += 1;
-            //     }
-            // }
+            // Read 2 images
+            if (j % 3 == 0) {
+            asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(image[0]):[in1] "r"(memAddress));
+            asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(image[1]):[in1] "r"(memAddress + cameraWidth / 4));
+            asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(image[2]):[in1] "r"(memAddress + 2 * cameraWidth / 4));
             uint32_t valueA, valueB = 0;
             uint32_t tmp_sobel_result = 0;
-            
-            uint8_t px0 = image[0]&0xFF;
-            uint8_t px1 = (image[0]>>8)&0xFF;
-            uint8_t px2 = (image[0]>>16)&0xFF;
-            uint8_t px3 = (image[1])&0xFF;
-            uint8_t px4 = (image[1]>>8)&0xFF;
-            uint8_t px5 = (image[1]>>16)&0xFF;
-            uint8_t px6 = (image[2])&0xFF;
-            uint8_t px7 = (image[2]>>8)&0xFF;
-            uint8_t px8 = (image[2]>>16)&0xFF;              
 
-            valueA = (px3 << 24) | (px2 << 16) | (px1 << 8) | px0;
+            valueA = ((image[1]&0xFF) << 24) | ((image[0]&0xFF0000) << 16) | ((image[0]&0xFF00) << 8) | image[0]&0xFF;
             valueB = 1;
             asm volatile ("l.nios_rrr r0,%[in1],%[in2],0xC"::[in1]"r"(valueA),[in2]"r"(valueB));
-            valueA = (px7 << 24) | (px6 << 16) | (px5 << 8) | px4;
-            valueB = 2 | (px8 << 8) | (threshold << 16); 
+            valueA = ((image[2]&0xFF00) << 24) | ((image[2]&0xFF) << 16) | ((image[1]&0xFF0000) << 8) | image[1]&0xFF00;
+            valueB = 2 | ((image[2]&0xFF0000) << 8) | (threshold << 16);
             asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(tmp_sobel_result):[in1]"r"(valueA),[in2]"r"(valueB));
             
             // Send sobel result to memory
-            sobelImage[(i+1)*cameraWidth+(memAddr+1)] = tmp_sobel_result&0xFF;
-            if (memAddr == cameraWidth - 2) {
-                break;
+            sobelImage[(i+1)*cameraWidth+(j+1)] = tmp_sobel_result&0xFF;
+            sobelImage[(i+1)*cameraWidth+(j+2)] = 0x00;
+            sobelImage[(i+1)*cameraWidth+(j+3)] = 0x00;
+            sobelImage[(i+1)*cameraWidth+(j+4)] = 0x00;
+            memAddress += 1;
             }
         }
-        if (i == cameraHeight - 2) {
-            break;
-        }
-        
-        // write back
     }
 }
+
+// void compute_sobel_v1(uint32_t grayscaleAddr, volatile uint8_t * sobelImage, uint32_t cameraWidth, uint32_t cameraHeight, uint8_t threshold) {
+//     DMA_setupSize(usedBlocksize, usedBurstSize);
+//     uint32_t tmp_result;
+
+//     uint32_t images[6];
+
+//     uint32_t pixel0Addr = 700;
+//     uint32_t pixelLine;
+
+//     for (int i = 0; i < cameraHeight; i++) {
+//         // DMA transfer
+//         DMA_setupAddr(grayscaleAddr + (i)*cameraWidth, usedCiRamAddress);
+//         DMA_startTransferBlocking();
+        
+//         // for (int j = 0; j < cameraWidth; j+=4) {
+//         for (int memAddr = 0; memAddr < cameraWidth; memAddr++) {
+//             // Read pixel from memory
+//             // Each address contains 4 pixels
+//             // asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(tmp_result):[in1] "r"(memAddr));
+//             uint32_t last_val = (memAddr == cameraWidth - 2) ? 1 : 0;
+
+//             for (int k = 0; k < (last_val ? 3 : 6); k++) {
+//                 uint32_t index = (k < 3) ? (memAddr + k * (cameraWidth / 4)) : (memAddr + 1 + k * (cameraWidth / 4));
+//                 DMA_readCIMem(index, &pixelLine);
+//                 DMA_writeCIMem(pixel0Addr + 4*k, pixelLine&0xFF);
+//                 DMA_writeCIMem(pixel0Addr + 1 + 4*k, (pixelLine>>8)&0xFF);
+//                 DMA_writeCIMem(pixel0Addr + 2 + 4*k, (pixelLine>>16)&0xFF);
+//                 DMA_writeCIMem(pixel0Addr + 3 + 4*k, (pixelLine>>24)&0xFF);
+//             }
+            
+//             // // Read 2 images
+//             // asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(images[0]):[in1] "r"(memAddr));
+//             // asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(images[1]):[in1] "r"(memAddr + cameraWidth / 4));
+//             // asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(images[2]):[in1] "r"(memAddr + 2 * cameraWidth / 4));
+
+//             // if (!last_val) {
+//             //     asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(images[3]):[in1] "r"(memAddr + 1));
+//             //     asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(images[4]):[in1] "r"(memAddr + 1 + cameraWidth / 4));
+//             //     asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(images[5]):[in1] "r"(memAddr + 1 + 2* cameraWidth / 4));   
+//             // }
+
+//             // for (int k = 0; k < 3; k++) {
+//             //     px[0 + k*6] = image_1[k]&0xFF;
+//             //     px[1 + k*6] = (image_1[k]>>8)&0xFF;
+//             //     px[2 + k*6] = (image_1[k]>>16)&0xFF;
+//             //     px[3 + k*6] = (image_1[k]>>24)&0xFF;
+//             //     px[4 + k*6] = image_2[k]&0xFF;
+//             //     px[5 + k*6] = (image_2[k]>>8)&0xFF;   
+//             // }
+
+//             uint32_t valueA, valueB = 0;
+//             uint32_t tmp_sobel_result = 0;
+
+//             volatile uint8_t px[24];
+            
+//             for (int k = 0; k < 23; k++) {
+//                 asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(px[k]):[in1] "r"(pixel0Addr)); 
+//             }
+
+//             valueA = (px[4] << 24) | (px[2] << 16) | (px[1] << 8) | px[0];
+//             valueB = 1;
+//             asm volatile ("l.nios_rrr r0,%[in1],%[in2],0xC"::[in1]"r"(valueA),[in2]"r"(valueB));
+//             valueA = (px[9] << 24) | (px[8] << 16) | (px[6] << 8) | px[5];
+//             valueB = 2 | (px[10] << 8) | (threshold << 16);
+//             asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(tmp_sobel_result):[in1]"r"(valueA),[in2]"r"(valueB));
+//             sobelImage[(i+1)*cameraWidth+(4*memAddr+1)] = tmp_sobel_result&0xFF;
+
+//             valueA = (px[5] << 24) | (px[3] << 16) | (px[2] << 8) | px[1];
+//             valueB = 1;
+//             asm volatile ("l.nios_rrr r0,%[in1],%[in2],0xC"::[in1]"r"(valueA),[in2]"r"(valueB));
+//             valueA = (px[10] << 24) | (px[9] << 16) | (px[7] << 8) | px[6];
+//             valueB = 2 | (px[11] << 8) | (threshold << 16);
+//             asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(tmp_sobel_result):[in1]"r"(valueA),[in2]"r"(valueB));
+//             sobelImage[(i+1)*cameraWidth+(4*memAddr+2)] = tmp_sobel_result&0xFF;
+
+//             valueA = (px[6] << 24) | (px[12] << 16) | (px[3] << 8) | px[2];
+//             valueB = 1;
+//             asm volatile ("l.nios_rrr r0,%[in1],%[in2],0xC"::[in1]"r"(valueA),[in2]"r"(valueB));
+//             valueA = (px[11] << 24) | (px[10] << 16) | (px[16] << 8) | px[7];
+//             valueB = 2 | (px[20] << 8) | (threshold << 16);
+//             asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(tmp_sobel_result):[in1]"r"(valueA),[in2]"r"(valueB));
+//             sobelImage[(i+1)*cameraWidth+(4*memAddr+3)] = tmp_sobel_result&0xFF;
+
+//             valueA = (px[7] << 24) | (px[13] << 16) | (px[12] << 8) | px[3];
+//             valueB = 1;
+//             asm volatile ("l.nios_rrr r0,%[in1],%[in2],0xC"::[in1]"r"(valueA),[in2]"r"(valueB));
+//             valueA = (px[20] << 24) | (px[11] << 16) | (px[7] << 8) | px[16];
+//             valueB = 2 | (px[21] << 8) | (threshold << 16);
+//             asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(tmp_sobel_result):[in1]"r"(valueA),[in2]"r"(valueB));
+//             sobelImage[(i+1)*cameraWidth+(4*memAddr+4)] = tmp_sobel_result&0xFF;
+
+//             // for (int k = 0; k < (last_val ? 2 : 4); k++) {
+//             //     valueA = (image_1[1 + k] << 24) | (((image_1[k]>>16)&0xFF) << 16) | (((image_1[k]>>8)&0xFF) << 8) | image_1[k];
+//             //     valueB = 1;
+//             //     asm volatile ("l.nios_rrr r0,%[in1],%[in2],0xC"::[in1]"r"(valueA),[in2]"r"(valueB));
+//             //     valueA = (image_1[13+ k] << 24) | (image_1[2 + k] << 16) | (((image_1[1 + k]>>16)&0xFF) << 8)  | (((image_1[1 + k]>>8)&0xFF));
+//             //     valueB = 2 | (image_1[14 + k] << 8) | (threshold << 16); 
+//             //     asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(tmp_sobel_result):[in1]"r"(valueA),[in2]"r"(valueB));
+                
+//             //     sobelImage[(i+1)*cameraWidth+(4*memAddr+k+1)] = tmp_sobel_result&0xFF;
+//             // }
+
+//             //sobelImage[(i+1)*cameraWidth+(memAddr+1)] = tmp_sobel_result&0xFF;
+
+//             // int cnt = 0;
+//             // for (int dx = -1; dx < 2; dx++) {
+//             //     for (int dy = -1; dy < 2; dy++) {
+//             //         uint32_t index = ((i+dx)*cameraWidth)+dy+j;
+//             //         asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(image[cnt]):[in1] "r"(index));
+//             //         cnt += 1;
+//             //     }
+//             // }
+//             // uint32_t valueA, valueB = 0;
+//             // uint32_t tmp_sobel_result = 0;
+            
+//             // uint8_t px0 = image[0]&0xFF;
+//             // uint8_t px1 = (image[0]>>8)&0xFF;
+//             // uint8_t px2 = (image[0]>>16)&0xFF;
+//             // uint8_t px3 = (image[1])&0xFF;
+//             // uint8_t px4 = (image[1]>>8)&0xFF;
+//             // uint8_t px5 = (image[1]>>16)&0xFF;
+//             // uint8_t px6 = (image[2])&0xFF;
+//             // uint8_t px7 = (image[2]>>8)&0xFF;
+//             // uint8_t px8 = (image[2]>>16)&0xFF;              
+
+//             // valueA = (px3 << 24) | (px2 << 16) | (px1 << 8) | px0;
+//             // valueB = 1;
+//             // asm volatile ("l.nios_rrr r0,%[in1],%[in2],0xC"::[in1]"r"(valueA),[in2]"r"(valueB));
+//             // valueA = (px7 << 24) | (px6 << 16) | (px5 << 8) | px4;
+//             // valueB = 2 | (px8 << 8) | (threshold << 16); 
+//             // asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(tmp_sobel_result):[in1]"r"(valueA),[in2]"r"(valueB));
+            
+//             // // Send sobel result to memory
+//             // sobelImage[(i+1)*cameraWidth+(memAddr+1)] = tmp_sobel_result&0xFF;
+//             // if (memAddr == cameraWidth - 2) {
+//             //     break;
+//             // }
+//         }
+//     }
+// }
