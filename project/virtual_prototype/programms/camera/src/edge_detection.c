@@ -115,9 +115,9 @@ void DMA_readCIMem(uint32_t memAddress, uint32_t *data) {
 // ================================================================================
 
 void compute_sobel_v1(uint32_t grayscaleAddr, volatile uint8_t * sobelImage, uint32_t cameraWidth, uint32_t cameraHeight, uint8_t threshold) {
-    uint32_t line_index = 0; // Start from the second line
-    uint32_t effectiveWidth = cameraWidth / 4; // Each address contains 4 pixels
-    uint32_t effectiveHeight = cameraHeight - 2; // writing 3 lines at a time -> STOP 2 lines before the end
+    uint32_t line_index = 0;                        // Start from the second line
+    uint32_t effectiveWidth = cameraWidth / 4;      // Each address contains 4 pixels
+    uint32_t effectiveHeight = cameraHeight - 2;    // writing 3 lines at a time -> STOP 2 lines before the end
     
     uint8_t pixelStorage[24];
     uint8_t sobelStorage[4];
@@ -164,16 +164,16 @@ void compute_sobel_v1(uint32_t grayscaleAddr, volatile uint8_t * sobelImage, uin
                 valueA = (pixelStorage[17 + numConv] << 24) | (pixelStorage[16 + numConv] << 16) | (pixelStorage[10 + numConv] << 8) | pixelStorage[9 + numConv];
                 valueB = 2 | (pixelStorage[18 + numConv] << 8) | (threshold << 16);
                 asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(tmp_sobel_result):[in1]"r"(valueA),[in2]"r"(valueB));
-                sobelImage[(line_index+1)*cameraWidth+(4*col_index+numConv+1)] = tmp_sobel_result > threshold ? 0xFF : 0x00;
-                //sobelStorage[numConv] = (tmp_sobel_result > threshold) ? 0xFF : 0x00;
+                //sobelImage[(line_index+1)*cameraWidth+(4*col_index+numConv+1)] = tmp_sobel_result > threshold ? 0xFF : 0x00;
+                sobelStorage[numConv] = (tmp_sobel_result > threshold) ? 0xFF : 0x00;
             }
 
-            //DMA_writeCIMem(startSobelBufferAddr + col_index, swap_u32((sobelStorage[3] << 24) | (sobelStorage[2] << 16) | (sobelStorage[1] << 8) | sobelStorage[0]));
+            DMA_writeCIMem(startSobelBufferAddr + col_index, ((sobelStorage[3] << 24) | (sobelStorage[2] << 16) | (sobelStorage[1] << 8) | sobelStorage[0]));
         }
 
         // Send sobelStorage to the VGA
-        //DMA_setupSize(sobelBufferSize, usedBurstSize);
-        //DMA_setupAddr((uint32_t)& sobelImage[0] + (line_index + 1)*cameraWidth + 1, startSobelBufferAddr);
-        //DMA_startTransferBlocking(2);
+        DMA_setupSize(sobelBufferSize, usedBurstSize);
+        DMA_setupAddr((uint32_t)& sobelImage[0] + (line_index + 1)*cameraWidth + 1, startSobelBufferAddr);
+        DMA_startTransferBlocking(2);
     }
 }

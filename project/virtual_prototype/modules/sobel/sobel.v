@@ -4,7 +4,7 @@ module sobel
                         pixel3, pixel4, pixel5,
                         pixel6, pixel7, pixel8,
     input wire  [7:0]   threshold,
-    output wire [31:0]   edge_val
+    output wire [7:0]   edge_val
 );
 
     // Sobel kernels
