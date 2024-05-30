@@ -45,7 +45,7 @@ module ramDmaCi #( parameter [7:0] customId = 8'h00 )
    *
    */
   reg[31:0] s_busStartAddressReg;
-  reg[8:0]  s_memoryStartAddressReg;
+  reg[9:0]  s_memoryStartAddressReg;
   reg[9:0]  s_blockSizeReg;
   reg[7:0]  s_usedBurstSizeReg;
   
@@ -53,8 +53,8 @@ module ramDmaCi #( parameter [7:0] customId = 8'h00 )
     begin
       s_busStartAddressReg    <= (reset == 1'b1) ? 32'd0 :
                                  (s_isMyCi == 1'b1 && valueA[13:10] == 4'b0011) ? valueB : s_busStartAddressReg;
-      s_memoryStartAddressReg <= (reset == 1'b1) ? 9'd0 :
-                                 (s_isMyCi == 1'b1 && valueA[13:10] == 4'b0101) ? valueB[8:0] : s_memoryStartAddressReg;
+      s_memoryStartAddressReg <= (reset == 1'b1) ? 10'd0 :
+                                 (s_isMyCi == 1'b1 && valueA[13:10] == 4'b0101) ? valueB[9:0] : s_memoryStartAddressReg;
       s_blockSizeReg          <= (reset == 1'b1) ? 10'd0 :
                                  (s_isMyCi == 1'b1 && valueA[13:10] == 4'b0111) ? valueB[9:0] : s_blockSizeReg;
       s_usedBurstSizeReg      <= (reset == 1'b1) ? 8'd0 :
