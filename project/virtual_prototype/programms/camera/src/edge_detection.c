@@ -36,7 +36,7 @@ const uint32_t blockSize = 3 << 11;
 const uint32_t burstSize = 4 << 11;
 const uint32_t statusControl = 5 << 11;
 const uint32_t usedCiRamAddress = 0;
-const uint32_t usedBlocksize = 160;
+const uint32_t usedBlocksize = 480; // = cameraWidth / 4 * nb of lines (here 3)
 const uint32_t usedBurstSize = 25;
 
 // ================================================================================
@@ -116,23 +116,52 @@ void compute_sobel_v1(uint32_t grayscaleAddr, volatile uint8_t * sobelImage, uin
 
     uint32_t line_index = 0; // Start from the second line
     uint32_t effectiveWidth = cameraWidth / 4; // Each address contains 4 pixels
+    uint32_t effectiveHeight = cameraHeight - 2; // writing 3 lines at a time -> STOP 2 lines before the end
+    uint8_t pixelStorage[24];
+    uint32_t valueA, valueB = 0;
+    uint32_t tmp_sobel_result = 0;
+    uint32_t col_index = 0;
+    uint32_t tmp_line = 0;
 
 
-    for (line_index; line_index < (cameraHeight); line_index++) {
+
+    for (line_index; line_index < effectiveHeight; line_index++) {
         // DMA transfer
         DMA_setupAddr(grayscaleAddr + (line_index)*cameraWidth, usedCiRamAddress);
         DMA_startTransferBlocking();
 
-        uint32_t col_index = 0;
+        col_index = 0;
         for (col_index; col_index < effectiveWidth - 1; col_index++) {
-            uint32_t pixelsRead;
-            asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(pixelsRead):[in1] "r"(col_index));
 
-            sobelImage[(line_index)*cameraWidth+(4*col_index+1)] = pixelsRead&0xFF;
-            sobelImage[(line_index)*cameraWidth+(4*col_index+2)] = (pixelsRead>>8)&0xFF;
-            sobelImage[(line_index)*cameraWidth+(4*col_index+3)] = (pixelsRead>>16)&0xFF;
-            sobelImage[(line_index)*cameraWidth+(4*col_index+4)] = (pixelsRead>>24)&0xFF;
+            // Read 3 lines and 2 blocks of pixels and store them in pixelStorage
+            for (int nbBlocks = 0; nbBlocks < 2; nbBlocks++) {
+                asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(tmp_line):[in1] "r"(col_index + nbBlocks));
+                pixelStorage[0 + nbBlocks*4] = tmp_line&0xFF;
+                pixelStorage[1 + nbBlocks*4] = (tmp_line>>8)&0xFF;
+                pixelStorage[2 + nbBlocks*4] = (tmp_line>>16)&0xFF;
+                pixelStorage[3 + nbBlocks*4] = (tmp_line>>24)&0xFF;
+                asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(tmp_line):[in1] "r"(effectiveWidth + (col_index + nbBlocks)));
+                pixelStorage[8 + nbBlocks*4] = tmp_line&0xFF;
+                pixelStorage[9 + nbBlocks*4] = (tmp_line>>8)&0xFF;
+                pixelStorage[10 + nbBlocks*4] = (tmp_line>>16)&0xFF;
+                pixelStorage[11 + nbBlocks*4] = (tmp_line>>24)&0xFF;
+                asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(tmp_line):[in1] "r"((2 * effectiveWidth) + (col_index + nbBlocks)));     
+                pixelStorage[16 + nbBlocks*4] = tmp_line&0xFF;
+                pixelStorage[17 + nbBlocks*4] = (tmp_line>>8)&0xFF;
+                pixelStorage[18 + nbBlocks*4] = (tmp_line>>16)&0xFF;
+                pixelStorage[19 + nbBlocks*4] = (tmp_line>>24)&0xFF;       
+            }
 
+            // Compute the Sobel filter
+            for (int numConv = 0; numConv < 4; numConv++) {
+                valueA = (pixelStorage[8 + numConv] << 24) | (pixelStorage[2 + numConv] << 16) | (pixelStorage[1 + numConv] << 8) | pixelStorage[0 + numConv];
+                valueB = 1;
+                asm volatile ("l.nios_rrr r0,%[in1],%[in2],0xC"::[in1]"r"(valueA),[in2]"r"(valueB));
+                valueA = (pixelStorage[17 + numConv] << 24) | (pixelStorage[16 + numConv] << 16) | (pixelStorage[10 + numConv] << 8) | pixelStorage[9 + numConv];
+                valueB = 2 | (pixelStorage[18 + numConv] << 8) | (threshold << 16);
+                asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(tmp_sobel_result):[in1]"r"(valueA),[in2]"r"(valueB));
+                sobelImage[(line_index+1)*cameraWidth+(4*col_index+numConv+1)] = tmp_sobel_result > threshold ? 0xFF : 0x00;
+            }
         }
     }
 }
