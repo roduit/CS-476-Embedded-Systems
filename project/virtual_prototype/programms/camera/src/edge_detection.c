@@ -66,10 +66,10 @@ void compare_arrays(uint8_t *new_image, uint8_t *old_image, uint8_t *grayscale, 
         result[i] = swap_u16(tmp_result & 0xFFFF);
         result[i+1] = swap_u16((tmp_result >> 16) & 0xFFFF);
         if (new_image[i] > old_image[i]) {
-            result[i] = swap_u16(LIME);
+            result[i] = swap_u16(RED);
         }
         if (new_image[i+1] > old_image[i+1]) {
-            result[i+1] = swap_u16(LIME);
+            result[i+1] = swap_u16(RED);
         }
     }
 

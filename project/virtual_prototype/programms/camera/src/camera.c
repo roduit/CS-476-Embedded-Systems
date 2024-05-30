@@ -59,13 +59,9 @@ int main() {
 
     while (1) {
         takeSingleImageBlocking((uint32_t)&grayscaleImage[0]);
-        // edgeDetection(grayscaleImage, newImageSobel, camParams.nrOfPixelsPerLine, camParams.nrOfLinesPerImage, THRESHOLD);
         compute_sobel_v1((uint32_t)&grayscaleImage[0], newImageSobel, camParams.nrOfPixelsPerLine, camParams.nrOfLinesPerImage, THRESHOLD);
         compare_arrays((uint8_t *)newImageSobel, (uint8_t *)oldImageSobel, (uint8_t *) grayscaleImage,  (uint16_t *)result, SIZE);
-
-            for (int i = 0; i < SIZE; i++) {
-                oldImageSobel[i] = newImageSobel[i];
-            }
+        memcpy((void*)oldImageSobel, (void*)newImageSobel, SIZE * sizeof(uint8_t));
     }
     return 0;
 }
