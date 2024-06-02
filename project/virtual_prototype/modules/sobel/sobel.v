@@ -22,7 +22,7 @@ module sobel
     assign Gy_abs = Gy < 0 ? -Gy : Gy;
 
     // Calculate the edge value
-    // assign edge_val = (Gx_abs + Gy_abs) > threshold ? 255 : 0;
-    assign edge_val = (Gx_abs + Gy_abs);
+    assign edge_val = (Gx_abs + Gy_abs) > threshold ? 255 : 0;
+    //assign edge_val = (Gx_abs + Gy_abs);
 
 endmodule

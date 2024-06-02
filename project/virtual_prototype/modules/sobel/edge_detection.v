@@ -41,11 +41,20 @@ module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
 
     wire s_isMyEd = (ciN == customInstructionId) ? start : 1'b0;
 
-    wire s_doCompute = s_isMyEd && (valueB[7:0] == 8'd5);
+    // wire s_doCompute = s_isMyEd && (valueB[7:0] == 8'd5);
+    wire s_doCompute = s_isMyEd;
     reg s_doComputeReg = 0;
   
     assign done   = (s_isMyEd && (valueB[7:0] != 8'd5)) ? 1'b1 : (s_doComputeReg) ? 1'b1 : 1'b0;
     assign result = (s_doComputeReg == 1'b1) ?  {s_sobel_3, s_sobel_2, s_sobel_1, s_sobel_0} : 32'd0;
+
+    // assign done   = (s_doComputeReg) ? 1'b1 : 1'b0;
+    // assign result = (s_doComputeReg == 1'b1) ?  (valueB[7:0] == 8'd0) ? {pixels[3], pixels[2], pixels[1], pixels[0]} : 
+    //                                             (valueB[7:0] == 8'd1) ? {pixels[3], pixels[2], pixels[1], pixels[0]} : 
+    //                                             (valueB[7:0] == 8'd2) ? {pixels[3], pixels[2], pixels[1], pixels[0]}: 
+    //                                             (valueB[7:0] == 8'd3) ? {pixels[3], pixels[2], pixels[1], pixels[0]} : 
+    //                                             (valueB[7:0] == 8'd4) ? {pixels[3], pixels[2], pixels[1], pixels[0]} :
+    //                                             {pixels[3], pixels[2], pixels[1], pixels[0]} : 32'd0;
 
     // ============================================================================
     //                         SOBEL EDGE DETECTION MODULE
@@ -149,7 +158,7 @@ module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
         end else begin
             // Compute the edge detection
             s_doComputeReg <= s_doCompute;
-            if (start) begin
+            if (s_isMyEd) begin
                 case(valueB[7:0])
                     LOAD_PX_0_3: begin
                         $display("Loading pixels 0-3");
