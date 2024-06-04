@@ -18,7 +18,8 @@ module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
     //  3. valueB[7:0] = 0b010  =>  Set pixel 8-11
     //  4. valueB[7:0] = 0b011  =>  Set pixel 12-15
     //  5. valueB[7:0] = 0b100  =>  Set pixel 16-19
-    //  6. valueB[7:0] = 0b101  =>  Set pixel 20-23 + threshold (valueB[15:8])
+    //  6. valueB[7:0] = 0b101  =>  Set pixel 20-23
+    //  7. valueB[7:0] = 0b110  =>  Set threshold (valueA[7:0])
     //
     //  Important: valueB[16] = 1 => reverse order of the images 
     //                               (1 -> reverse, 0 -> forward)
@@ -134,7 +135,8 @@ module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
     localparam LOAD_PX_8_11 = 8'd2;
     localparam LOAD_PX_12_15 = 8'd3;
     localparam LOAD_PX_16_19 = 8'd4;
-    localparam LOAD_LAST_PX_AND_THRESHOLD = 8'd5;
+    localparam LOAD_PX_20_23 = 8'd5;
+    localparam SET_THRESHOLD = 8'd6;
 
     always @(posedge clock) 
     begin
@@ -205,13 +207,15 @@ module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
                         pixels[18] <= valueA[23:16];
                         pixels[19] <= valueA[31:24];
                     end
-                    LOAD_LAST_PX_AND_THRESHOLD: begin
+                    LOAD_PX_20_23: begin
                         $display("Loading pixels 20-23 and threshold");
                         pixels[20] <= valueA[7:0];
                         pixels[21] <= valueA[15:8];
                         pixels[22] <= valueA[23:16];
                         pixels[23] <= valueA[31:24];
-                        threshold <= valueB[15:8];
+                    end
+                    SET_THRESHOLD: begin
+                        threshold <= valueA[7:0];
                     end
 
                 endcase

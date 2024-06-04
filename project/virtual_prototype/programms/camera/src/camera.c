@@ -54,83 +54,84 @@ int main() {
     // =====    Sobel Motion Detection    =====
     // ========================================
 
-    vga[2] = swap_u32(2);
-    vga[3] = swap_u32((uint32_t)&newImageSobel[0]);
+    vga[2] = swap_u32(1);
+    vga[3] = swap_u32((uint32_t)&result[0]);
+    printf("Starting edge detection\n");
 
-    // while (1) {
-    //     takeSingleImageBlocking((uint32_t)&grayscaleImage[0]);
-    //     compute_sobel_v1((uint32_t)&grayscaleImage[0], (uint8_t *)newImageSobel, camParams.nrOfPixelsPerLine, camParams.nrOfLinesPerImage, THRESHOLD);
-    //     // compare_arrays((uint8_t *)newImageSobel, (uint8_t *)oldImageSobel, (uint8_t *) grayscaleImage,  (uint16_t *)result, SIZE);
-    //     // memcpy((void*)oldImageSobel, (void*)newImageSobel, SIZE * sizeof(uint8_t));
+    while (1) {
+        takeSingleImageBlocking((uint32_t)&grayscaleImage[0]);
+        compute_sobel_v1((uint32_t)&grayscaleImage[0], (uint8_t *)newImageSobel, camParams.nrOfPixelsPerLine, camParams.nrOfLinesPerImage, THRESHOLD);
+        compare_arrays((uint8_t *)newImageSobel, (uint8_t *)oldImageSobel, (uint8_t *) grayscaleImage,  (uint16_t *)result, SIZE);
+        memcpy((void*)oldImageSobel, (void*)newImageSobel, SIZE * sizeof(uint8_t));
+    }
+
+    // uint32_t tmplines[3][2];
+    // uint32_t tmp_sobel_result = 0;
+    // uint32_t threshold = THRESHOLD;
+
+    // tmplines[0][0] = 0x8c652f85;
+    // tmplines[0][1] = 0x9c6440bb;
+    // tmplines[1][0] = 0xfa4391b4;
+    // tmplines[1][1] = 0xd916909e;
+    // tmplines[2][0] = 0x4285b377;
+    // tmplines[2][1] = 0x6e848536;
+
+    // printf("\n");
+
+    // uint32_t valueB = 0;
+    // for (int nbLines = 0; nbLines < 3; nbLines++) {
+    //     asm volatile ("l.nios_rrr r0,%[in1],%[in2],0xC"::[in1]"r"(tmplines[nbLines][0]),[in2]"r"((valueB)));
+    //     printf("line %0d: %3d, %3d, %3d, %3d\n", nbLines*2 + 1, tmplines[nbLines][0]&0xFF, (tmplines[nbLines][0] >> 8) & 0xFF, (tmplines[nbLines][0] >> 16) & 0xFF, (tmplines[nbLines][0] >> 24) & 0xFF);
+    //     valueB++;
+
+    //     if (valueB == 5) {
+    //         valueB = 5 | (threshold << 8) | (1 << 17);
+    //     }
+    //     asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(tmp_sobel_result):[in1]"r"(tmplines[nbLines][1]),[in2]"r"((valueB)));
+    //     printf("line %0d: %3d, %3d, %3d, %3d\n", nbLines*2 + 2, tmplines[nbLines][1]&0xFF, (tmplines[nbLines][1] >> 8) & 0xFF, (tmplines[nbLines][1] >> 16) & 0xFF, (tmplines[nbLines][1] >> 24) & 0xFF);
+    //     valueB++;
     // }
+    // // print the result in hex
+    // printf("\n");
+    // printf("tmp_sobel_result conv 1: %3d\n", tmp_sobel_result & 0xFF);
+    // printf("tmp_sobel_result conv 2: %3d\n", (tmp_sobel_result >> 8) & 0xFF);
+    // printf("tmp_sobel_result conv 3: %3d\n", (tmp_sobel_result >> 16) & 0xFF);
+    // printf("tmp_sobel_result conv 4: %3d\n", (tmp_sobel_result >> 24) & 0xFF);
 
-    uint32_t tmplines[3][2];
-    uint32_t tmp_sobel_result = 0;
-    uint32_t threshold = THRESHOLD;
+    // printf("\n");
+    // tmplines[0][0] = 0xaa652f85;
+    // tmplines[0][1] = 0x4285b377;
+    // tmplines[1][0] = 0xe13dd277;
+    // tmplines[1][1] = 0xdddaaaff;
+    // tmplines[2][0] = 0x1313223a;
+    // tmplines[2][1] = 0x983489ab;
 
-    tmplines[0][0] = 0x8c652f85;
-    tmplines[0][1] = 0x9c6440bb;
-    tmplines[1][0] = 0xfa4391b4;
-    tmplines[1][1] = 0xd916909e;
-    tmplines[2][0] = 0x4285b377;
-    tmplines[2][1] = 0x6e848536;
+    // valueB = 3 << 16;
+    // for (int nbLines = 0; nbLines < 3; nbLines++) {
+    //     asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(tmp_sobel_result):[in1]"r"(tmplines[nbLines][0]),[in2]"r"((valueB)));
+    //     printf("line %0d: %3d, %3d, %3d, %3d\n", nbLines*2 + 1, tmplines[nbLines][1]&0xFF, (tmplines[nbLines][0] >> 8) & 0xFF, (tmplines[nbLines][1] >> 16) & 0xFF, (tmplines[nbLines][1] >> 24) & 0xFF);
+    //     valueB += 2;
+    // }
+    // // print the result in hex
+    // printf("\n");
+    // printf("tmp_sobel_result conv 1: %3d\n", tmp_sobel_result & 0xFF);
+    // printf("tmp_sobel_result conv 2: %3d\n", (tmp_sobel_result >> 8) & 0xFF);
+    // printf("tmp_sobel_result conv 3: %3d\n", (tmp_sobel_result >> 16) & 0xFF);
+    // printf("tmp_sobel_result conv 4: %3d\n", (tmp_sobel_result >> 24) & 0xFF);
+    // printf("\n");
 
-    printf("\n");
-
-    uint32_t valueB = 0;
-    for (int nbLines = 0; nbLines < 3; nbLines++) {
-        asm volatile ("l.nios_rrr r0,%[in1],%[in2],0xC"::[in1]"r"(tmplines[nbLines][0]),[in2]"r"((valueB)));
-        printf("line %0d: %3d, %3d, %3d, %3d\n", nbLines*2 + 1, tmplines[nbLines][0]&0xFF, (tmplines[nbLines][0] >> 8) & 0xFF, (tmplines[nbLines][0] >> 16) & 0xFF, (tmplines[nbLines][0] >> 24) & 0xFF);
-        valueB++;
-
-        if (valueB == 5) {
-            valueB = 5 | (threshold << 8);
-        }
-        asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(tmp_sobel_result):[in1]"r"(tmplines[nbLines][1]),[in2]"r"((valueB)));
-        printf("line %0d: %3d, %3d, %3d, %3d\n", nbLines*2 + 2, tmplines[nbLines][1]&0xFF, (tmplines[nbLines][1] >> 8) & 0xFF, (tmplines[nbLines][1] >> 16) & 0xFF, (tmplines[nbLines][1] >> 24) & 0xFF);
-        valueB++;
-    }
-    // print the result in hex
-    printf("\n");
-    printf("tmp_sobel_result conv 1: %3d\n", tmp_sobel_result & 0xFF);
-    printf("tmp_sobel_result conv 2: %3d\n", (tmp_sobel_result >> 8) & 0xFF);
-    printf("tmp_sobel_result conv 3: %3d\n", (tmp_sobel_result >> 16) & 0xFF);
-    printf("tmp_sobel_result conv 4: %3d\n", (tmp_sobel_result >> 24) & 0xFF);
-
-    printf("\n");
-    tmplines[0][0] = 0xaa652f85;
-    tmplines[0][1] = 0x4285b377;
-    tmplines[1][0] = 0xe13dd277;
-    tmplines[1][1] = 0xdddaaaff;
-    tmplines[2][0] = 0x1313223a;
-    tmplines[2][1] = 0x983489ab;
-
-    valueB = 1 << 16;
-    for (int nbLines = 0; nbLines < 3; nbLines++) {
-        asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(tmp_sobel_result):[in1]"r"(tmplines[nbLines][0]),[in2]"r"((valueB)));
-        printf("line %0d: %3d, %3d, %3d, %3d\n", nbLines*2 + 1, tmplines[nbLines][1]&0xFF, (tmplines[nbLines][0] >> 8) & 0xFF, (tmplines[nbLines][1] >> 16) & 0xFF, (tmplines[nbLines][1] >> 24) & 0xFF);
-        valueB += 2;
-    }
-    // print the result in hex
-    printf("\n");
-    printf("tmp_sobel_result conv 1: %3d\n", tmp_sobel_result & 0xFF);
-    printf("tmp_sobel_result conv 2: %3d\n", (tmp_sobel_result >> 8) & 0xFF);
-    printf("tmp_sobel_result conv 3: %3d\n", (tmp_sobel_result >> 16) & 0xFF);
-    printf("tmp_sobel_result conv 4: %3d\n", (tmp_sobel_result >> 24) & 0xFF);
-    printf("\n");
-
-    valueB = 1;
-    for (int nbLines = 0; nbLines < 3; nbLines++) {
-        asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(tmp_sobel_result):[in1]"r"(tmplines[nbLines][1]),[in2]"r"((valueB)));
-        printf("line %0d: %3d, %3d, %3d, %3d\n", nbLines*2 + 2, tmplines[nbLines][1]&0xFF, (tmplines[nbLines][1] >> 8) & 0xFF, (tmplines[nbLines][1] >> 16) & 0xFF, (tmplines[nbLines][1] >> 24) & 0xFF);
-        valueB += 2;
-    }
-    // print the result in hex
-    printf("\n");
-    printf("tmp_sobel_result conv 1: %3d\n", tmp_sobel_result & 0xFF);
-    printf("tmp_sobel_result conv 2: %3d\n", (tmp_sobel_result >> 8) & 0xFF);
-    printf("tmp_sobel_result conv 3: %3d\n", (tmp_sobel_result >> 16) & 0xFF);
-    printf("tmp_sobel_result conv 4: %3d\n", (tmp_sobel_result >> 24) & 0xFF);
+    // valueB = 1 | (1 << 17);
+    // for (int nbLines = 0; nbLines < 3; nbLines++) {
+    //     asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(tmp_sobel_result):[in1]"r"(tmplines[nbLines][1]),[in2]"r"((valueB)));
+    //     printf("line %0d: %3d, %3d, %3d, %3d\n", nbLines*2 + 2, tmplines[nbLines][1]&0xFF, (tmplines[nbLines][1] >> 8) & 0xFF, (tmplines[nbLines][1] >> 16) & 0xFF, (tmplines[nbLines][1] >> 24) & 0xFF);
+    //     valueB += 2;
+    // }
+    // // print the result in hex
+    // printf("\n");
+    // printf("tmp_sobel_result conv 1: %3d\n", tmp_sobel_result & 0xFF);
+    // printf("tmp_sobel_result conv 2: %3d\n", (tmp_sobel_result >> 8) & 0xFF);
+    // printf("tmp_sobel_result conv 3: %3d\n", (tmp_sobel_result >> 16) & 0xFF);
+    // printf("tmp_sobel_result conv 4: %3d\n", (tmp_sobel_result >> 24) & 0xFF);
 
     return 0;
 }
