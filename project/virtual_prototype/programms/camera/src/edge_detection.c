@@ -39,7 +39,7 @@ const uint32_t usedCiRamAddress = 0;
 const uint32_t usedBlocksize = 480; // = cameraWidth / 4 * nb of lines (here 3)
 const uint32_t usedBurstSize = 25;
 
-const uint32_t startSobelBufferAddr = 800;
+const uint32_t startSobelBufferAddr = 0;
 const uint32_t sobelBufferSize = 160;
 const uint32_t reverse = 1 << 16;
 const uint32_t startEdgeDetection = 1 << 17;
@@ -129,6 +129,9 @@ void compute_sobel_v1(uint32_t grayscaleAddr, volatile uint8_t * sobelImage, uin
     uint32_t col_index = 0;
     uint32_t tmp_line = 0;
 
+    // Set the threshold
+    asm volatile ("l.nios_rrr r0,%[in1],%[in2],0xC"::[in1]"r"((threshold)),[in2]"r"((6)));
+
 
 
     for (line_index; line_index < effectiveHeight; line_index++) {
@@ -137,13 +140,9 @@ void compute_sobel_v1(uint32_t grayscaleAddr, volatile uint8_t * sobelImage, uin
         DMA_setupAddr(grayscaleAddr + (line_index)*cameraWidth, usedCiRamAddress);
         DMA_startTransferBlocking(1);
 
-        // Set the threshold
-        asm volatile ("l.nios_rrr r0,%[in1],%[in2],0xC"::[in1]"r"((threshold)),[in2]"r"((6)));
-
         for (col_index = 0; col_index < effectiveWidth; col_index++) {
 
-            // Read 3 lines and 2 blocks of pixels and store them in pixelStorage
-            // first case
+            // first case, we need to charge both (equivalent to a reset)
             if (col_index == 0) {
                 valueB = 0;
                 for (int nbLines = 0; nbLines < 3; nbLines++) {
@@ -158,25 +157,18 @@ void compute_sobel_v1(uint32_t grayscaleAddr, volatile uint8_t * sobelImage, uin
                     asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(tmp_sobel_result):[in1]"r"((tmp_line)),[in2]"r"((valueB)));
                     valueB++;
                 }
-                col_index++;
             }
-            // general case
+            // // general case
             else {
-                //printf("col_index: %d\n", col_index);
                 valueB = (col_index % 2 == 0) ? 1 : reverse;
-                //printf("=====================================\n");
 
                 for (int nbLines = 0; nbLines < 3; nbLines++) {
-                    //printf("valueB: %d, reverse: %d\n", valueB&0xFF, valueB >> 16);
-                    // if ((valueB&0xFF) == 5 | (valueB&0xFF) == 4) {
-                    //     valueB = valueB | (threshold << 8);
-                    // }
                     asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(tmp_line):[in1] "r"(col_index + (nbLines * effectiveWidth)));
-                    //printf("writing %d: %d, %d, %d, %d\n", valueB >> 16, (tmp_line >> 24) & 0xFF, (tmp_line >> 16) & 0xFF, (tmp_line >> 8) & 0xFF, tmp_line & 0xFF);
-
-                    asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(tmp_sobel_result):[in1]"r"((tmp_line)),[in2]"r"((valueB | startEdgeDetection)));
+                    if (nbLines == 2) {
+                        valueB += 1 << 17;
+                    }
+                    asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(tmp_sobel_result):[in1]"r"((tmp_line)),[in2]"r"((valueB)));
                     valueB += 2;
-                    //printf("reading %d: %d, %d, %d, %d\n", valueB >> 16, (tmp_sobel_result >> 24) & 0xFF, (tmp_sobel_result >> 16) & 0xFF, (tmp_sobel_result >> 8) & 0xFF, tmp_sobel_result & 0xFF);
                 }
 
             }
@@ -194,7 +186,6 @@ void compute_sobel_v1(uint32_t grayscaleAddr, volatile uint8_t * sobelImage, uin
             //     asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(tmp_sobel_result):[in1]"r"((tmp_line)),[in2]"r"((valueB | startEdgeDetection)));
             //     valueB++;
             // }
-
             DMA_writeCIMem(startSobelBufferAddr + col_index, tmp_sobel_result);
         }
 
