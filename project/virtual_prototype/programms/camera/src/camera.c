@@ -54,15 +54,15 @@ int main() {
     // =====    Sobel Motion Detection    =====
     // ========================================
 
-    vga[2] = swap_u32(2);
-    vga[3] = swap_u32((uint32_t)&newImageSobel[0]);
+    vga[2] = swap_u32(1);
+    vga[3] = swap_u32((uint32_t)&result[0]);
     printf("Starting edge detection\n");
 
     while (1) {
         takeSingleImageBlocking((uint32_t)&grayscaleImage[0]);
         compute_sobel_v1((uint32_t)&grayscaleImage[0], (uint8_t *)newImageSobel, camParams.nrOfPixelsPerLine, camParams.nrOfLinesPerImage, THRESHOLD);
-        // compare_arrays((uint8_t *)newImageSobel, (uint8_t *)oldImageSobel, (uint8_t *) grayscaleImage,  (uint16_t *)result, SIZE);
-        // memcpy((void*)oldImageSobel, (void*)newImageSobel, SIZE * sizeof(uint8_t));
+        compare_arrays((uint8_t *)newImageSobel, (uint8_t *)oldImageSobel, (uint8_t *) grayscaleImage,  (uint16_t *)result, SIZE);
+        memcpy((void*)oldImageSobel, (void*)newImageSobel, SIZE * sizeof(uint8_t));
     }
 
     // uint32_t tmplines[3][2];

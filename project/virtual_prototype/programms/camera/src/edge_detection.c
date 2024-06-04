@@ -39,10 +39,11 @@ const uint32_t usedCiRamAddress = 0;
 const uint32_t usedBlocksize = 480; // = cameraWidth / 4 * nb of lines (here 3)
 const uint32_t usedBurstSize = 25;
 
-const uint32_t startSobelBufferAddr = 0;
+const uint32_t startSobelBufferAddr = 800;
 const uint32_t sobelBufferSize = 160;
 const uint32_t reverse = 1 << 16;
 const uint32_t startEdgeDetection = 1 << 17;
+const uint32_t lineBlockSize = 160;
 
 // ================================================================================
 // =====                           Delay Generator                            =====
@@ -121,13 +122,18 @@ void compute_sobel_v1(uint32_t grayscaleAddr, volatile uint8_t * sobelImage, uin
     uint32_t effectiveWidth = cameraWidth / 4;      // Each address contains 4 pixels
     uint32_t effectiveHeight = cameraHeight - 2;    // writing 3 lines at a time -> STOP 2 lines before the end
     
-    uint8_t pixelStorage[24];
-    uint8_t sobelStorage[4];
+    //uint8_t pixelStorage[24];
+    //uint8_t sobelStorage[4];
     
     uint32_t valueA, valueB = 0;
     uint32_t tmp_sobel_result = 0;
     uint32_t col_index = 0;
     uint32_t tmp_line = 0;
+
+    uint32_t startLine = 2;
+    uint32_t startIdx = 0;
+
+    uint32_t readAddr = 0;
 
     // Set the threshold
     asm volatile ("l.nios_rrr r0,%[in1],%[in2],0xC"::[in1]"r"((threshold)),[in2]"r"((6)));
@@ -136,9 +142,16 @@ void compute_sobel_v1(uint32_t grayscaleAddr, volatile uint8_t * sobelImage, uin
 
     for (line_index; line_index < effectiveHeight; line_index++) {
         // DMA transfer
-        DMA_setupSize(usedBlocksize, usedBurstSize);
-        DMA_setupAddr(grayscaleAddr + (line_index)*cameraWidth, usedCiRamAddress);
-        DMA_startTransferBlocking(1);
+        
+        if (line_index < cameraHeight - 3) {
+            // DMA_setupSize(usedBlocksize, usedBurstSize);
+            DMA_setupSize(line_index == 0 ? usedBlocksize : lineBlockSize, usedBurstSize);
+            readAddr = line_index == 0 ? grayscaleAddr : (grayscaleAddr + (line_index + 2)*cameraWidth);
+            // DMA_setupAddr(grayscaleAddr + (line_index)*cameraWidth, line_index == 0 ? 0 : (startLine * effectiveWidth));
+            DMA_setupAddr(readAddr, line_index == 0 ? 0 : (startLine * effectiveWidth));
+            DMA_startTransferBlocking(1);
+            // printf("readAddr: %d\n", readAddr);
+        }
 
         for (col_index = 0; col_index < effectiveWidth; col_index++) {
 
@@ -146,24 +159,26 @@ void compute_sobel_v1(uint32_t grayscaleAddr, volatile uint8_t * sobelImage, uin
             if (col_index == 0) {
                 valueB = 0;
                 for (int nbLines = 0; nbLines < 3; nbLines++) {
-                    asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(tmp_line):[in1] "r"(col_index + (nbLines * effectiveWidth)));
+                    startIdx = ((line_index + nbLines) % 4) * effectiveWidth;
+                    asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(tmp_line):[in1] "r"(col_index + startIdx));
                     asm volatile ("l.nios_rrr r0,%[in1],%[in2],0xC"::[in1]"r"((tmp_line)),[in2]"r"((valueB)));
                     valueB++;
                     if (valueB == 5) {
                         valueB = 5 | startEdgeDetection;
                     }
 
-                    asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(tmp_line):[in1] "r"(col_index + 1 + (nbLines * effectiveWidth)));
+                    asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(tmp_line):[in1] "r"(col_index + 1 + startIdx));
                     asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(tmp_sobel_result):[in1]"r"((tmp_line)),[in2]"r"((valueB)));
                     valueB++;
                 }
             }
-            // // General case
+            // General case
             else {
                 valueB = (col_index % 2 == 0) ? 1 : reverse;
 
                 for (int nbLines = 0; nbLines < 3; nbLines++) {
-                    asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(tmp_line):[in1] "r"(col_index + (nbLines * effectiveWidth)));
+                    startIdx = ((line_index + nbLines) % 4) * effectiveWidth;
+                    asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(tmp_line):[in1] "r"(col_index + startIdx));
                     if (nbLines == 2) {
                         valueB += 1 << 17;
                     }
@@ -188,6 +203,9 @@ void compute_sobel_v1(uint32_t grayscaleAddr, volatile uint8_t * sobelImage, uin
             // }
             DMA_writeCIMem(startSobelBufferAddr + col_index, tmp_sobel_result);
         }
+
+        // Update the start line
+        startLine = (startLine + 1) % 4;
 
         // Send sobelStorage to the VGA
         DMA_setupSize(sobelBufferSize, usedBurstSize);
