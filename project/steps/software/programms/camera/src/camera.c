@@ -6,7 +6,6 @@
 #include <vga.h>
 #include <floyd_steinberg.h>
 #include <sobel.h>
-#include <edge_detection.h>
 
 // ================================================================================
 // =====                    Camera Parameters and Signals                     =====
@@ -81,7 +80,7 @@ int main() {
 
     while (1) {
         takeSingleImageBlocking((uint32_t)&grayscaleImage[0]);
-        edgeDetection((uint32_t)&grayscaleImage[0], (uint8_t *)newImageSobel, camParams.nrOfPixelsPerLine, camParams.nrOfLinesPerImage, THRESHOLD);
+        edgeDetection((volatile uint8_t *)grayscaleImage, (volatile uint8_t *)newImageSobel, WIDTH, HEIGHT, THRESHOLD);
         compare_arrays((uint8_t *)newImageSobel, (uint8_t *)oldImageSobel, (uint8_t *) grayscaleImage,  (uint16_t *)result, SIZE);
         memcpy((void*)oldImageSobel, (void*)newImageSobel, SIZE * sizeof(uint8_t));
     }

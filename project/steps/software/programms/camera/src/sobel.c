@@ -19,9 +19,6 @@ void edgeDetection( volatile uint8_t *grayscale,
   const int32_t gy_array[3][3] = { {1, 2, 1},
                                    {0, 0, 0},
                                    {-1,-2,-1}};
-  // const int32_t gd_array[3][3] = { {0, 1, 2},
-  //                                  {-1, 0, 1},
-  //                                  {-2,-1,0}};
   int32_t valueX,valueY, valueD, result;
   for (int line = 1; line < height - 1; line++) {
     for (int pixel = 1; pixel < width - 1; pixel++) {
@@ -32,12 +29,10 @@ void edgeDetection( volatile uint8_t *grayscale,
           int32_t gray = grayscale[index];
           valueX += gray*gx_array[dy+1][dx+1];
           valueY += gray*gy_array[dy+1][dx+1];
-          //valueD += gray*gd_array[dy+1][dx+1];
         }
       }
       result = (valueX < 0) ? -valueX : valueX;
       result += (valueY < 0) ? -valueY : valueY;
-      //result = (valueD < 0) ? -valueD : valueD;
       sobelResult[line*width+pixel] = (result > threshold) ? 0xFF : 0;
     }
   }
