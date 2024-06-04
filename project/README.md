@@ -47,6 +47,7 @@ The folder `steps` contains all the steps that lead to the final solutions. They
 2. sobel_ci
 3. dma_alone
 4. dma_4conv
+5. ping pong blocks
 
 The folder `virtual_prototype` contains the final result. Again, it can be used to see the result.
 
