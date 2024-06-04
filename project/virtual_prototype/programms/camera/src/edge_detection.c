@@ -142,7 +142,7 @@ void compute_sobel_v1(uint32_t grayscaleAddr, volatile uint8_t * sobelImage, uin
 
         for (col_index = 0; col_index < effectiveWidth; col_index++) {
 
-            // first case, we need to charge both (equivalent to a reset)
+            // First case, we need to charge both images
             if (col_index == 0) {
                 valueB = 0;
                 for (int nbLines = 0; nbLines < 3; nbLines++) {
@@ -158,7 +158,7 @@ void compute_sobel_v1(uint32_t grayscaleAddr, volatile uint8_t * sobelImage, uin
                     valueB++;
                 }
             }
-            // // general case
+            // // General case
             else {
                 valueB = (col_index % 2 == 0) ? 1 : reverse;
 
