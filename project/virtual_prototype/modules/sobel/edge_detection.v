@@ -18,7 +18,7 @@ module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
     //  3. valueB[7:0] = 0b010  =>  Set pixel 8-11
     //  4. valueB[7:0] = 0b011  =>  Set pixel 12-15
     //  5. valueB[7:0] = 0b100  =>  Set pixel 16-19
-    //  6. valueB[7:0] = 0b101  =>  Set pixel 20-23 + threshold (valueB[15:8])
+    //  6. valueB[7:0] = 0b101  =>  Set pixel 20-23 + threshold (valueB[15:8]) + reverse[1]/forward[0] (valueB[16])
     // ============================================================================
     //
     //  Example of how to use this module (case 1):
@@ -44,6 +44,8 @@ module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
     // wire s_doCompute = s_isMyEd && (valueB[7:0] == 8'd5);
     wire s_doCompute = s_isMyEd;
     reg s_doComputeReg = 0;
+
+    wire reverse = valueB[16];
   
     assign done   = (s_isMyEd && (valueB[7:0] != 8'd5)) ? 1'b1 : (s_doComputeReg) ? 1'b1 : 1'b0;
     assign result = (s_doComputeReg == 1'b1) ?  {s_sobel_3, s_sobel_2, s_sobel_1, s_sobel_0} : 32'd0;
@@ -61,60 +63,61 @@ module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
     // ============================================================================
 
     sobel sobel_module_0 (
-        .pixel0(pixels[0]),
-        .pixel1(pixels[1]),
-        .pixel2(pixels[2]),
-        .pixel3(pixels[8]),
-        .pixel4(pixels[9]),
-        .pixel5(pixels[10]),
-        .pixel6(pixels[16]),
-        .pixel7(pixels[17]),
-        .pixel8(pixels[18]),
+        .pixel0(reverse ? pixels[4] : pixels[0]),
+        .pixel1(reverse ? pixels[5] : pixels[1]),
+        .pixel2(reverse ? pixels[6] : pixels[2]),
+        .pixel3(reverse ? pixels[12] : pixels[8]),
+        .pixel4(reverse ? pixels[13] : pixels[9]),
+        .pixel5(reverse ? pixels[14] : pixels[10]),
+        .pixel6(reverse ? pixels[20] : pixels[16]),
+        .pixel7(reverse ? pixels[21] : pixels[17]),
+        .pixel8(reverse ? pixels[22] : pixels[18]),
         .threshold(threshold),
         .edge_val(s_sobel_0)
     );
 
     sobel sobel_module_1 (
-        .pixel0(pixels[1]),
-        .pixel1(pixels[2]),
-        .pixel2(pixels[3]),
-        .pixel3(pixels[9]),
-        .pixel4(pixels[10]),
-        .pixel5(pixels[11]),
-        .pixel6(pixels[17]),
-        .pixel7(pixels[18]),
-        .pixel8(pixels[19]),
+        .pixel0(reverse ? pixels[5] : pixels[1]),
+        .pixel1(reverse ? pixels[6] : pixels[2]),
+        .pixel2(reverse ? pixels[7] : pixels[3]),
+        .pixel3(reverse ? pixels[13] : pixels[9]),
+        .pixel4(reverse ? pixels[14] : pixels[10]),
+        .pixel5(reverse ? pixels[15] : pixels[11]),
+        .pixel6(reverse ? pixels[21] : pixels[17]),
+        .pixel7(reverse ? pixels[22] : pixels[18]),
+        .pixel8(reverse ? pixels[23] : pixels[19]),
         .threshold(threshold),
         .edge_val(s_sobel_1)
     );
 
     sobel sobel_module_2 (
-        .pixel0(pixels[2]),
-        .pixel1(pixels[3]),
-        .pixel2(pixels[4]),
-        .pixel3(pixels[10]),
-        .pixel4(pixels[11]),
-        .pixel5(pixels[12]),
-        .pixel6(pixels[18]),
-        .pixel7(pixels[19]),
-        .pixel8(pixels[20]),
+        .pixel0(reverse ? pixels[6] : pixels[2]),
+        .pixel1(reverse ? pixels[7] : pixels[3]),
+        .pixel2(reverse ? pixels[0] : pixels[4]),
+        .pixel3(reverse ? pixels[14] : pixels[10]),
+        .pixel4(reverse ? pixels[15] : pixels[11]),
+        .pixel5(reverse ? pixels[8] : pixels[12]),
+        .pixel6(reverse ? pixels[22] : pixels[18]),
+        .pixel7(reverse ? pixels[23] : pixels[19]),
+        .pixel8(reverse ? pixels[16] : pixels[20]),
         .threshold(threshold),
         .edge_val(s_sobel_2)
     );
 
     sobel sobel_module_3 (
-        .pixel0(pixels[3]),
-        .pixel1(pixels[4]),
-        .pixel2(pixels[5]),
-        .pixel3(pixels[11]),
-        .pixel4(pixels[12]),
-        .pixel5(pixels[13]),
-        .pixel6(pixels[19]),
-        .pixel7(pixels[20]),
-        .pixel8(pixels[21]),
+        .pixel0(reverse ? pixels[7] : pixels[3]),
+        .pixel1(reverse ? pixels[0] : pixels[4]),
+        .pixel2(reverse ? pixels[1] : pixels[5]),
+        .pixel3(reverse ? pixels[15] : pixels[11]),
+        .pixel4(reverse ? pixels[8] : pixels[12]),
+        .pixel5(reverse ? pixels[9] : pixels[13]),
+        .pixel6(reverse ? pixels[23] : pixels[19]),
+        .pixel7(reverse ? pixels[16] : pixels[20]),
+        .pixel8(reverse ? pixels[17] : pixels[21]),
         .threshold(threshold),
         .edge_val(s_sobel_3)
     );
+
 
     // ============================================================================
     //                             SOBEL STATE MACHINE                        
