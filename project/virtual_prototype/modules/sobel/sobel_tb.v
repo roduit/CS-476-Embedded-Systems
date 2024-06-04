@@ -93,6 +93,7 @@ module sobel_tb;
         valueB = {14'd0, 1'b1, reverse, threshold, 8'd5};
         valueA = px_line5;
         `WAITCYCLE;
+        `WAITCYCLE;
         start = 1'b0;
         while (!DUT.done) begin
             `WAITCYCLE;
@@ -166,13 +167,21 @@ module sobel_tb;
         // compute_sobel(line[0], line[1], line[2], line[3], line[4], line[5], threshold, 0);
         //compute_sobel(line[0], line[1], line[2], line[3], line[4], line[5], threshold, 1);
 
-        line[0] = 32'haa652f85;
-        line[1] = 32'h4285b377;
-        line[2] = 32'he13dd277;
-        line[3] = 32'hdddaaaff;
-        line[4] = 32'h1313223a;
-        line[5] = 32'h983489ab;
+        line[0] = 32'h000000ff;
+        line[1] = 32'h00000000;
+        line[2] = 32'h00000000;
+        line[3] = 32'h00000000;
+        line[4] = 32'h00000000;
+        line[5] = 32'h00000000;
 
+        compute_sobel(line[0], line[1], line[2], line[3], line[4], line[5], threshold, 0);
+
+        line[0] = 32'h00000000;
+        line[1] = 32'h000000ff;
+        line[2] = 32'h00000000;
+        line[3] = 32'h00000000;
+        line[4] = 32'h00000000;
+        line[5] = 32'h00000000;
         compute_sobel(line[0], line[1], line[2], line[3], line[4], line[5], threshold, 0);
 
         // Finish simulation
