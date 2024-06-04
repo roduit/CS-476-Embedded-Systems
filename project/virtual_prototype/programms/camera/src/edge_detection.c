@@ -29,7 +29,7 @@
 // =====                         DMA Control Signals                          =====
 // ================================================================================
 
-const uint32_t writeBit = 1<<10;
+const uint32_t writeBit = 1 << 10;
 const uint32_t busStartAddress = 1 << 11;
 const uint32_t memoryStartAddress = 2 << 11;
 const uint32_t blockSize = 3 << 11;
@@ -41,6 +41,7 @@ const uint32_t usedBurstSize = 25;
 
 const uint32_t startSobelBufferAddr = 800;
 const uint32_t sobelBufferSize = 160;
+const uint32_t reverse = 1 << 16;
 
 // ================================================================================
 // =====                           Delay Generator                            =====
@@ -135,22 +136,60 @@ void compute_sobel_v1(uint32_t grayscaleAddr, volatile uint8_t * sobelImage, uin
         DMA_setupAddr(grayscaleAddr + (line_index)*cameraWidth, usedCiRamAddress);
         DMA_startTransferBlocking(1);
 
-        for (col_index = 0; col_index < effectiveWidth - 1; col_index++) {
+        for (col_index = 0; col_index < effectiveWidth; col_index++) {
 
             // Read 3 lines and 2 blocks of pixels and store them in pixelStorage
-            valueB = 0;
-            for (int nbLines = 0; nbLines < 3; nbLines++) {
-                asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(tmp_line):[in1] "r"(col_index + (nbLines * effectiveWidth)));
-                asm volatile ("l.nios_rrr r0,%[in1],%[in2],0xC"::[in1]"r"((tmp_line)),[in2]"r"((valueB)));
-                valueB++;
+            // first case
+            if (col_index == 0) {
+                valueB = 0;
+                for (int nbLines = 0; nbLines < 3; nbLines++) {
+                    asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(tmp_line):[in1] "r"(col_index + (nbLines * effectiveWidth)));
+                    asm volatile ("l.nios_rrr r0,%[in1],%[in2],0xC"::[in1]"r"((tmp_line)),[in2]"r"((valueB)));
+                    valueB++;
 
-                if (valueB == 5) {
-                    valueB = 5 | (threshold << 8);
+                    if (valueB == 5) {
+                        valueB = 5 | (threshold << 8);
+                    }
+                    asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(tmp_line):[in1] "r"(col_index + 1 + (nbLines * effectiveWidth)));
+                    asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(tmp_sobel_result):[in1]"r"((tmp_line)),[in2]"r"((valueB)));
+                    valueB++;
                 }
-                asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(tmp_line):[in1] "r"(col_index + 1 + (nbLines * effectiveWidth)));
-                asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(tmp_sobel_result):[in1]"r"((tmp_line)),[in2]"r"((valueB)));
-                valueB++;
+                col_index++;
             }
+            // general case
+            else {
+                //printf("col_index: %d\n", col_index);
+                valueB = (col_index % 2 == 0) ? 0 : reverse;
+                //printf("=====================================\n");
+
+                for (int nbLines = 0; nbLines < 3; nbLines++) {
+                    //printf("valueB: %d, reverse: %d\n", valueB&0xFF, valueB >> 16);
+                    // if ((valueB&0xFF) == 5 | (valueB&0xFF) == 4) {
+                    //     valueB = valueB | (threshold << 8);
+                    // }
+                    asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(tmp_line):[in1] "r"(col_index + (nbLines * effectiveWidth)));
+                    //printf("writing %d: %d, %d, %d, %d\n", valueB >> 16, (tmp_line >> 24) & 0xFF, (tmp_line >> 16) & 0xFF, (tmp_line >> 8) & 0xFF, tmp_line & 0xFF);
+
+                    asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(tmp_sobel_result):[in1]"r"((tmp_line)),[in2]"r"((valueB)));
+                    valueB += 2;
+                    //printf("reading %d: %d, %d, %d, %d\n", valueB >> 16, (tmp_sobel_result >> 24) & 0xFF, (tmp_sobel_result >> 16) & 0xFF, (tmp_sobel_result >> 8) & 0xFF, tmp_sobel_result & 0xFF);
+                }
+
+            }
+            
+            // valueB = 0;
+            // for (int nbLines = 0; nbLines < 3; nbLines++) {
+            //     asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(tmp_line):[in1] "r"(col_index + (nbLines * effectiveWidth)));
+            //     asm volatile ("l.nios_rrr r0,%[in1],%[in2],0xC"::[in1]"r"((tmp_line)),[in2]"r"((valueB)));
+            //     valueB++;
+
+            //     if (valueB == 5) {
+            //         valueB = 5 | (threshold << 8);
+            //     }
+            //     asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(tmp_line):[in1] "r"(col_index + 1 + (nbLines * effectiveWidth)));
+            //     asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(tmp_sobel_result):[in1]"r"((tmp_line)),[in2]"r"((valueB)));
+            //     valueB++;
+            // }
 
             DMA_writeCIMem(startSobelBufferAddr + col_index, tmp_sobel_result);
         }

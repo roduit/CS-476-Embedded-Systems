@@ -1,5 +1,5 @@
 Analysis & Synthesis report for or1420SingleCore
-Tue Jun  4 11:00:43 2024
+Tue Jun  4 12:15:40 2024
 Quartus Prime Version 18.1.1 Build 646 04/11/2019 SJ Lite Edition
 
 
@@ -155,13 +155,13 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +------------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Tue Jun  4 11:00:43 2024       ;
+; Analysis & Synthesis Status        ; Successful - Tue Jun  4 12:15:39 2024       ;
 ; Quartus Prime Version              ; 18.1.1 Build 646 04/11/2019 SJ Lite Edition ;
 ; Revision Name                      ; or1420SingleCore                            ;
 ; Top-level Entity Name              ; or1420SingleCore                            ;
 ; Family                             ; Cyclone IV E                                ;
-; Total logic elements               ; 15,952                                      ;
-;     Total combinational functions  ; 13,910                                      ;
+; Total logic elements               ; 15,940                                      ;
+;     Total combinational functions  ; 13,898                                      ;
 ;     Dedicated logic registers      ; 6,519                                       ;
 ; Total registers                    ; 6519                                        ;
 ; Total pins                         ; 113                                         ;
@@ -271,7 +271,7 @@ https://fpgasoftware.intel.com/eula.
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;   0.3%      ;
+;     Processor 2            ;   0.4%      ;
 ;     Processor 3            ;   0.2%      ;
 ;     Processor 4            ;   0.2%      ;
 +----------------------------+-------------+
@@ -385,16 +385,16 @@ https://fpgasoftware.intel.com/eula.
 +---------------------------------------------+---------------------------------------------------------------------+
 ; Resource                                    ; Usage                                                               ;
 +---------------------------------------------+---------------------------------------------------------------------+
-; Estimated Total logic elements              ; 15,952                                                              ;
+; Estimated Total logic elements              ; 15,940                                                              ;
 ;                                             ;                                                                     ;
-; Total combinational functions               ; 13910                                                               ;
+; Total combinational functions               ; 13898                                                               ;
 ; Logic element usage by number of LUT inputs ;                                                                     ;
-;     -- 4 input functions                    ; 7648                                                                ;
-;     -- 3 input functions                    ; 4736                                                                ;
-;     -- <=2 input functions                  ; 1526                                                                ;
+;     -- 4 input functions                    ; 7635                                                                ;
+;     -- 3 input functions                    ; 4734                                                                ;
+;     -- <=2 input functions                  ; 1529                                                                ;
 ;                                             ;                                                                     ;
 ; Logic elements by mode                      ;                                                                     ;
-;     -- normal mode                          ; 12202                                                               ;
+;     -- normal mode                          ; 12190                                                               ;
 ;     -- arithmetic mode                      ; 1708                                                                ;
 ;                                             ;                                                                     ;
 ; Total registers                             ; 6519                                                                ;
@@ -411,7 +411,7 @@ https://fpgasoftware.intel.com/eula.
 ;                                             ;                                                                     ;
 ; Maximum fan-out node                        ; altpll:altpll_component|test_altpll:auto_generated|wire_pll1_clk[0] ;
 ; Maximum fan-out                             ; 6628                                                                ;
-; Total fan-out                               ; 71119                                                               ;
+; Total fan-out                               ; 71067                                                               ;
 ; Average fan-out                             ; 3.39                                                                ;
 +---------------------------------------------+---------------------------------------------------------------------+
 
@@ -421,7 +421,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------------------------------------------------+--------------------+--------------+
 ; Compilation Hierarchy Node                      ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                  ; Entity Name        ; Library Name ;
 +-------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------------------------------------------------+--------------------+--------------+
-; |or1420SingleCore                               ; 13910 (516)         ; 6519 (5)                  ; 307616      ; 9            ; 3       ; 3         ; 113  ; 0            ; |or1420SingleCore                                                                                                                    ; or1420SingleCore   ; work         ;
+; |or1420SingleCore                               ; 13898 (513)         ; 6519 (5)                  ; 307616      ; 9            ; 3       ; 3         ; 113  ; 0            ; |or1420SingleCore                                                                                                                    ; or1420SingleCore   ; work         ;
 ;    |altpll:altpll_component|                    ; 1 (0)               ; 1 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|altpll:altpll_component                                                                                            ; altpll             ; work         ;
 ;       |test_altpll:auto_generated|              ; 1 (1)               ; 1 (1)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|altpll:altpll_component|test_altpll:auto_generated                                                                 ; test_altpll        ; work         ;
 ;    |bios:start|                                 ; 79 (79)             ; 103 (103)                 ; 65536       ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|bios:start                                                                                                         ; bios               ; work         ;
@@ -447,7 +447,7 @@ https://fpgasoftware.intel.com/eula.
 ;    |delayIse:delayMicro|                        ; 70 (66)             ; 44 (38)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|delayIse:delayMicro                                                                                                ; delayIse           ; work         ;
 ;       |synchroFlop:rsync|                       ; 2 (2)               ; 3 (3)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|delayIse:delayMicro|synchroFlop:rsync                                                                              ; synchroFlop        ; work         ;
 ;       |synchroFlop:usync|                       ; 2 (2)               ; 3 (3)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|delayIse:delayMicro|synchroFlop:usync                                                                              ; synchroFlop        ; work         ;
-;    |edge_detection:sobel|                       ; 615 (157)           ; 193 (193)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|edge_detection:sobel                                                                                               ; edge_detection     ; work         ;
+;    |edge_detection:sobel|                       ; 616 (158)           ; 193 (193)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|edge_detection:sobel                                                                                               ; edge_detection     ; work         ;
 ;       |sobel:sobel_module_0|                    ; 124 (107)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|edge_detection:sobel|sobel:sobel_module_0                                                                          ; sobel              ; work         ;
 ;          |lpm_add_sub:Add10|                    ; 17 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|edge_detection:sobel|sobel:sobel_module_0|lpm_add_sub:Add10                                                        ; lpm_add_sub        ; work         ;
 ;             |add_sub_cui:auto_generated|        ; 17 (17)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|edge_detection:sobel|sobel:sobel_module_0|lpm_add_sub:Add10|add_sub_cui:auto_generated                             ; add_sub_cui        ; work         ;
@@ -461,10 +461,10 @@ https://fpgasoftware.intel.com/eula.
 ;          |lpm_add_sub:Add10|                    ; 17 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|edge_detection:sobel|sobel:sobel_module_3|lpm_add_sub:Add10                                                        ; lpm_add_sub        ; work         ;
 ;             |add_sub_cui:auto_generated|        ; 17 (17)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|edge_detection:sobel|sobel:sobel_module_3|lpm_add_sub:Add10|add_sub_cui:auto_generated                             ; add_sub_cui        ; work         ;
 ;    |gpio:sevenSegDipSwitch|                     ; 49 (49)             ; 43 (43)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|gpio:sevenSegDipSwitch                                                                                             ; gpio               ; work         ;
-;    |grayscale_conv:grayscale|                   ; 14 (14)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|grayscale_conv:grayscale                                                                                           ; grayscale_conv     ; work         ;
+;    |grayscale_conv:grayscale|                   ; 15 (15)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|grayscale_conv:grayscale                                                                                           ; grayscale_conv     ; work         ;
 ;    |i2cCustomInstr:i2cm|                        ; 97 (8)              ; 78 (26)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|i2cCustomInstr:i2cm                                                                                                ; i2cCustomInstr     ; work         ;
 ;       |i2cMaster:master|                        ; 89 (89)             ; 52 (52)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|i2cCustomInstr:i2cm|i2cMaster:master                                                                               ; i2cMaster          ; work         ;
-;    |or1420Top:cpu1|                             ; 8304 (76)           ; 3607 (32)                 ; 81920       ; 6            ; 0       ; 3         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1                                                                                                     ; or1420Top          ; work         ;
+;    |or1420Top:cpu1|                             ; 8297 (76)           ; 3607 (32)                 ; 81920       ; 6            ; 0       ; 3         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1                                                                                                     ; or1420Top          ; work         ;
 ;       |dCache:loadStore|                        ; 169 (169)           ; 129 (129)                 ; 65536       ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|dCache:loadStore                                                                                    ; dCache             ; work         ;
 ;          |dCacheSpm:spm|                        ; 0 (0)               ; 0 (0)                     ; 65536       ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|dCache:loadStore|dCacheSpm:spm                                                                      ; dCacheSpm          ; work         ;
 ;             |altsyncram:byteRam0_rtl_0|         ; 0 (0)               ; 0 (0)                     ; 16384       ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|dCache:loadStore|dCacheSpm:spm|altsyncram:byteRam0_rtl_0                                            ; altsyncram         ; work         ;
@@ -476,14 +476,14 @@ https://fpgasoftware.intel.com/eula.
 ;             |altsyncram:byteRam3_rtl_0|         ; 0 (0)               ; 0 (0)                     ; 16384       ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|dCache:loadStore|dCacheSpm:spm|altsyncram:byteRam3_rtl_0                                            ; altsyncram         ; work         ;
 ;                |altsyncram_9f81:auto_generated| ; 0 (0)               ; 0 (0)                     ; 16384       ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|dCache:loadStore|dCacheSpm:spm|altsyncram:byteRam3_rtl_0|altsyncram_9f81:auto_generated             ; altsyncram_9f81    ; work         ;
 ;       |decodeStage:decode|                      ; 309 (309)           ; 160 (160)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|decodeStage:decode                                                                                  ; decodeStage        ; work         ;
-;       |executeStage:exe|                        ; 1244 (623)          ; 174 (174)                 ; 0           ; 6            ; 0       ; 3         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|executeStage:exe                                                                                    ; executeStage       ; work         ;
+;       |executeStage:exe|                        ; 1244 (618)          ; 174 (174)                 ; 0           ; 6            ; 0       ; 3         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|executeStage:exe                                                                                    ; executeStage       ; work         ;
 ;          |adder:addSub|                         ; 163 (163)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|executeStage:exe|adder:addSub                                                                       ; adder              ; work         ;
-;          |logicUnit:logicU|                     ; 95 (95)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|executeStage:exe|logicUnit:logicU                                                                   ; logicUnit          ; work         ;
+;          |logicUnit:logicU|                     ; 94 (94)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|executeStage:exe|logicUnit:logicU                                                                   ; logicUnit          ; work         ;
 ;          |multiplier:mul|                       ; 28 (0)              ; 0 (0)                     ; 0           ; 6            ; 0       ; 3         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|executeStage:exe|multiplier:mul                                                                     ; multiplier         ; work         ;
 ;             |lpm_mult:Mult0|                    ; 28 (0)              ; 0 (0)                     ; 0           ; 6            ; 0       ; 3         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|executeStage:exe|multiplier:mul|lpm_mult:Mult0                                                      ; lpm_mult           ; work         ;
 ;                |mult_7dt:auto_generated|        ; 28 (28)             ; 0 (0)                     ; 0           ; 6            ; 0       ; 3         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|executeStage:exe|multiplier:mul|lpm_mult:Mult0|mult_7dt:auto_generated                              ; mult_7dt           ; work         ;
-;          |shifter:shift|                        ; 335 (335)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|executeStage:exe|shifter:shift                                                                      ; shifter            ; work         ;
-;       |fetchStage:fetch|                        ; 999 (999)           ; 882 (882)                 ; 16384       ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|fetchStage:fetch                                                                                    ; fetchStage         ; work         ;
+;          |shifter:shift|                        ; 341 (341)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|executeStage:exe|shifter:shift                                                                      ; shifter            ; work         ;
+;       |fetchStage:fetch|                        ; 992 (992)           ; 882 (882)                 ; 16384       ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|fetchStage:fetch                                                                                    ; fetchStage         ; work         ;
 ;          |altsyncram:s_dataMemory_rtl_0|        ; 0 (0)               ; 0 (0)                     ; 16384       ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|fetchStage:fetch|altsyncram:s_dataMemory_rtl_0                                                      ; altsyncram         ; work         ;
 ;             |altsyncram_nd81:auto_generated|    ; 0 (0)               ; 0 (0)                     ; 16384       ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|fetchStage:fetch|altsyncram:s_dataMemory_rtl_0|altsyncram_nd81:auto_generated                       ; altsyncram_nd81    ; work         ;
 ;       |memoryStage:mem|                         ; 39 (39)             ; 39 (39)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|or1420Top:cpu1|memoryStage:mem                                                                                     ; memoryStage        ; work         ;
@@ -570,7 +570,7 @@ https://fpgasoftware.intel.com/eula.
 ;       |rgb565Grayscale:pixel2|                  ; 81 (81)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|rgb565GrayscaleIse:converter|rgb565Grayscale:pixel2                                                                ; rgb565Grayscale    ; work         ;
 ;       |rgb565Grayscale:pixel3|                  ; 82 (82)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|rgb565GrayscaleIse:converter|rgb565Grayscale:pixel3                                                                ; rgb565Grayscale    ; work         ;
 ;       |rgb565Grayscale:pixel4|                  ; 81 (81)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|rgb565GrayscaleIse:converter|rgb565Grayscale:pixel4                                                                ; rgb565Grayscale    ; work         ;
-;    |screens:hdmi|                               ; 1030 (287)          ; 468 (69)                  ; 94208       ; 3            ; 3       ; 0         ; 0    ; 0            ; |or1420SingleCore|screens:hdmi                                                                                                       ; screens            ; work         ;
+;    |screens:hdmi|                               ; 1033 (287)          ; 468 (69)                  ; 94208       ; 3            ; 3       ; 0         ; 0    ; 0            ; |or1420SingleCore|screens:hdmi                                                                                                       ; screens            ; work         ;
 ;       |charRom:asciiRom|                        ; 0 (0)               ; 0 (0)                     ; 8192        ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|screens:hdmi|charRom:asciiRom                                                                                      ; charRom            ; work         ;
 ;          |altsyncram:Ram0_rtl_0|                ; 0 (0)               ; 0 (0)                     ; 8192        ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|screens:hdmi|charRom:asciiRom|altsyncram:Ram0_rtl_0                                                                ; altsyncram         ; work         ;
 ;             |altsyncram_ul71:auto_generated|    ; 0 (0)               ; 0 (0)                     ; 8192        ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|screens:hdmi|charRom:asciiRom|altsyncram:Ram0_rtl_0|altsyncram_ul71:auto_generated                                 ; altsyncram_ul71    ; work         ;
@@ -587,10 +587,10 @@ https://fpgasoftware.intel.com/eula.
 ;          |altsyncram:memory_rtl_0|              ; 0 (0)               ; 0 (0)                     ; 28672       ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|screens:hdmi|dualPortRam4k:asciiRam2|altsyncram:memory_rtl_0                                                       ; altsyncram         ; work         ;
 ;             |altsyncram_g6d1:auto_generated|    ; 0 (0)               ; 0 (0)                     ; 28672       ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|screens:hdmi|dualPortRam4k:asciiRam2|altsyncram:memory_rtl_0|altsyncram_g6d1:auto_generated                        ; altsyncram_g6d1    ; work         ;
 ;       |graphicsController:graphics|             ; 306 (306)           ; 218 (218)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|screens:hdmi|graphicsController:graphics                                                                           ; graphicsController ; work         ;
-;       |hdmi_720p:generator|                     ; 111 (111)           ; 72 (72)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|screens:hdmi|hdmi_720p:generator                                                                                   ; hdmi_720p          ; work         ;
+;       |hdmi_720p:generator|                     ; 110 (110)           ; 72 (72)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|screens:hdmi|hdmi_720p:generator                                                                                   ; hdmi_720p          ; work         ;
 ;       |synchroFlop:syncNewLine|                 ; 2 (2)               ; 3 (3)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|screens:hdmi|synchroFlop:syncNewLine                                                                               ; synchroFlop        ; work         ;
 ;       |synchroFlop:syncNewScreen|               ; 2 (2)               ; 3 (3)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|screens:hdmi|synchroFlop:syncNewScreen                                                                             ; synchroFlop        ; work         ;
-;       |textController:textC1|                   ; 322 (322)           ; 103 (103)                 ; 0           ; 3            ; 3       ; 0         ; 0    ; 0            ; |or1420SingleCore|screens:hdmi|textController:textC1                                                                                 ; textController     ; work         ;
+;       |textController:textC1|                   ; 326 (326)           ; 103 (103)                 ; 0           ; 3            ; 3       ; 0         ; 0    ; 0            ; |or1420SingleCore|screens:hdmi|textController:textC1                                                                                 ; textController     ; work         ;
 ;          |lpm_mult:Mult0|                       ; 0 (0)               ; 0 (0)                     ; 0           ; 1            ; 1       ; 0         ; 0    ; 0            ; |or1420SingleCore|screens:hdmi|textController:textC1|lpm_mult:Mult0                                                                  ; lpm_mult           ; work         ;
 ;             |mult_6at:auto_generated|           ; 0 (0)               ; 0 (0)                     ; 0           ; 1            ; 1       ; 0         ; 0    ; 0            ; |or1420SingleCore|screens:hdmi|textController:textC1|lpm_mult:Mult0|mult_6at:auto_generated                                          ; mult_6at           ; work         ;
 ;          |lpm_mult:Mult1|                       ; 0 (0)               ; 0 (0)                     ; 0           ; 1            ; 1       ; 0         ; 0    ; 0            ; |or1420SingleCore|screens:hdmi|textController:textC1|lpm_mult:Mult1                                                                  ; lpm_mult           ; work         ;
@@ -602,13 +602,13 @@ https://fpgasoftware.intel.com/eula.
 ;          |sram512X32Dp:readMem|                 ; 38 (38)             ; 83 (83)                   ; 16384       ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|sdramController:sdram|sdramFifo:buffer|sram512X32Dp:readMem                                                        ; sram512X32Dp       ; work         ;
 ;             |altsyncram:memory_rtl_0|           ; 0 (0)               ; 0 (0)                     ; 16384       ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|sdramController:sdram|sdramFifo:buffer|sram512X32Dp:readMem|altsyncram:memory_rtl_0                                ; altsyncram         ; work         ;
 ;                |altsyncram_svg1:auto_generated| ; 0 (0)               ; 0 (0)                     ; 16384       ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|sdramController:sdram|sdramFifo:buffer|sram512X32Dp:readMem|altsyncram:memory_rtl_0|altsyncram_svg1:auto_generated ; altsyncram_svg1    ; work         ;
-;    |spiBus:flash|                               ; 747 (200)           ; 554 (299)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|spiBus:flash                                                                                                       ; spiBus             ; work         ;
+;    |spiBus:flash|                               ; 743 (196)           ; 554 (299)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|spiBus:flash                                                                                                       ; spiBus             ; work         ;
 ;       |spiShiftQuad:quad|                       ; 148 (148)           ; 95 (95)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|spiBus:flash|spiShiftQuad:quad                                                                                     ; spiShiftQuad       ; work         ;
 ;       |spiShiftSingle:single|                   ; 399 (399)           ; 160 (160)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|spiBus:flash|spiShiftSingle:single                                                                                 ; spiShiftSingle     ; work         ;
-;    |swapByte:ise1|                              ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|swapByte:ise1                                                                                                      ; swapByte           ; work         ;
-;    |uartBus:uart1|                              ; 525 (140)           ; 319 (127)                 ; 256         ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|uartBus:uart1                                                                                                      ; uartBus            ; work         ;
+;    |swapByte:ise1|                              ; 5 (5)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|swapByte:ise1                                                                                                      ; swapByte           ; work         ;
+;    |uartBus:uart1|                              ; 524 (140)           ; 319 (127)                 ; 256         ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|uartBus:uart1                                                                                                      ; uartBus            ; work         ;
 ;       |baudGenerator:bdg|                       ; 27 (27)             ; 22 (22)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|uartBus:uart1|baudGenerator:bdg                                                                                    ; baudGenerator      ; work         ;
-;       |uartRx:RXC|                              ; 81 (81)             ; 41 (41)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|uartBus:uart1|uartRx:RXC                                                                                           ; uartRx             ; work         ;
+;       |uartRx:RXC|                              ; 80 (80)             ; 41 (41)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|uartBus:uart1|uartRx:RXC                                                                                           ; uartRx             ; work         ;
 ;       |uartRxFifo:RXF|                          ; 195 (192)           ; 81 (64)                   ; 128         ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF                                                                                       ; uartRxFifo         ; work         ;
 ;          |uartFifoMemory:fifoMem|               ; 3 (3)               ; 17 (17)                   ; 128         ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|uartFifoMemory:fifoMem                                                                ; uartFifoMemory     ; work         ;
 ;             |altsyncram:s_memory_rtl_0|         ; 0 (0)               ; 0 (0)                     ; 128         ; 0            ; 0       ; 0         ; 0    ; 0            ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|uartFifoMemory:fifoMem|altsyncram:s_memory_rtl_0                                      ; altsyncram         ; work         ;
@@ -1646,166 +1646,166 @@ Note: All cells listed above may not be present at the end of synthesis due to v
 +--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------------------------------------------------+
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                                              ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------------------------------------------------+
-; 3:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |or1420SingleCore|busArbiter:arbiter|s_queueRemovePointerReg[2]                         ;
-; 3:1                ; 11 bits   ; 22 LEs        ; 11 LEs               ; 11 LEs                 ; Yes        ; |or1420SingleCore|bios:start|s_RomAddressReg[5]                                         ;
-; 3:1                ; 24 bits   ; 48 LEs        ; 24 LEs               ; 24 LEs                 ; Yes        ; |or1420SingleCore|spiBus:flash|spiShiftSingle:single|s_memoryCapReg[2]                  ;
+; 3:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |or1420SingleCore|busArbiter:arbiter|s_queueRemovePointerReg[0]                         ;
+; 3:1                ; 11 bits   ; 22 LEs        ; 11 LEs               ; 11 LEs                 ; Yes        ; |or1420SingleCore|bios:start|s_RomAddressReg[4]                                         ;
+; 3:1                ; 24 bits   ; 48 LEs        ; 24 LEs               ; 24 LEs                 ; Yes        ; |or1420SingleCore|spiBus:flash|spiShiftSingle:single|s_memoryTypeReg[4]                 ;
 ; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |or1420SingleCore|spiBus:flash|spiShiftSingle:single|s_status0Reg[0]                    ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |or1420SingleCore|spiBus:flash|spiShiftSingle:single|s_status1Reg[6]                    ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |or1420SingleCore|spiBus:flash|spiShiftSingle:single|s_status2Reg[2]                    ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |or1420SingleCore|camera:camIf|s_nrOfPixelsPerLineReg[6]                                ;
-; 3:1                ; 30 bits   ; 60 LEs        ; 60 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|ramDmaCi:ramDma|s_addressDataOutReg[21]                               ;
-; 3:1                ; 32 bits   ; 64 LEs        ; 64 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|fetchStage:fetch|instruction[19]                       ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRx:RXC|s_overrunReg                                 ;
-; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |or1420SingleCore|sdramController:sdram|sdramCsN                                        ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |or1420SingleCore|spiBus:flash|spiShiftSingle:single|s_status1Reg[5]                    ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |or1420SingleCore|spiBus:flash|spiShiftSingle:single|s_status2Reg[6]                    ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |or1420SingleCore|camera:camIf|s_nrOfPixelsPerLineReg[7]                                ;
+; 3:1                ; 30 bits   ; 60 LEs        ; 60 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|ramDmaCi:ramDma|s_addressDataOutReg[29]                               ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 64 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|fetchStage:fetch|instruction[4]                        ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRx:RXC|s_frameErrorReg                              ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |or1420SingleCore|sdramController:sdram|sdramRasN                                       ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |or1420SingleCore|sdramController:sdram|s_transactionActiveReg                          ;
-; 3:1                ; 45 bits   ; 90 LEs        ; 45 LEs               ; 45 LEs                 ; Yes        ; |or1420SingleCore|screens:hdmi|graphicsController:graphics|s_busAddressReg[27]          ;
-; 3:1                ; 15 bits   ; 30 LEs        ; 15 LEs               ; 15 LEs                 ; Yes        ; |or1420SingleCore|busArbiter:arbiter|s_timeOutReg[2]                                    ;
-; 3:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |or1420SingleCore|busArbiter:arbiter|busGrants[27]                                      ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|graphicsController:graphics|s_currentPixelAddressReg[0]  ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|hdmi_720p:generator|s_horizontalCounter[0]               ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|hdmi_720p:generator|s_horizontalCounter[1]               ;
-; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |or1420SingleCore|uartBus:uart1|s_dataInReg[30]                                         ;
+; 3:1                ; 45 bits   ; 90 LEs        ; 45 LEs               ; 45 LEs                 ; Yes        ; |or1420SingleCore|screens:hdmi|graphicsController:graphics|s_busAddressReg[2]           ;
+; 3:1                ; 15 bits   ; 30 LEs        ; 15 LEs               ; 15 LEs                 ; Yes        ; |or1420SingleCore|busArbiter:arbiter|s_timeOutReg[0]                                    ;
+; 3:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |or1420SingleCore|busArbiter:arbiter|busGrants[30]                                      ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|graphicsController:graphics|s_currentPixelAddressReg[1]  ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|hdmi_720p:generator|s_horizontalCounter[8]               ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|hdmi_720p:generator|s_horizontalCounter[3]               ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |or1420SingleCore|uartBus:uart1|s_dataInReg[10]                                         ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |or1420SingleCore|i2cCustomInstr:i2cm|i2cMaster:master|s_clockCountReg[0]               ;
-; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|decodeStage:decode|exeMult                             ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|decodeStage:decode|s_isCustomReg                       ;
 ; 3:1                ; 14 bits   ; 28 LEs        ; 14 LEs               ; 14 LEs                 ; Yes        ; |or1420SingleCore|sdramController:sdram|s_refreshCounter[8]                             ;
-; 3:1                ; 24 bits   ; 48 LEs        ; 24 LEs               ; 24 LEs                 ; Yes        ; |or1420SingleCore|gpio:sevenSegDipSwitch|s_externalOutputsReg[21]                       ;
-; 3:1                ; 9 bits    ; 18 LEs        ; 9 LEs                ; 9 LEs                  ; Yes        ; |or1420SingleCore|bios:start|s_burstCountReg[5]                                         ;
-; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |or1420SingleCore|screens:hdmi|graphicsController:graphics|s_graphicBaseAddressReg[23]  ;
-; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |or1420SingleCore|screens:hdmi|graphicsController:graphics|s_writeAddressReg[3]         ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |or1420SingleCore|camera:camIf|s_singleShotActionReg[1]                                 ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |or1420SingleCore|ramDmaCi:ramDma|s_wordsWrittenReg[7]                                  ;
-; 3:1                ; 9 bits    ; 18 LEs        ; 9 LEs                ; 9 LEs                  ; Yes        ; |or1420SingleCore|camera:camIf|s_burstCountReg[7]                                       ;
-; 3:1                ; 30 bits   ; 60 LEs        ; 30 LEs               ; 30 LEs                 ; Yes        ; |or1420SingleCore|camera:camIf|s_busAddressReg[17]                                      ;
+; 3:1                ; 24 bits   ; 48 LEs        ; 24 LEs               ; 24 LEs                 ; Yes        ; |or1420SingleCore|gpio:sevenSegDipSwitch|s_externalOutputsReg[13]                       ;
+; 3:1                ; 9 bits    ; 18 LEs        ; 9 LEs                ; 9 LEs                  ; Yes        ; |or1420SingleCore|bios:start|s_burstCountReg[8]                                         ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |or1420SingleCore|screens:hdmi|graphicsController:graphics|s_graphicBaseAddressReg[15]  ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |or1420SingleCore|screens:hdmi|graphicsController:graphics|s_writeAddressReg[2]         ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |or1420SingleCore|camera:camIf|s_singleShotActionReg[0]                                 ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |or1420SingleCore|ramDmaCi:ramDma|s_wordsWrittenReg[1]                                  ;
+; 3:1                ; 9 bits    ; 18 LEs        ; 9 LEs                ; 9 LEs                  ; Yes        ; |or1420SingleCore|camera:camIf|s_burstCountReg[6]                                       ;
+; 3:1                ; 30 bits   ; 60 LEs        ; 30 LEs               ; 30 LEs                 ; Yes        ; |or1420SingleCore|camera:camIf|s_busAddressReg[25]                                      ;
 ; 3:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|executeStage:exe|wbWriteData[28]                       ;
-; 3:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|decodeStage:decode|exePortBData[29]                    ;
-; 3:1                ; 50 bits   ; 100 LEs       ; 50 LEs               ; 50 LEs                 ; Yes        ; |or1420SingleCore|ramDmaCi:ramDma|s_busStartAddressShadowReg[9]                         ;
+; 3:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|decodeStage:decode|exePortBData[30]                    ;
+; 3:1                ; 50 bits   ; 100 LEs       ; 50 LEs               ; 50 LEs                 ; Yes        ; |or1420SingleCore|ramDmaCi:ramDma|s_busStartAddressShadowReg[18]                        ;
 ; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRx:RXC|s_rxPipeReg[2]                               ;
-; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRx:RXC|s_shiftReg[8]                                ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|s_fifoControlReg[6]                                     ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|baudGenerator:bdg|s_baudDivReg[2]                       ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|s_lineControlReg[2]                                     ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRx:RXC|s_shiftReg[9]                                ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|s_fifoControlReg[7]                                     ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|baudGenerator:bdg|s_baudDivReg[0]                       ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|s_lineControlReg[6]                                     ;
 ; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |or1420SingleCore|sdramController:sdram|s_columnAddressReg[1]                           ;
-; 3:1                ; 15 bits   ; 30 LEs        ; 15 LEs               ; 15 LEs                 ; Yes        ; |or1420SingleCore|sdramController:sdram|s_rowAddressReg[9]                              ;
+; 3:1                ; 15 bits   ; 30 LEs        ; 15 LEs               ; 15 LEs                 ; Yes        ; |or1420SingleCore|sdramController:sdram|s_rowAddressReg[3]                              ;
 ; 3:1                ; 9 bits    ; 18 LEs        ; 9 LEs                ; 9 LEs                  ; Yes        ; |or1420SingleCore|sdramController:sdram|sdramFifo:buffer|s_readPushAddressReg[2]        ;
-; 3:1                ; 11 bits   ; 22 LEs        ; 11 LEs               ; 11 LEs                 ; Yes        ; |or1420SingleCore|camera:camIf|s_lineCountReg[5]                                        ;
-; 3:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|decodeStage:decode|wbWriteIndex[1]                     ;
-; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |or1420SingleCore|ramDmaCi:ramDma|s_busStartAddressReg[5]                               ;
-; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |or1420SingleCore|ramDmaCi:ramDma|s_memoryStartAddressReg[2]                            ;
-; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |or1420SingleCore|ramDmaCi:ramDma|s_blockSizeReg[3]                                     ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |or1420SingleCore|ramDmaCi:ramDma|s_usedBurstSizeReg[4]                                 ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |or1420SingleCore|camera:camIf|s_fpsCountReg[6]                                         ;
-; 3:1                ; 17 bits   ; 34 LEs        ; 17 LEs               ; 17 LEs                 ; Yes        ; |or1420SingleCore|camera:camIf|s_pclkCountValueReg[3]                                   ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |or1420SingleCore|camera:camIf|s_fpsCountValueReg[5]                                    ;
-; 3:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |or1420SingleCore|screens:hdmi|textController:textC1|s_foreGroundColorReg[6]            ;
+; 3:1                ; 11 bits   ; 22 LEs        ; 11 LEs               ; 11 LEs                 ; Yes        ; |or1420SingleCore|camera:camIf|s_lineCountReg[1]                                        ;
+; 3:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|decodeStage:decode|wbWriteIndex[0]                     ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |or1420SingleCore|ramDmaCi:ramDma|s_busStartAddressReg[30]                              ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |or1420SingleCore|ramDmaCi:ramDma|s_memoryStartAddressReg[7]                            ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |or1420SingleCore|ramDmaCi:ramDma|s_blockSizeReg[7]                                     ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |or1420SingleCore|ramDmaCi:ramDma|s_usedBurstSizeReg[3]                                 ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |or1420SingleCore|camera:camIf|s_fpsCountReg[2]                                         ;
+; 3:1                ; 17 bits   ; 34 LEs        ; 17 LEs               ; 17 LEs                 ; Yes        ; |or1420SingleCore|camera:camIf|s_pclkCountValueReg[0]                                   ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |or1420SingleCore|camera:camIf|s_fpsCountValueReg[7]                                    ;
+; 3:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |or1420SingleCore|screens:hdmi|textController:textC1|s_foreGroundColorReg[3]            ;
 ; 3:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |or1420SingleCore|screens:hdmi|textController:textC1|s_backGroundColorReg[0]            ;
-; 3:1                ; 28 bits   ; 56 LEs        ; 28 LEs               ; 28 LEs                 ; Yes        ; |or1420SingleCore|or1420Top:cpu1|sprUnit:sprs|s_iCacheVectorReg[22]                     ;
-; 3:1                ; 28 bits   ; 56 LEs        ; 28 LEs               ; 28 LEs                 ; Yes        ; |or1420SingleCore|or1420Top:cpu1|sprUnit:sprs|s_dCacheVectorReg[6]                      ;
-; 3:1                ; 28 bits   ; 56 LEs        ; 28 LEs               ; 28 LEs                 ; Yes        ; |or1420SingleCore|or1420Top:cpu1|sprUnit:sprs|s_irqVectorReg[23]                        ;
-; 3:1                ; 28 bits   ; 56 LEs        ; 28 LEs               ; 28 LEs                 ; Yes        ; |or1420SingleCore|or1420Top:cpu1|sprUnit:sprs|s_invalidVectorReg[8]                     ;
-; 3:1                ; 28 bits   ; 56 LEs        ; 28 LEs               ; 28 LEs                 ; Yes        ; |or1420SingleCore|or1420Top:cpu1|sprUnit:sprs|s_systemVectorReg[24]                     ;
-; 3:1                ; 24 bits   ; 48 LEs        ; 24 LEs               ; 24 LEs                 ; Yes        ; |or1420SingleCore|processorId:cpuFreq|s_procFreqIdReg[12]                               ;
-; 3:1                ; 30 bits   ; 60 LEs        ; 30 LEs               ; 30 LEs                 ; Yes        ; |or1420SingleCore|camera:camIf|s_frameBufferBaseReg[13]                                 ;
-; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRx:RXC|s_baudCounterReg[0]                          ;
-; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartTxFifo:TXF|s_writeAddressReg[2]                     ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|s_divisorReg[5]                                         ;
-; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_writeAddressReg[1]                     ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|s_divisorReg[12]                                        ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|s_interruptEnableReg[2]                                 ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_parityErrorReg[15]                     ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_breakReg[14]                           ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_breakReg[13]                           ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_breakReg[12]                           ;
+; 3:1                ; 28 bits   ; 56 LEs        ; 28 LEs               ; 28 LEs                 ; Yes        ; |or1420SingleCore|or1420Top:cpu1|sprUnit:sprs|s_iCacheVectorReg[7]                      ;
+; 3:1                ; 28 bits   ; 56 LEs        ; 28 LEs               ; 28 LEs                 ; Yes        ; |or1420SingleCore|or1420Top:cpu1|sprUnit:sprs|s_dCacheVectorReg[7]                      ;
+; 3:1                ; 28 bits   ; 56 LEs        ; 28 LEs               ; 28 LEs                 ; Yes        ; |or1420SingleCore|or1420Top:cpu1|sprUnit:sprs|s_irqVectorReg[17]                        ;
+; 3:1                ; 28 bits   ; 56 LEs        ; 28 LEs               ; 28 LEs                 ; Yes        ; |or1420SingleCore|or1420Top:cpu1|sprUnit:sprs|s_invalidVectorReg[24]                    ;
+; 3:1                ; 28 bits   ; 56 LEs        ; 28 LEs               ; 28 LEs                 ; Yes        ; |or1420SingleCore|or1420Top:cpu1|sprUnit:sprs|s_systemVectorReg[1]                      ;
+; 3:1                ; 24 bits   ; 48 LEs        ; 24 LEs               ; 24 LEs                 ; Yes        ; |or1420SingleCore|processorId:cpuFreq|s_procFreqIdReg[24]                               ;
+; 3:1                ; 30 bits   ; 60 LEs        ; 30 LEs               ; 30 LEs                 ; Yes        ; |or1420SingleCore|camera:camIf|s_frameBufferBaseReg[7]                                  ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRx:RXC|s_baudCounterReg[3]                          ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartTxFifo:TXF|s_writeAddressReg[0]                     ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|s_divisorReg[7]                                         ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_writeAddressReg[0]                     ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|s_divisorReg[9]                                         ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|s_interruptEnableReg[0]                                 ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_frameErrorReg[15]                      ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_frameErrorReg[14]                      ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_frameErrorReg[13]                      ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_frameErrorReg[12]                      ;
 ; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_breakReg[11]                           ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_parityErrorReg[10]                     ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_breakReg[10]                           ;
 ; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_parityErrorReg[9]                      ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_parityErrorReg[8]                      ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_parityErrorReg[7]                      ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_breakReg[6]                            ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_parityErrorReg[5]                      ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_frameErrorReg[4]                       ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_breakReg[8]                            ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_frameErrorReg[7]                       ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_frameErrorReg[6]                       ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_breakReg[5]                            ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_parityErrorReg[4]                      ;
 ; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_parityErrorReg[3]                      ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_parityErrorReg[2]                      ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_breakReg[2]                            ;
 ; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_parityErrorReg[1]                      ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_breakReg[0]                            ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|s_scratchReg[0]                                         ;
-; 3:1                ; 11 bits   ; 22 LEs        ; 11 LEs               ; 11 LEs                 ; Yes        ; |or1420SingleCore|camera:camIf|s_pixelCountReg[3]                                       ;
-; 3:1                ; 30 bits   ; 60 LEs        ; 60 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|executeStage:exe|s_savedPcReg[10]                      ;
-; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |or1420SingleCore|processorId:cpuFreq|decimalCounter:cnt[0].dcount|s_countValueReg[1]   ;
-; 3:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_nrOfEntriesReg[3]                      ;
-; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |or1420SingleCore|sdramController:sdram|s_dataToRamReg[17]                              ;
-; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |or1420SingleCore|camera:camIf|s_hzCountReg[2]                                          ;
-; 3:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; Yes        ; |or1420SingleCore|screens:hdmi|textController:textC1|s_clearScreenCounterReg[10]        ;
-; 3:1                ; 44 bits   ; 88 LEs        ; 44 LEs               ; 44 LEs                 ; Yes        ; |or1420SingleCore|or1420Top:cpu1|decodeStage:decode|exeLogicCntrl[0]                    ;
-; 3:1                ; 6 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|executeStage:exe|memLoadMode[2]                        ;
-; 3:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |or1420SingleCore|busArbiter:arbiter|s_queueInsertPointerReg[1]                         ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_parityErrorReg[0]                      ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|s_scratchReg[5]                                         ;
+; 3:1                ; 11 bits   ; 22 LEs        ; 11 LEs               ; 11 LEs                 ; Yes        ; |or1420SingleCore|camera:camIf|s_pixelCountReg[10]                                      ;
+; 3:1                ; 30 bits   ; 60 LEs        ; 60 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|executeStage:exe|s_savedPcReg[4]                       ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |or1420SingleCore|processorId:cpuFreq|decimalCounter:cnt[0].dcount|s_countValueReg[3]   ;
+; 3:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRxFifo:RXF|s_nrOfEntriesReg[2]                      ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |or1420SingleCore|sdramController:sdram|s_dataToRamReg[19]                              ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |or1420SingleCore|camera:camIf|s_hzCountReg[6]                                          ;
+; 3:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; Yes        ; |or1420SingleCore|screens:hdmi|textController:textC1|s_clearScreenCounterReg[8]         ;
+; 3:1                ; 44 bits   ; 88 LEs        ; 44 LEs               ; 44 LEs                 ; Yes        ; |or1420SingleCore|or1420Top:cpu1|memoryStage:mem|wbWriteData[4]                         ;
+; 3:1                ; 6 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|executeStage:exe|memStoreMode[1]                       ;
+; 3:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |or1420SingleCore|busArbiter:arbiter|s_queueInsertPointerReg[3]                         ;
 ; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|dCache:loadStore|s_loadModeReg[0]                      ;
-; 3:1                ; 30 bits   ; 60 LEs        ; 30 LEs               ; 30 LEs                 ; Yes        ; |or1420SingleCore|or1420Top:cpu1|fetchStage:fetch|s_pcReg[12]                           ;
-; 3:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|decodeStage:decode|s_flushReg                          ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|sprUnit:sprs|s_exceptionReg[2]                         ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|spiBus:flash|spiShiftQuad:quad|s_wordCountReg[6]                      ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|hdmi_720p:generator|s_verticalCounter[8]                 ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|hdmi_720p:generator|s_verticalCounter[9]                 ;
+; 3:1                ; 30 bits   ; 60 LEs        ; 30 LEs               ; 30 LEs                 ; Yes        ; |or1420SingleCore|or1420Top:cpu1|fetchStage:fetch|s_pcReg[17]                           ;
+; 3:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|decodeStage:decode|s_rfeDelayReg[1]                    ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|sprUnit:sprs|s_exceptionReg[1]                         ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|spiBus:flash|spiShiftQuad:quad|s_wordCountReg[5]                      ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|hdmi_720p:generator|s_verticalCounter[5]                 ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|hdmi_720p:generator|s_verticalCounter[4]                 ;
 ; 4:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |or1420SingleCore|gpio:sevenSegDipSwitch|s_addressDataOutReg[3]                         ;
-; 4:1                ; 14 bits   ; 28 LEs        ; 28 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|sdramController:sdram|s_counterValue[13]                              ;
-; 4:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|s_dataOutReg[18]                                        ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|s_dataOutReg[25]                                        ;
-; 4:1                ; 21 bits   ; 42 LEs        ; 42 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|graphicsController:graphics|s_busDataOutReg[16]          ;
-; 4:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |or1420SingleCore|sdramController:sdram|s_dataOutReg[23]                                ;
-; 4:1                ; 30 bits   ; 60 LEs        ; 60 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|graphicsController:graphics|s_currentPixelAddressReg[15] ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|decodeStage:decode|exePortBData[1]                     ;
-; 4:1                ; 14 bits   ; 28 LEs        ; 28 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|decodeStage:decode|exePortBData[7]                     ;
+; 4:1                ; 14 bits   ; 28 LEs        ; 28 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|sdramController:sdram|s_counterValue[7]                               ;
+; 4:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|s_dataOutReg[17]                                        ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|s_dataOutReg[28]                                        ;
+; 4:1                ; 21 bits   ; 42 LEs        ; 42 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|graphicsController:graphics|s_busDataOutReg[30]          ;
+; 4:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |or1420SingleCore|sdramController:sdram|s_dataOutReg[11]                                ;
+; 4:1                ; 30 bits   ; 60 LEs        ; 60 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|graphicsController:graphics|s_currentPixelAddressReg[11] ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|decodeStage:decode|exePortBData[0]                     ;
+; 4:1                ; 14 bits   ; 28 LEs        ; 28 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|decodeStage:decode|exePortBData[12]                    ;
 ; 4:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|decodeStage:decode|exePortAData[1]                     ;
 ; 4:1                ; 30 bits   ; 60 LEs        ; 60 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|decodeStage:decode|exePortAData[13]                    ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRx:RXC|s_bitCounterReg[2]                           ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartRx:RXC|s_bitCounterReg[3]                           ;
 ; 4:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartTx:TXC|s_halfBitCountReg[3]                         ;
 ; 4:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|uartTx:TXC|s_shiftReg[8]                                ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|graphicsController:graphics|burstSizeOut[2]              ;
-; 4:1                ; 32 bits   ; 64 LEs        ; 64 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|delayIse:delayMicro|s_delayCountReg[17]                               ;
-; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; Yes        ; |or1420SingleCore|screens:hdmi|textController:textC1|s_screenOffsetReg[6]               ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|sdramController:sdram|s_writeCountReg[0]                              ;
-; 4:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|textController:textC1|s_clearLineCounterReg[0]           ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |or1420SingleCore|processorId:cpuFreq|decimalCounter:cnt[1].dcount|s_countValueReg[0]   ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |or1420SingleCore|processorId:cpuFreq|decimalCounter:cnt[2].dcount|s_countValueReg[3]   ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|graphicsController:graphics|burstSizeOut[3]              ;
+; 4:1                ; 32 bits   ; 64 LEs        ; 64 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|delayIse:delayMicro|s_delayCountReg[3]                                ;
+; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; Yes        ; |or1420SingleCore|screens:hdmi|textController:textC1|s_screenOffsetReg[5]               ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|sdramController:sdram|s_writeCountReg[2]                              ;
+; 4:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|textController:textC1|s_clearLineCounterReg[6]           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |or1420SingleCore|processorId:cpuFreq|decimalCounter:cnt[1].dcount|s_countValueReg[1]   ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |or1420SingleCore|processorId:cpuFreq|decimalCounter:cnt[2].dcount|s_countValueReg[0]   ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |or1420SingleCore|processorId:cpuFreq|decimalCounter:cnt[3].dcount|s_countValueReg[0]   ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |or1420SingleCore|processorId:cpuFreq|decimalCounter:cnt[4].dcount|s_countValueReg[3]   ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |or1420SingleCore|processorId:cpuFreq|decimalCounter:cnt[5].dcount|s_countValueReg[3]   ;
-; 3:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|dCache:loadStore|s_byteEnablesReg[2]                   ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|executeStage:exe|memStoreData[27]                      ;
-; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; Yes        ; |or1420SingleCore|sdramController:sdram|sdramDqmN[0]                                    ;
-; 5:1                ; 7 bits    ; 21 LEs        ; 14 LEs               ; 7 LEs                  ; Yes        ; |or1420SingleCore|spiBus:flash|spiShiftQuad:quad|s_shift1Reg[0]                         ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |or1420SingleCore|processorId:cpuFreq|decimalCounter:cnt[4].dcount|s_countValueReg[1]   ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |or1420SingleCore|processorId:cpuFreq|decimalCounter:cnt[5].dcount|s_countValueReg[2]   ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|dCache:loadStore|s_byteEnablesReg[3]                   ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|executeStage:exe|memStoreData[24]                      ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; Yes        ; |or1420SingleCore|sdramController:sdram|sdramDqmN[1]                                    ;
+; 5:1                ; 7 bits    ; 21 LEs        ; 14 LEs               ; 7 LEs                  ; Yes        ; |or1420SingleCore|spiBus:flash|spiShiftQuad:quad|s_shift2Reg[1]                         ;
 ; 5:1                ; 3 bits    ; 9 LEs         ; 6 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|spiBus:flash|spiShiftQuad:quad|s_shift2Reg[2]                         ;
-; 5:1                ; 14 bits   ; 42 LEs        ; 28 LEs               ; 14 LEs                 ; Yes        ; |or1420SingleCore|spiBus:flash|spiShiftQuad:quad|s_shift3Reg[4]                         ;
+; 5:1                ; 14 bits   ; 42 LEs        ; 28 LEs               ; 14 LEs                 ; Yes        ; |or1420SingleCore|spiBus:flash|spiShiftQuad:quad|s_shift1Reg[6]                         ;
 ; 4:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |or1420SingleCore|camera:camIf|s_addressDataOutReg[0]                                   ;
-; 4:1                ; 30 bits   ; 60 LEs        ; 60 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|camera:camIf|s_addressDataOutReg[22]                                  ;
-; 5:1                ; 10 bits   ; 30 LEs        ; 20 LEs               ; 10 LEs                 ; Yes        ; |or1420SingleCore|or1420Top:cpu1|decodeStage:decode|exePortBData[20]                    ;
-; 5:1                ; 7 bits    ; 21 LEs        ; 7 LEs                ; 14 LEs                 ; Yes        ; |or1420SingleCore|screens:hdmi|textController:textC1|s_cursorXPos[3]                    ;
-; 5:1                ; 5 bits    ; 15 LEs        ; 10 LEs               ; 5 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|s_dataOutReg[12]                                        ;
-; 5:1                ; 3 bits    ; 9 LEs         ; 6 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|s_dataOutReg[10]                                        ;
-; 5:1                ; 5 bits    ; 15 LEs        ; 10 LEs               ; 5 LEs                  ; Yes        ; |or1420SingleCore|busArbiter:arbiter|s_queuedRequests[31]                               ;
+; 4:1                ; 30 bits   ; 60 LEs        ; 60 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|camera:camIf|s_addressDataOutReg[23]                                  ;
+; 5:1                ; 10 bits   ; 30 LEs        ; 20 LEs               ; 10 LEs                 ; Yes        ; |or1420SingleCore|or1420Top:cpu1|decodeStage:decode|exePortBData[25]                    ;
+; 5:1                ; 7 bits    ; 21 LEs        ; 7 LEs                ; 14 LEs                 ; Yes        ; |or1420SingleCore|screens:hdmi|textController:textC1|s_cursorXPos[4]                    ;
+; 5:1                ; 5 bits    ; 15 LEs        ; 10 LEs               ; 5 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|s_dataOutReg[11]                                        ;
+; 5:1                ; 3 bits    ; 9 LEs         ; 6 LEs                ; 3 LEs                  ; Yes        ; |or1420SingleCore|uartBus:uart1|s_dataOutReg[9]                                         ;
+; 5:1                ; 5 bits    ; 15 LEs        ; 10 LEs               ; 5 LEs                  ; Yes        ; |or1420SingleCore|busArbiter:arbiter|s_queuedRequests[29]                               ;
 ; 6:1                ; 2 bits    ; 8 LEs         ; 6 LEs                ; 2 LEs                  ; Yes        ; |or1420SingleCore|sdramController:sdram|sdramBa[1]                                      ;
-; 6:1                ; 3 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; Yes        ; |or1420SingleCore|spiBus:flash|spiShiftQuad:quad|s_shift0Reg[1]                         ;
-; 6:1                ; 4 bits    ; 16 LEs        ; 12 LEs               ; 4 LEs                  ; Yes        ; |or1420SingleCore|spiBus:flash|spiShiftQuad:quad|s_shift0Reg[7]                         ;
-; 6:1                ; 4 bits    ; 16 LEs        ; 12 LEs               ; 4 LEs                  ; Yes        ; |or1420SingleCore|spiBus:flash|spiShiftQuad:quad|s_bitCountReg[3]                       ;
-; 6:1                ; 2 bits    ; 8 LEs         ; 6 LEs                ; 2 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|decodeStage:decode|exeForwardCntrlB[1]                 ;
+; 6:1                ; 3 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; Yes        ; |or1420SingleCore|spiBus:flash|spiShiftQuad:quad|s_shift0Reg[2]                         ;
+; 6:1                ; 4 bits    ; 16 LEs        ; 12 LEs               ; 4 LEs                  ; Yes        ; |or1420SingleCore|spiBus:flash|spiShiftQuad:quad|s_shift0Reg[4]                         ;
+; 6:1                ; 4 bits    ; 16 LEs        ; 12 LEs               ; 4 LEs                  ; Yes        ; |or1420SingleCore|spiBus:flash|spiShiftQuad:quad|s_bitCountReg[1]                       ;
+; 6:1                ; 2 bits    ; 8 LEs         ; 6 LEs                ; 2 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|decodeStage:decode|exeForwardCntrlB[0]                 ;
 ; 6:1                ; 2 bits    ; 8 LEs         ; 6 LEs                ; 2 LEs                  ; Yes        ; |or1420SingleCore|or1420Top:cpu1|decodeStage:decode|exeForwardCntrlA[0]                 ;
-; 5:1                ; 2 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|s_greenPixel[2]                                          ;
-; 5:1                ; 10 bits   ; 30 LEs        ; 10 LEs               ; 20 LEs                 ; Yes        ; |or1420SingleCore|sdramController:sdram|s_distanceDelayCounterReg[4]                    ;
-; 6:1                ; 9 bits    ; 36 LEs        ; 27 LEs               ; 9 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|graphicsController:graphics|s_graphicsWidthReg[6]        ;
-; 6:1                ; 9 bits    ; 36 LEs        ; 27 LEs               ; 9 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|graphicsController:graphics|s_graphicsHeightReg[9]       ;
-; 6:1                ; 7 bits    ; 28 LEs        ; 14 LEs               ; 14 LEs                 ; Yes        ; |or1420SingleCore|uartBus:uart1|s_dataOutReg[2]                                         ;
-; 7:1                ; 4 bits    ; 16 LEs        ; 12 LEs               ; 4 LEs                  ; Yes        ; |or1420SingleCore|sdramController:sdram|sdramAddr[12]                                   ;
-; 8:1                ; 7 bits    ; 35 LEs        ; 28 LEs               ; 7 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|graphicsController:graphics|s_busDataOutReg[3]           ;
-; 8:1                ; 2 bits    ; 10 LEs        ; 8 LEs                ; 2 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|graphicsController:graphics|s_busDataOutReg[0]           ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|s_BluePixel[4]                                           ;
+; 5:1                ; 10 bits   ; 30 LEs        ; 10 LEs               ; 20 LEs                 ; Yes        ; |or1420SingleCore|sdramController:sdram|s_distanceDelayCounterReg[0]                    ;
+; 6:1                ; 9 bits    ; 36 LEs        ; 27 LEs               ; 9 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|graphicsController:graphics|s_graphicsWidthReg[1]        ;
+; 6:1                ; 9 bits    ; 36 LEs        ; 27 LEs               ; 9 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|graphicsController:graphics|s_graphicsHeightReg[6]       ;
+; 6:1                ; 7 bits    ; 28 LEs        ; 14 LEs               ; 14 LEs                 ; Yes        ; |or1420SingleCore|uartBus:uart1|s_dataOutReg[5]                                         ;
+; 7:1                ; 4 bits    ; 16 LEs        ; 12 LEs               ; 4 LEs                  ; Yes        ; |or1420SingleCore|sdramController:sdram|sdramAddr[9]                                    ;
+; 8:1                ; 7 bits    ; 35 LEs        ; 28 LEs               ; 7 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|graphicsController:graphics|s_busDataOutReg[2]           ;
+; 8:1                ; 2 bits    ; 10 LEs        ; 8 LEs                ; 2 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|graphicsController:graphics|s_busDataOutReg[1]           ;
 ; 7:1                ; 6 bits    ; 24 LEs        ; 24 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|spiBus:flash|spiShiftSingle:single|s_bitCountReg[4]                   ;
-; 8:1                ; 9 bits    ; 45 LEs        ; 36 LEs               ; 9 LEs                  ; Yes        ; |or1420SingleCore|sdramController:sdram|sdramAddr[7]                                    ;
+; 8:1                ; 9 bits    ; 45 LEs        ; 36 LEs               ; 9 LEs                  ; Yes        ; |or1420SingleCore|sdramController:sdram|sdramAddr[8]                                    ;
 ; 8:1                ; 8 bits    ; 40 LEs        ; 24 LEs               ; 16 LEs                 ; Yes        ; |or1420SingleCore|sdramController:sdram|s_shortCountReg[8]                              ;
-; 7:1                ; 2 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|s_redPixel[1]                                            ;
-; 8:1                ; 6 bits    ; 30 LEs        ; 30 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|s_greenPixel[5]                                          ;
-; 7:1                ; 2 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|s_redPixel[3]                                            ;
+; 7:1                ; 2 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|s_redPixel[4]                                            ;
+; 8:1                ; 6 bits    ; 30 LEs        ; 30 LEs               ; 0 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|s_BluePixel[1]                                           ;
+; 7:1                ; 2 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|s_redPixel[2]                                            ;
 ; 259:1              ; 25 bits   ; 4300 LEs      ; 125 LEs              ; 4175 LEs               ; Yes        ; |or1420SingleCore|or1420Top:cpu1|executeStage:exe|wbWriteData[15]                       ;
 ; 259:1              ; 3 bits    ; 516 LEs       ; 18 LEs               ; 498 LEs                ; Yes        ; |or1420SingleCore|or1420Top:cpu1|executeStage:exe|wbWriteData[2]                        ;
-; 19:1               ; 23 bits   ; 276 LEs       ; 276 LEs              ; 0 LEs                  ; Yes        ; |or1420SingleCore|spiBus:flash|spiShiftSingle:single|s_shiftReg[12]                     ;
-; 20:1               ; 8 bits    ; 104 LEs       ; 96 LEs               ; 8 LEs                  ; Yes        ; |or1420SingleCore|spiBus:flash|spiShiftSingle:single|s_shiftReg[29]                     ;
+; 19:1               ; 23 bits   ; 276 LEs       ; 276 LEs              ; 0 LEs                  ; Yes        ; |or1420SingleCore|spiBus:flash|spiShiftSingle:single|s_shiftReg[8]                      ;
+; 20:1               ; 8 bits    ; 104 LEs       ; 96 LEs               ; 8 LEs                  ; Yes        ; |or1420SingleCore|spiBus:flash|spiShiftSingle:single|s_shiftReg[28]                     ;
 ; 4:1                ; 7 bits    ; 14 LEs        ; 7 LEs                ; 7 LEs                  ; Yes        ; |or1420SingleCore|screens:hdmi|textController:textC1|s_cursorYPos[5]                    ;
 ; 3:1                ; 9 bits    ; 18 LEs        ; 9 LEs                ; 9 LEs                  ; No         ; |or1420SingleCore|spiBus:flash|spiShiftSingle:single|s_stateReg                         ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; No         ; |or1420SingleCore|spiBus:flash|spiShiftSingle:single|s_cntrlReg                         ;
@@ -4355,23 +4355,23 @@ Note: In order to hide this table in the UI and the text report file, please set
 ;     SLD               ; 96                          ;
 ;     plain             ; 2768                        ;
 ; cycloneiii_io_obuf    ; 21                          ;
-; cycloneiii_lcell_comb ; 13910                       ;
+; cycloneiii_lcell_comb ; 13898                       ;
 ;     arith             ; 1708                        ;
 ;         2 data inputs ; 709                         ;
 ;         3 data inputs ; 999                         ;
-;     normal            ; 12202                       ;
+;     normal            ; 12190                       ;
 ;         0 data inputs ; 55                          ;
 ;         1 data inputs ; 96                          ;
-;         2 data inputs ; 666                         ;
-;         3 data inputs ; 3737                        ;
-;         4 data inputs ; 7648                        ;
+;         2 data inputs ; 669                         ;
+;         3 data inputs ; 3735                        ;
+;         4 data inputs ; 7635                        ;
 ; cycloneiii_mac_mult   ; 6                           ;
 ; cycloneiii_mac_out    ; 6                           ;
 ; cycloneiii_pll        ; 1                           ;
 ; cycloneiii_ram_block  ; 291                         ;
 ;                       ;                             ;
 ; Max LUT depth         ; 18.90                       ;
-; Average LUT depth     ; 7.28                        ;
+; Average LUT depth     ; 7.27                        ;
 +-----------------------+-----------------------------+
 
 
@@ -4380,7 +4380,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:31     ;
+; Top            ; 00:00:29     ;
 +----------------+--------------+
 
 
@@ -4404,7 +4404,7 @@ Info: Running Quartus Prime Analysis & Synthesis
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Tue Jun  4 10:59:55 2024
+    Info: Processing started: Tue Jun  4 12:14:56 2024
 Info: Command: quartus_map --family="Cyclone IV E" or1420SingleCore
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
@@ -4663,7 +4663,7 @@ Info (10264): Verilog HDL Case Statement information at i2cMaster.v(170): all ca
 Info (12128): Elaborating entity "delayIse" for hierarchy "delayIse:delayMicro" File: /home/quadri/Desktop/myfiles/CS-476-Embedded-Systems/project/virtual_prototype/systems/singleCore/verilog/or1420SingleCore.v Line: 439
 Warning (10230): Verilog HDL assignment warning at delayIse.v(49): truncated value with size 32 to match size of target (4) File: /home/quadri/Desktop/myfiles/CS-476-Embedded-Systems/project/virtual_prototype/modules/delay/verilog/delayIse.v Line: 49
 Info (12128): Elaborating entity "edge_detection" for hierarchy "edge_detection:sobel" File: /home/quadri/Desktop/myfiles/CS-476-Embedded-Systems/project/virtual_prototype/systems/singleCore/verilog/or1420SingleCore.v Line: 465
-Info (12128): Elaborating entity "sobel" for hierarchy "edge_detection:sobel|sobel:sobel_module_0" File: /home/quadri/Desktop/myfiles/CS-476-Embedded-Systems/project/virtual_prototype/modules/sobel/edge_detection.v Line: 77
+Info (12128): Elaborating entity "sobel" for hierarchy "edge_detection:sobel|sobel:sobel_module_0" File: /home/quadri/Desktop/myfiles/CS-476-Embedded-Systems/project/virtual_prototype/modules/sobel/edge_detection.v Line: 78
 Warning (10230): Verilog HDL assignment warning at sobel.v(21): truncated value with size 32 to match size of target (11) File: /home/quadri/Desktop/myfiles/CS-476-Embedded-Systems/project/virtual_prototype/modules/sobel/sobel.v Line: 21
 Warning (10230): Verilog HDL assignment warning at sobel.v(22): truncated value with size 32 to match size of target (11) File: /home/quadri/Desktop/myfiles/CS-476-Embedded-Systems/project/virtual_prototype/modules/sobel/sobel.v Line: 22
 Warning (10230): Verilog HDL assignment warning at sobel.v(26): truncated value with size 11 to match size of target (8) File: /home/quadri/Desktop/myfiles/CS-476-Embedded-Systems/project/virtual_prototype/modules/sobel/sobel.v Line: 26
@@ -5270,19 +5270,19 @@ Info (17049): 153 registers lost all their fanouts during netlist optimizations.
 Info (144001): Generated suppressed messages file /home/quadri/Desktop/myfiles/CS-476-Embedded-Systems/project/virtual_prototype/systems/singleCore/sandbox/or1420SingleCore.map.smsg
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 1 node(s), including 0 DDIO, 1 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 16758 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 16741 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 24 input pins
     Info (21059): Implemented 68 output pins
     Info (21060): Implemented 21 bidirectional pins
-    Info (21061): Implemented 16344 logic cells
+    Info (21061): Implemented 16327 logic cells
     Info (21064): Implemented 291 RAM segments
     Info (21065): Implemented 1 PLLs
     Info (21062): Implemented 9 DSP elements
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 34 warnings
-    Info: Peak virtual memory: 1093 megabytes
-    Info: Processing ended: Tue Jun  4 11:00:43 2024
-    Info: Elapsed time: 00:00:48
-    Info: Total CPU time (on all processors): 00:00:55
+    Info: Peak virtual memory: 1095 megabytes
+    Info: Processing ended: Tue Jun  4 12:15:40 2024
+    Info: Elapsed time: 00:00:44
+    Info: Total CPU time (on all processors): 00:00:52
 
 
 +------------------------------------------+

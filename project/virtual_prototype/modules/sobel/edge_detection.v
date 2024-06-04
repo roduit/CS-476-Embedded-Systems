@@ -48,7 +48,8 @@ module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
     wire reverse = valueB[16];
   
     assign done   = (s_isMyEd && (valueB[7:0] != 8'd5)) ? 1'b1 : (s_doComputeReg) ? 1'b1 : 1'b0;
-    assign result = (s_doComputeReg == 1'b1) ?  {s_sobel_3, s_sobel_2, s_sobel_1, s_sobel_0} : 32'd0;
+    // assign result = (s_doComputeReg == 1'b1) ?  {s_sobel_3, s_sobel_2, s_sobel_1, s_sobel_0} : 32'd0;
+    assign result = {s_sobel_3, s_sobel_2, s_sobel_1, s_sobel_0};
 
     // assign done   = (s_doComputeReg) ? 1'b1 : 1'b0;
     // assign result = (s_doComputeReg == 1'b1) ?  (valueB[7:0] == 8'd0) ? {pixels[3], pixels[2], pixels[1], pixels[0]} : 
