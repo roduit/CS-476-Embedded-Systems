@@ -18,7 +18,13 @@ module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
     //  3. valueB[7:0] = 0b010  =>  Set pixel 8-11
     //  4. valueB[7:0] = 0b011  =>  Set pixel 12-15
     //  5. valueB[7:0] = 0b100  =>  Set pixel 16-19
-    //  6. valueB[7:0] = 0b101  =>  Set pixel 20-23 + threshold (valueB[15:8]) + reverse[1]/forward[0] (valueB[16])
+    //  6. valueB[7:0] = 0b101  =>  Set pixel 20-23 + threshold (valueB[15:8])
+    //
+    //  Important: valueB[16] = 1 => reverse order of the images 
+    //                               (1 -> reverse, 0 -> forward)
+    //
+    //  Important: valueB[17] = 1 => start the edge detection
+    //
     // ============================================================================
     //
     //  Example of how to use this module (case 1):
@@ -46,10 +52,10 @@ module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
     reg s_doComputeReg = 0;
 
     wire reverse = valueB[16];
+    wire startEd = valueB[17];
   
-    assign done   = (s_isMyEd && (valueB[7:0] != 8'd5)) ? 1'b1 : (s_doComputeReg) ? 1'b1 : 1'b0;
-    // assign result = (s_doComputeReg == 1'b1) ?  {s_sobel_3, s_sobel_2, s_sobel_1, s_sobel_0} : 32'd0;
-    assign result = {s_sobel_3, s_sobel_2, s_sobel_1, s_sobel_0};
+    assign done   = (s_isMyEd && !startEd) ? 1'b1 : (s_doComputeReg) ? 1'b1 : 1'b0;
+    assign result = (s_doComputeReg == 1'b1) ?  {s_sobel_3, s_sobel_2, s_sobel_1, s_sobel_0} : 32'd0;
 
     // assign done   = (s_doComputeReg) ? 1'b1 : 1'b0;
     // assign result = (s_doComputeReg == 1'b1) ?  (valueB[7:0] == 8'd0) ? {pixels[3], pixels[2], pixels[1], pixels[0]} : 

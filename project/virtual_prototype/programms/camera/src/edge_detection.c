@@ -159,7 +159,7 @@ void compute_sobel_v1(uint32_t grayscaleAddr, volatile uint8_t * sobelImage, uin
             // general case
             else {
                 //printf("col_index: %d\n", col_index);
-                valueB = (col_index % 2 == 0) ? 0 : reverse;
+                valueB = (col_index % 2 == 0) ? 1 : reverse;
                 //printf("=====================================\n");
 
                 for (int nbLines = 0; nbLines < 3; nbLines++) {
