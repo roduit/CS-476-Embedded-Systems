@@ -45,6 +45,10 @@ const uint32_t reverse = 1 << 16;
 const uint32_t startEdgeDetection = 1 << 17;
 const uint32_t lineBlockSize = 160;
 
+const uint32_t newImgStartAddrCI = 640;
+const uint32_t oldImgStartAddrCI = 700;
+const uint32_t grayscaleStartAddrCI = 760;
+
 // ================================================================================
 // =====                           Delay Generator                            =====
 // ================================================================================
