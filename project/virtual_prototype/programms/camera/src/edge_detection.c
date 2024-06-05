@@ -45,11 +45,11 @@ const uint32_t reverse = 1 << 16;
 const uint32_t startEdgeDetection = 1 << 17;
 const uint32_t lineBlockSize = 160;
 
-const uint32_t compareBlockSize = 60;
+const uint32_t compareBlockSize = 64;
 const uint32_t newImgStartAddrCI = 640;
-const uint32_t oldImgStartAddrCI = 700;
-const uint32_t grayscaleStartAddrCI = 760;
-const uint32_t resultStartAddrCI = 820;
+const uint32_t oldImgStartAddrCI = 704;
+const uint32_t grayscaleStartAddrCI = 768;
+const uint32_t resultStartAddrCI = 832;
 
 // ================================================================================
 // =====                            DMA Functions                             =====
@@ -127,25 +127,25 @@ void boosted_compare(uint8_t *new_image, uint8_t *old_image, uint8_t *grayscale,
     uint8_t doShift = 0;
     int idx = 0;
     
-    for (int i = 0; i < (int)(size / 240); i += 1) {
+    for (int i = 0; i < (int)(size / 256); i += 1) {
         idx = 0;
 
         // DMA transfer
         DMA_setupSize(compareBlockSize, usedBurstSize);
         
         // New image
-        DMA_setupAddr((uint32_t)&new_image[0] + i*240, newImgStartAddrCI);
+        DMA_setupAddr((uint32_t)&new_image[0] + i*256, newImgStartAddrCI);
         DMA_startTransferBlocking(1);
 
         // // Old image
-        DMA_setupAddr((uint32_t)&old_image[0] + i*240, oldImgStartAddrCI);
+        DMA_setupAddr((uint32_t)&old_image[0] + i*256, oldImgStartAddrCI);
         DMA_startTransferBlocking(1);
 
         // Grayscale
-        DMA_setupAddr((uint32_t)&grayscale[0] + i*240, grayscaleStartAddrCI);
+        DMA_setupAddr((uint32_t)&grayscale[0] + i*256, grayscaleStartAddrCI);
         DMA_startTransferBlocking(1);
 
-        for (int j = 0; j < 240; j+=2) {
+        for (int j = 0; j < 256; j+=2) {
             if (j % 4 == 0) {
                 // Read data from the CI memory
                 DMA_readCIMem(newImgStartAddrCI + idx, &tmp_new);
@@ -173,7 +173,7 @@ void boosted_compare(uint8_t *new_image, uint8_t *old_image, uint8_t *grayscale,
 
         // Send the result to the VGA
         DMA_setupSize(2*compareBlockSize, usedBurstSize);
-        DMA_setupAddr((uint32_t)&result[0] + i*480, resultStartAddrCI);
+        DMA_setupAddr((uint32_t)&result[0] + i*512, resultStartAddrCI);
         DMA_startTransferBlocking(2);
     }
 }
@@ -263,7 +263,7 @@ void compute_sobel_v1(uint32_t grayscaleAddr, volatile uint8_t * sobelImage, uin
                     startIdx = ((line_index + nbLines) % 4) * effectiveWidth;
                     asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(tmp_line):[in1] "r"(col_index + startIdx));
                     if (nbLines == 2) {
-                        valueB += 1 << 17;
+                        valueB = valueB | startEdgeDetection;
                     }
                     asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xC":[out1]"=r"(tmp_sobel_result):[in1]"r"((tmp_line)),[in2]"r"((valueB)));
                     valueB += 2;

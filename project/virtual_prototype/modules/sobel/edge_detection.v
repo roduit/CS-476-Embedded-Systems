@@ -49,20 +49,20 @@ module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
     wire s_isMyEd = (ciN == customInstructionId) ? start : 1'b0;
 
     // wire s_doCompute = s_isMyEd && (valueB[7:0] == 8'd5);
-    wire s_doCompute = s_isMyEd;
-    reg s_doComputeReg = 0;
+    // wire s_doCompute = s_isMyEd;
+    reg s_startReg = 0;
 
     wire reverse = valueB[16];
     wire startEd = valueB[17];
 
     reg [31:0] shiftReg = 32'd0;
   
-    assign done   = (s_isMyEd && !startEd) ? 1'b1 : (s_doComputeReg) ? 1'b1 : 1'b0;
-    // assign result = (s_doComputeReg == 1'b1) ?  shiftReg : 32'd0;
-    assign result = (s_doComputeReg == 1'b1) ?  {28'd0, s_sobel_3, s_sobel_2, s_sobel_1, s_sobel_0} : 32'd0;
+    assign done   = (s_isMyEd && !startEd) ? 1'b1 : (s_startReg) ? 1'b1 : 1'b0;
+    // assign result = (s_startReg == 1'b1) ?  shiftReg : 32'd0;
+    assign result = (s_startReg == 1'b1) ?  {shiftReg[27:0], s_sobel_3, s_sobel_2, s_sobel_1, s_sobel_0} : 32'd0;
 
-    // assign done   = (s_doComputeReg) ? 1'b1 : 1'b0;
-    // assign result = (s_doComputeReg == 1'b1) ?  (valueB[7:0] == 8'd0) ? {pixels[3], pixels[2], pixels[1], pixels[0]} : 
+    // assign done   = (s_startReg) ? 1'b1 : 1'b0;
+    // assign result = (s_startReg == 1'b1) ?  (valueB[7:0] == 8'd0) ? {pixels[3], pixels[2], pixels[1], pixels[0]} : 
     //                                             (valueB[7:0] == 8'd1) ? {pixels[3], pixels[2], pixels[1], pixels[0]} : 
     //                                             (valueB[7:0] == 8'd2) ? {pixels[3], pixels[2], pixels[1], pixels[0]}: 
     //                                             (valueB[7:0] == 8'd3) ? {pixels[3], pixels[2], pixels[1], pixels[0]} : 
@@ -171,11 +171,11 @@ module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
             pixels[23] <= 8'b0;
             threshold <= 8'b0;
             shiftReg <= 32'd0;
-            s_doComputeReg <= 0;
+            s_startReg <= 0;
         end else begin
             // Compute the edge detection
-            s_doComputeReg <= s_doCompute;
-            if (s_doComputeReg & startEd) begin
+            s_startReg <= s_isMyEd && startEd;
+            if (s_startReg) begin
                 shiftReg <= {shiftReg[27:0], s_sobel_3, s_sobel_2, s_sobel_1, s_sobel_0};
                 // shiftReg <= {shiftReg[28:0], 1'd1, 1'd1, 1'd1, 1'd0};
             end
