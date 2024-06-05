@@ -45,11 +45,11 @@ const uint32_t reverse = 1 << 16;
 const uint32_t startEdgeDetection = 1 << 17;
 const uint32_t lineBlockSize = 160;
 
-const uint32_t compareBlockSize = 80;
+const uint32_t compareBlockSize = 60;
 const uint32_t newImgStartAddrCI = 640;
-const uint32_t oldImgStartAddrCI = 720;
-const uint32_t grayscaleStartAddrCI = 800;
-const uint32_t resultStartAddrCI = 900;
+const uint32_t oldImgStartAddrCI = 700;
+const uint32_t grayscaleStartAddrCI = 760;
+const uint32_t resultStartAddrCI = 820;
 
 // ================================================================================
 // =====                            DMA Functions                             =====
@@ -123,50 +123,62 @@ void boosted_compare(uint8_t *new_image, uint8_t *old_image, uint8_t *grayscale,
     uint32_t tmp_new, tmp_old, tmp_gray;
     uint32_t tmp_result;
     uint32_t valueA, valueB = 0;
+    uint8_t doShift = 0;
     int idx = 0;
     
-    for (int i = 0; i < (int)(size / 320); i += 1) {
+    for (int i = 0; i < (int)(size / 240); i += 1) {
         idx = 0;
 
         // DMA transfer
         DMA_setupSize(compareBlockSize, usedBurstSize);
         
         // New image
-        DMA_setupAddr((uint32_t)&new_image[i], newImgStartAddrCI);
+        DMA_setupAddr((uint32_t)&new_image[0] + i*240, newImgStartAddrCI);
         DMA_startTransferBlocking(1);
 
-        // Old image
-        DMA_setupAddr((uint32_t)&old_image[i], oldImgStartAddrCI);
+        // // Old image
+        DMA_setupAddr((uint32_t)&old_image[0] + i*240, oldImgStartAddrCI);
         DMA_startTransferBlocking(1);
 
         // Grayscale
-        DMA_setupAddr((uint32_t)&grayscale[i], grayscaleStartAddrCI);
+        DMA_setupAddr((uint32_t)&grayscale[0] + i*240, grayscaleStartAddrCI);
         DMA_startTransferBlocking(1);
 
-        for (int j = 0; j < 320; j+=2) {
+        for (int j = 0; j < 240; j+=2) {
             if (j % 4 == 0) {
-                //DMA_readCIMem(newImgStartAddrCI + idx, &tmp_new);
-                asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(tmp_new):[in1] "r"(newImgStartAddrCI + j));
-                //DMA_readCIMem(oldImgStartAddrCI + idx, &tmp_old);
-                asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(tmp_old):[in1] "r"(oldImgStartAddrCI + j));
-                mask = (tmp_new ^ tmp_old) & tmp_new;
+                DMA_readCIMem(newImgStartAddrCI + idx, &tmp_new);
+                DMA_readCIMem(oldImgStartAddrCI + idx, &tmp_old);
+                DMA_readCIMem(grayscaleStartAddrCI + idx, &tmp_gray);
+                mask = ((tmp_new&0xFF) ^ (tmp_old&0xFF)) & (tmp_new&0xFF);
                 idx++;
+                doShift = 0;
             }
             
-            DMA_readCIMem(grayscaleStartAddrCI + j, &tmp_gray);
-            valueA = tmp_gray & 0xFFFF | (tmp_gray >> 16) & 0xFFFF;
+            if (doShift == 0) {
+                valueA = tmp_gray & 0xFFFF;
+                doShift = 1;
+            } else {
+                valueA = (tmp_gray >> 16) & 0xFFFF;
+            }
+            
+            // Convert the 8bit grayscale to 16bit grayscale
             asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xD" : [out1] "=r" (tmp_result) : [in1] "r" (valueA), [in2] "r" (valueB));
 
-            result[i * 320 + j] = swap_u16(tmp_result & 0xFFFF);
-            result[i * 320 + j + 1] = swap_u16((tmp_result >> 16) & 0xFFFF);
+            result[i * 240 + j] = swap_u16(tmp_result & 0xFFFF);
+            result[i * 240 + j + 1] = swap_u16((tmp_result >> 16) & 0xFFFF);
 
             if (mask & (1 << (j % 4))) {
-                result[i * 320 + j] = swap_u16(RED);
+                result[i * 240 + j] = swap_u16(RED);
             }
             if (mask & (1 << ((j + 1) % 4))) {
-                result[i * 320 + j + 1] = swap_u16(RED);
+                result[i * 240 + j + 1] = swap_u16(RED);
             }
         }
+
+        // Send the result to the VGA
+        // DMA_setupSize(2*compareBlockSize, usedBurstSize);
+        // DMA_setupAddr((uint32_t)&result[0] + i*240, resultStartAddrCI);
+        // DMA_startTransferBlocking(2);
     }
 }
 
