@@ -19,7 +19,7 @@
 #
 # Quartus Prime
 # Version 18.1.1 Build 646 04/11/2019 SJ Lite Edition
-# Date created = 04:04:49  June 05, 2024
+# Date created = 05:05:56  June 05, 2024
 #
 # -------------------------------------------------------------------------- #
 #
@@ -40,7 +40,7 @@
 set_global_assignment -name FAMILY "Cyclone IV E"
 set_global_assignment -name DEVICE EP4CE30F23C8
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 18.1.1
-set_global_assignment -name PROJECT_CREATION_TIME_DATE "04:04:49  JUNE 05, 2024"
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "05:05:56  JUNE 05, 2024"
 set_global_assignment -name LAST_QUARTUS_VERSION "18.1.1 Lite Edition"
 set_global_assignment -name TOP_LEVEL_ENTITY or1420SingleCore
 

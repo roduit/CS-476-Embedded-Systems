@@ -18,11 +18,12 @@
 #define THRESHOLD 100
 
 volatile uint8_t grayscaleImage[SIZE];
-// volatile uint8_t newImageSobel[SIZE] = {0};
-// volatile uint8_t oldImageSobel[SIZE] = {0};
-#define SOBEL_SIZE ((WIDTH * HEIGHT) / sizeof(uint32_t))
-volatile uint32_t newImageSobel[SOBEL_SIZE] = {0};
-volatile uint32_t oldImageSobel[SOBEL_SIZE] = {0};
+volatile uint8_t newImageSobel[SIZE] = {0};
+volatile uint8_t oldImageSobel[SIZE] = {0};
+// #define SOBEL_SIZE ((WIDTH * HEIGHT) / sizeof(uint8_t))
+// #define SOBEL_SIZE ((WIDTH * HEIGHT))
+// volatile uint8_t newImageSobel[SOBEL_SIZE] = {0};
+// volatile uint8_t oldImageSobel[SOBEL_SIZE] = {0};
 
 
 uint16_t result[SIZE] = {0};
@@ -64,10 +65,10 @@ int main() {
 
     while (1) {
         takeSingleImageBlocking((uint32_t)&grayscaleImage[0]);
-        compute_sobel_v1((uint32_t)&grayscaleImage[0], (uint32_t *)newImageSobel, camParams.nrOfPixelsPerLine, camParams.nrOfLinesPerImage, THRESHOLD);
-        boosted_compare((uint32_t *)newImageSobel, (uint32_t *)oldImageSobel, (uint8_t *)grayscaleImage, (uint16_t *)result, SIZE);
+        compute_sobel_v1((uint32_t)&grayscaleImage[0], (uint8_t *)newImageSobel, camParams.nrOfPixelsPerLine, camParams.nrOfLinesPerImage, THRESHOLD);
+        boosted_compare((uint8_t *)newImageSobel, (uint8_t *)oldImageSobel, (uint8_t *)grayscaleImage, (uint16_t *)result, SIZE);
         // compare_arrays((uint8_t *)newImageSobel, (uint8_t *)oldImageSobel, (uint8_t *) grayscaleImage,  (uint16_t *)result, SIZE);
-        memcpy((void*)oldImageSobel, (void*)newImageSobel, SOBEL_SIZE * sizeof(uint32_t));
+        memcpy((void*)oldImageSobel, (void*)newImageSobel, SIZE * sizeof(uint8_t));
     }
     // printf("Hello,!\n");
     // uint32_t new_image[4] = {0x00000005, 0x00000000, 0x00000000, 0x00000000};

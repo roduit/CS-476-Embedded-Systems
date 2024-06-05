@@ -80,56 +80,56 @@ void compare_arrays(uint8_t *new_image, uint8_t *old_image, uint8_t *grayscale, 
     }
 }
 
-// void boosted_compare(uint8_t *new_image, uint8_t *old_image, uint8_t *grayscale, uint16_t *result, int size) {
-//     uint8_t mask;
-//     uint32_t tmp_result;
-//     uint32_t valueA, valueB = 0;
-//     int idx = 0;
-    
-//     for (int i = 0; i < size; i += 2) {
-//         if (i % 4 == 0) {
-//             mask = (new_image[i] ^ old_image[i]) & new_image[i];
-//             idx++;
-//         }
-//         valueA = (grayscale[i+1] << 8) | grayscale[i];
-        
-//         // Assembly instruction is architecture-specific and may need to be adjusted
-//         asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xD" : [out1] "=r" (tmp_result) : [in1] "r" (valueA), [in2] "r" (valueB));
-        
-//         result[i] = swap_u16(tmp_result & 0xFFFF);
-//         result[i+1] = swap_u16((tmp_result >> 16) & 0xFFFF);
-        
-//         if (mask & (1 << (i % 4))) {
-//             result[i] = swap_u16(RED);
-//         }
-//         if (mask & (1 << ((i + 1) % 4))) {
-//             result[i+1] = swap_u16(RED);
-//         }
-//     }
-// }
-
-void boosted_compare(uint32_t *new_image, uint32_t *old_image, uint8_t *grayscale, uint16_t *result, int size) {
-    uint32_t mask;
+void boosted_compare(uint8_t *new_image, uint8_t *old_image, uint8_t *grayscale, uint16_t *result, int size) {
+    uint8_t mask;
     uint32_t tmp_result;
     uint32_t valueA, valueB = 0;
     int idx = 0;
-    for (int i = 0; i < size; i = i + 2) {
-        if (i % 32 == 0) {
+    
+    for (int i = 0; i < size; i += 2) {
+        if (i % 4 == 0) {
             mask = (new_image[idx] ^ old_image[idx]) & new_image[idx];
-            idx++;
+            idx += 4;
         }
         valueA = (grayscale[i+1] << 8) | grayscale[i];
-        asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xD":[out1]"=r"(tmp_result):[in1]"r"(valueA),[in2]"r"(valueB));
+        
+        // Assembly instruction is architecture-specific and may need to be adjusted
+        asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xD" : [out1] "=r" (tmp_result) : [in1] "r" (valueA), [in2] "r" (valueB));
+        
         result[i] = swap_u16(tmp_result & 0xFFFF);
         result[i+1] = swap_u16((tmp_result >> 16) & 0xFFFF);
-        if (mask & (1 << (i % 32))) {
+        
+        if (mask & (1 << (i % 4))) {
             result[i] = swap_u16(RED);
-        } 
-        if (mask & (1 << ((i + 1) % 32))) {
+        }
+        if (mask & (1 << ((i + 1) % 4))) {
             result[i+1] = swap_u16(RED);
         }
     }
 }
+
+// void boosted_compare(uint32_t *new_image, uint32_t *old_image, uint8_t *grayscale, uint16_t *result, int size) {
+//     uint32_t mask;
+//     uint32_t tmp_result;
+//     uint32_t valueA, valueB = 0;
+//     int idx = 0;
+//     for (int i = 0; i < size; i = i + 2) {
+//         if (i % 32 == 0) {
+//             mask = (new_image[idx] ^ old_image[idx]) & new_image[idx];
+//             idx++;
+//         }
+//         valueA = (grayscale[i+1] << 8) | grayscale[i];
+//         asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xD":[out1]"=r"(tmp_result):[in1]"r"(valueA),[in2]"r"(valueB));
+//         result[i] = swap_u16(tmp_result & 0xFFFF);
+//         result[i+1] = swap_u16((tmp_result >> 16) & 0xFFFF);
+//         if (mask & (1 << (i % 32))) {
+//             result[i] = swap_u16(RED);
+//         } 
+//         if (mask & (1 << ((i + 1) % 32))) {
+//             result[i+1] = swap_u16(RED);
+//         }
+//     }
+// }
 
 // ================================================================================
 // =====                            DMA Functions                             =====
@@ -167,7 +167,7 @@ void DMA_readCIMem(uint32_t memAddress, uint32_t *data) {
 // =====                            Edge Detection                            =====
 // ================================================================================
 
-void compute_sobel_v1(uint32_t grayscaleAddr, volatile uint32_t * sobelImage, uint32_t cameraWidth, uint32_t cameraHeight, uint8_t threshold) {
+void compute_sobel_v1(uint32_t grayscaleAddr, volatile uint8_t * sobelImage, uint32_t cameraWidth, uint32_t cameraHeight, uint8_t threshold) {
     uint32_t line_index = 0;                        // Start from the second line
     uint32_t effectiveWidth = cameraWidth / 4;      // Each address contains 4 pixels
     uint32_t effectiveHeight = cameraHeight - 2;    // writing 3 lines at a time -> STOP 2 lines before the end
@@ -234,22 +234,21 @@ void compute_sobel_v1(uint32_t grayscaleAddr, volatile uint32_t * sobelImage, ui
 
             }
 
-            if (col_index % 8 == 0) {
-                //printf("tmp_sobel_result conv 1: %0d\n", tmp_sobel_result);
-                //DMA_writeCIMem(startSobelBufferAddr + cnt, tmp_sobel_result);
-                sobelImage[cnt + 19] = swap_u32(tmp_sobel_result);
-                cnt++;
-            }
-            // DMA_writeCIMem(startSobelBufferAddr + col_index, tmp_sobel_result & 0xFF);
+            // if ((col_index + 1) % 2 == 0) {
+            //     DMA_writeCIMem(startSobelBufferAddr + cnt, tmp_sobel_result);
+            //     cnt++;
+            // }
+            DMA_writeCIMem(startSobelBufferAddr + col_index, tmp_sobel_result&0xFF);
+
         }
 
         // Update the start line
         startLine = (startLine + 1) % 4;
 
         // Send sobelStorage to the VGA
-        // DMA_setupSize(sobelBufferSize / 4, usedBurstSize);
-        // DMA_setupAddr((uint32_t)& sobelImage[0] + (line_index + 1)*effectiveWidth + 1, startSobelBufferAddr);
-        // DMA_startTransferBlocking(2);
+        DMA_setupSize(sobelBufferSize, usedBurstSize);
+        DMA_setupAddr((uint32_t)& sobelImage[0] + (line_index + 1)*(cameraWidth) + 1, startSobelBufferAddr);
+        DMA_startTransferBlocking(2);
     }
     //printf("cnt: %0d\n", cnt);
 }

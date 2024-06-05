@@ -169,6 +169,8 @@ module edge_detection #(parameter [7:0] customInstructionId = 8'd0)
             pixels[22] <= 8'b0;
             pixels[23] <= 8'b0;
             threshold <= 8'b0;
+            shiftReg <= 32'd0;
+            s_doComputeReg <= 0;
         end else begin
             // Compute the edge detection
             s_doComputeReg <= s_doCompute;
