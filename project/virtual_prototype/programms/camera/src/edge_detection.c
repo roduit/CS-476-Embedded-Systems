@@ -122,6 +122,7 @@ void boosted_compare(uint8_t *new_image, uint8_t *old_image, uint8_t *grayscale,
     uint8_t mask;
     uint32_t tmp_new, tmp_old, tmp_gray;
     uint32_t tmp_result;
+    uint32_t tmp_dma_result;
     uint32_t valueA, valueB = 0;
     uint8_t doShift = 0;
     int idx = 0;
@@ -146,10 +147,11 @@ void boosted_compare(uint8_t *new_image, uint8_t *old_image, uint8_t *grayscale,
 
         for (int j = 0; j < 240; j+=2) {
             if (j % 4 == 0) {
+                // Read data from the CI memory
                 DMA_readCIMem(newImgStartAddrCI + idx, &tmp_new);
                 DMA_readCIMem(oldImgStartAddrCI + idx, &tmp_old);
                 DMA_readCIMem(grayscaleStartAddrCI + idx, &tmp_gray);
-                mask = ((tmp_new&0xFF) ^ (tmp_old&0xFF)) & (tmp_new&0xFF);
+                mask = (tmp_new ^ tmp_old) & tmp_new;
                 idx++;
                 doShift = 0;
             }
@@ -163,22 +165,16 @@ void boosted_compare(uint8_t *new_image, uint8_t *old_image, uint8_t *grayscale,
             
             // Convert the 8bit grayscale to 16bit grayscale
             asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xD" : [out1] "=r" (tmp_result) : [in1] "r" (valueA), [in2] "r" (valueB));
-
-            result[i * 240 + j] = swap_u16(tmp_result & 0xFFFF);
-            result[i * 240 + j + 1] = swap_u16((tmp_result >> 16) & 0xFFFF);
-
-            if (mask & (1 << (j % 4))) {
-                result[i * 240 + j] = swap_u16(RED);
-            }
-            if (mask & (1 << ((j + 1) % 4))) {
-                result[i * 240 + j + 1] = swap_u16(RED);
-            }
+            
+            // Store the result in the CI memory
+            tmp_dma_result = (mask & (1 << (j % 4)) ? RED : tmp_result & 0xFFFF) | ((mask & (1 << ((j + 1) % 4)) ? RED : (tmp_result >> 16) & 0xFFFF) << 16);
+            DMA_writeCIMem(resultStartAddrCI + (j >> 1), tmp_dma_result);
         }
 
         // Send the result to the VGA
-        // DMA_setupSize(2*compareBlockSize, usedBurstSize);
-        // DMA_setupAddr((uint32_t)&result[0] + i*240, resultStartAddrCI);
-        // DMA_startTransferBlocking(2);
+        DMA_setupSize(2*compareBlockSize, usedBurstSize);
+        DMA_setupAddr((uint32_t)&result[0] + i*480, resultStartAddrCI);
+        DMA_startTransferBlocking(2);
     }
 }
 
