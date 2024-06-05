@@ -19,7 +19,7 @@
 #
 # Quartus Prime
 # Version 18.1.1 Build 646 04/11/2019 SJ Lite Edition
-# Date created = 18:25:59  June 04, 2024
+# Date created = 11:03:00  June 05, 2024
 #
 # -------------------------------------------------------------------------- #
 #
@@ -40,7 +40,7 @@
 set_global_assignment -name FAMILY "Cyclone IV E"
 set_global_assignment -name DEVICE EP4CE30F23C8
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 18.1.1
-set_global_assignment -name PROJECT_CREATION_TIME_DATE "18:25:59  JUNE 04, 2024"
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "11:03:00  JUNE 05, 2024"
 set_global_assignment -name LAST_QUARTUS_VERSION "18.1.1 Lite Edition"
 set_global_assignment -name TOP_LEVEL_ENTITY or1420SingleCore
 
@@ -161,6 +161,8 @@ set_global_assignment -name VERILOG_FILE ../../../modules/support/verilog/sram_5
 set_global_assignment -name VERILOG_FILE ../../../modules/support/verilog/sram_1024x16_dp.v
 
 set_global_assignment -name VERILOG_FILE ../../../modules/support/verilog/sram2048x8Dp.v
+
+set_global_assignment -name VERILOG_FILE ../../../modules/grayscale_conv/grayscale_conv.v
 
 set_global_assignment -name VERILOG_FILE ../verilog/or1420SingleCore.v
 #######################################################################
