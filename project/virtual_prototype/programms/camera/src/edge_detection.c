@@ -45,9 +45,43 @@ const uint32_t reverse = 1 << 16;
 const uint32_t startEdgeDetection = 1 << 17;
 const uint32_t lineBlockSize = 160;
 
+const uint32_t compareBlockSize = 80;
 const uint32_t newImgStartAddrCI = 640;
-const uint32_t oldImgStartAddrCI = 700;
-const uint32_t grayscaleStartAddrCI = 760;
+const uint32_t oldImgStartAddrCI = 720;
+const uint32_t grayscaleStartAddrCI = 800;
+const uint32_t resultStartAddrCI = 900;
+
+// ================================================================================
+// =====                            DMA Functions                             =====
+// ================================================================================
+
+void DMA_setupSize(uint32_t blockSizesas, uint32_t burstSizesas) {
+    asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(blockSize | writeBit),[in2] "r"(blockSizesas));
+    asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(burstSize | writeBit),[in2] "r"(burstSizesas));
+}
+
+void DMA_setupAddr(uint32_t busAddr, uint32_t CImemAddr) {
+    asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(busStartAddress | writeBit),[in2] "r"(busAddr));
+    asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(memoryStartAddress | writeBit),[in2] "r"(CImemAddr));
+}
+
+void DMA_startTransferBlocking(uint32_t rw) {
+    asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(statusControl | writeBit),[in2] "r"(rw));
+    
+    uint32_t status;
+    while (1) {
+        asm volatile("l.nios_rrr %[out1],%[in1],r0,20":[out1]"=r"(status):[in1]"r"(statusControl));
+        if (status == 0) break;
+    }
+}
+
+void DMA_writeCIMem(uint32_t memAddress, uint32_t data) {
+    asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(memAddress | writeBit), [in2]"r"(data));   
+}
+
+void DMA_readCIMem(uint32_t memAddress, uint32_t *data) {
+    asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(*data):[in1] "r"(memAddress)); 
+}
 
 // ================================================================================
 // =====                           Delay Generator                            =====
@@ -86,28 +120,52 @@ void compare_arrays(uint8_t *new_image, uint8_t *old_image, uint8_t *grayscale, 
 
 void boosted_compare(uint8_t *new_image, uint8_t *old_image, uint8_t *grayscale, uint16_t *result, int size) {
     uint8_t mask;
+    uint32_t tmp_new, tmp_old, tmp_gray;
     uint32_t tmp_result;
     uint32_t valueA, valueB = 0;
     int idx = 0;
     
-    for (int i = 0; i < size; i += 2) {
-        if (i % 4 == 0) {
-            mask = (new_image[idx] ^ old_image[idx]) & new_image[idx];
-            idx += 4;
-        }
-        valueA = (grayscale[i+1] << 8) | grayscale[i];
+    for (int i = 0; i < (int)(size / 320); i += 1) {
+        idx = 0;
+
+        // DMA transfer
+        DMA_setupSize(compareBlockSize, usedBurstSize);
         
-        // Assembly instruction is architecture-specific and may need to be adjusted
-        asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xD" : [out1] "=r" (tmp_result) : [in1] "r" (valueA), [in2] "r" (valueB));
-        
-        result[i] = swap_u16(tmp_result & 0xFFFF);
-        result[i+1] = swap_u16((tmp_result >> 16) & 0xFFFF);
-        
-        if (mask & (1 << (i % 4))) {
-            result[i] = swap_u16(RED);
-        }
-        if (mask & (1 << ((i + 1) % 4))) {
-            result[i+1] = swap_u16(RED);
+        // New image
+        DMA_setupAddr((uint32_t)&new_image[i], newImgStartAddrCI);
+        DMA_startTransferBlocking(1);
+
+        // Old image
+        DMA_setupAddr((uint32_t)&old_image[i], oldImgStartAddrCI);
+        DMA_startTransferBlocking(1);
+
+        // Grayscale
+        DMA_setupAddr((uint32_t)&grayscale[i], grayscaleStartAddrCI);
+        DMA_startTransferBlocking(1);
+
+        for (int j = 0; j < 320; j+=2) {
+            if (j % 4 == 0) {
+                //DMA_readCIMem(newImgStartAddrCI + idx, &tmp_new);
+                asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(tmp_new):[in1] "r"(newImgStartAddrCI + j));
+                //DMA_readCIMem(oldImgStartAddrCI + idx, &tmp_old);
+                asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(tmp_old):[in1] "r"(oldImgStartAddrCI + j));
+                mask = (tmp_new ^ tmp_old) & tmp_new;
+                idx++;
+            }
+            
+            DMA_readCIMem(grayscaleStartAddrCI + j, &tmp_gray);
+            valueA = tmp_gray & 0xFFFF | (tmp_gray >> 16) & 0xFFFF;
+            asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xD" : [out1] "=r" (tmp_result) : [in1] "r" (valueA), [in2] "r" (valueB));
+
+            result[i * 320 + j] = swap_u16(tmp_result & 0xFFFF);
+            result[i * 320 + j + 1] = swap_u16((tmp_result >> 16) & 0xFFFF);
+
+            if (mask & (1 << (j % 4))) {
+                result[i * 320 + j] = swap_u16(RED);
+            }
+            if (mask & (1 << ((j + 1) % 4))) {
+                result[i * 320 + j + 1] = swap_u16(RED);
+            }
         }
     }
 }
@@ -134,38 +192,6 @@ void boosted_compare(uint8_t *new_image, uint8_t *old_image, uint8_t *grayscale,
 //         }
 //     }
 // }
-
-// ================================================================================
-// =====                            DMA Functions                             =====
-// ================================================================================
-
-void DMA_setupSize(uint32_t blockSizesas, uint32_t burstSizesas) {
-    asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(blockSize | writeBit),[in2] "r"(blockSizesas));
-    asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(burstSize | writeBit),[in2] "r"(burstSizesas));
-}
-
-void DMA_setupAddr(uint32_t busAddr, uint32_t CImemAddr) {
-    asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(busStartAddress | writeBit),[in2] "r"(busAddr));
-    asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(memoryStartAddress | writeBit),[in2] "r"(CImemAddr));
-}
-
-void DMA_startTransferBlocking(uint32_t rw) {
-    asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(statusControl | writeBit),[in2] "r"(rw));
-    
-    uint32_t status;
-    while (1) {
-        asm volatile("l.nios_rrr %[out1],%[in1],r0,20":[out1]"=r"(status):[in1]"r"(statusControl));
-        if (status == 0) break;
-    }
-}
-
-void DMA_writeCIMem(uint32_t memAddress, uint32_t data) {
-    asm volatile("l.nios_rrr r0,%[in1],%[in2],20" ::[in1] "r"(memAddress | writeBit), [in2]"r"(data));   
-}
-
-void DMA_readCIMem(uint32_t memAddress, uint32_t *data) {
-    asm volatile("l.nios_rrr %[out1],%[in1],r0,20" :[out1]"=r"(*data):[in1] "r"(memAddress)); 
-}
 
 // ================================================================================
 // =====                            Edge Detection                            =====

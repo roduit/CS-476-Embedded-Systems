@@ -63,12 +63,23 @@ int main() {
     vga[3] = swap_u32((uint32_t)&result[0]);
     printf("Starting edge detection\n");
 
+    volatile uint32_t cycles,stall,idle;
+    uint32_t counter = 0;
+
     while (1) {
+        asm volatile ("l.nios_rrr r0,r0,%[in2],0xE"::[in2]"r"(7));
         takeSingleImageBlocking((uint32_t)&grayscaleImage[0]);
         compute_sobel_v1((uint32_t)&grayscaleImage[0], (uint8_t *)newImageSobel, camParams.nrOfPixelsPerLine, camParams.nrOfLinesPerImage, THRESHOLD);
+        
+        // Profile the compare arrays function
         boosted_compare((uint8_t *)newImageSobel, (uint8_t *)oldImageSobel, (uint8_t *)grayscaleImage, (uint16_t *)result, SIZE);
         // compare_arrays((uint8_t *)newImageSobel, (uint8_t *)oldImageSobel, (uint8_t *) grayscaleImage,  (uint16_t *)result, SIZE);
         memcpy((void*)oldImageSobel, (void*)newImageSobel, SIZE * sizeof(uint8_t));
+        asm volatile ("l.nios_rrr %[out1],r0,%[in2],0xE":[out1]"=r"(cycles):[in2]"r"(1<<8|7<<4));
+        asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xE":[out1]"=r"(stall):[in1]"r"(1),[in2]"r"(1<<9));
+        asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xE":[out1]"=r"(idle):[in1]"r"(2),[in2]"r"(1<<10));
+        if (counter % 5 == 0) printf("nrOfCycles (cycles, stall, idle): %d %d %d\n", cycles, stall, idle);
+        counter++;
     }
     // printf("Hello,!\n");
     // uint32_t new_image[4] = {0x00000005, 0x00000000, 0x00000000, 0x00000000};
