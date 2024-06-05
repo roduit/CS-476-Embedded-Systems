@@ -97,16 +97,16 @@ sdramClk                     : AA3       : output : 2.5 V             :         
 sdramData[15]                : AA4       : bidir  : 2.5 V             :         : 3         : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : AA5       :        :                   :         : 3         :                
 VCCIO3                       : AA6       : power  :                   : 2.5V    : 3         :                
-sevenSegments[6]             : AA7       : output : 2.5 V             :         : 3         : N              
-dipSwitch[7]                 : AA8       : input  : 2.5 V             :         : 3         : N              
-sevenSegments[10]            : AA9       : output : 2.5 V             :         : 3         : N              
-sevenSegments[13]            : AA10      : output : 2.5 V             :         : 3         : N              
+sevenSegments[1]             : AA7       : output : 2.5 V             :         : 3         : N              
+sevenSegments[19]            : AA8       : output : 2.5 V             :         : 3         : N              
+sevenSegments[13]            : AA9       : output : 2.5 V             :         : 3         : N              
+sevenSegments[18]            : AA10      : output : 2.5 V             :         : 3         : N              
 nReset                       : AA11      : input  : 2.5 V             :         : 3         : Y              
 GND+                         : AA12      :        :                   :         : 4         :                
-sevenSegments[1]             : AA13      : output : 2.5 V             :         : 4         : N              
-sevenSegments[22]            : AA14      : output : 2.5 V             :         : 4         : N              
-sevenSegments[4]             : AA15      : output : 2.5 V             :         : 4         : N              
-sevenSegments[3]             : AA16      : output : 2.5 V             :         : 4         : N              
+sevenSegments[3]             : AA13      : output : 2.5 V             :         : 4         : N              
+sevenSegments[23]            : AA14      : output : 2.5 V             :         : 4         : N              
+sevenSegments[21]            : AA15      : output : 2.5 V             :         : 4         : N              
+sevenSegments[14]            : AA16      : output : 2.5 V             :         : 4         : N              
 hdmiRed[1]                   : AA17      : output : 2.5 V             :         : 4         : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : AA18      :        :                   :         : 4         :                
 hdmiGreen[3]                 : AA19      : output : 2.5 V             :         : 4         : Y              
@@ -119,16 +119,16 @@ sdramData[14]                : AB3       : bidir  : 2.5 V             :         
 RESERVED_INPUT_WITH_WEAK_PULLUP : AB4       :        :                   :         : 3         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : AB5       :        :                   :         : 3         :                
 GND                          : AB6       : gnd    :                   :         :           :                
-dipSwitch[6]                 : AB7       : input  : 2.5 V             :         : 3         : N              
-sevenSegments[16]            : AB8       : output : 2.5 V             :         : 3         : N              
-sevenSegments[0]             : AB9       : output : 2.5 V             :         : 3         : N              
-sevenSegments[14]            : AB10      : output : 2.5 V             :         : 3         : N              
+dipSwitch[2]                 : AB7       : input  : 2.5 V             :         : 3         : N              
+sevenSegments[22]            : AB8       : output : 2.5 V             :         : 3         : N              
+sevenSegments[16]            : AB9       : output : 2.5 V             :         : 3         : N              
+sevenSegments[10]            : AB10      : output : 2.5 V             :         : 3         : N              
 biosBypass                   : AB11      : input  : 2.5 V             :         : 3         : Y              
 GND+                         : AB12      :        :                   :         : 4         :                
-sevenSegments[23]            : AB13      : output : 2.5 V             :         : 4         : N              
-sevenSegments[17]            : AB14      : output : 2.5 V             :         : 4         : N              
-sevenSegments[21]            : AB15      : output : 2.5 V             :         : 4         : N              
-sevenSegments[9]             : AB16      : output : 2.5 V             :         : 4         : N              
+sevenSegments[5]             : AB13      : output : 2.5 V             :         : 4         : N              
+sevenSegments[8]             : AB14      : output : 2.5 V             :         : 4         : N              
+sevenSegments[9]             : AB15      : output : 2.5 V             :         : 4         : N              
+RESERVED_INPUT_WITH_WEAK_PULLUP : AB16      :        :                   :         : 4         :                
 hdmiRed[0]                   : AB17      : output : 2.5 V             :         : 4         : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : AB18      :        :                   :         : 4         :                
 hdmiGreen[2]                 : AB19      : output : 2.5 V             :         : 4         : Y              
@@ -370,7 +370,7 @@ GND                          : M12       : gnd    :                   :         
 GND                          : M13       : gnd    :                   :         :           :                
 VCCINT                       : M14       : power  :                   : 1.2V    :           :                
 VCCINT                       : M15       : power  :                   : 1.2V    :           :                
-sevenSegments[5]             : M16       : output : 2.5 V             :         : 5         : N              
+RESERVED_INPUT_WITH_WEAK_PULLUP : M16       :        :                   :         : 5         :                
 MSEL0                        : M17       :        :                   :         : 6         :                
 CONF_DONE                    : M18       :        :                   :         : 6         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : M19       :        :                   :         : 5         :                
@@ -451,11 +451,11 @@ RESERVED_INPUT_WITH_WEAK_PULLUP : T5        :        :                   :      
 VCCA1                        : T6        : power  :                   : 2.5V    :           :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : T7        :        :                   :         : 2         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : T8        :        :                   :         : 3         :                
-RESERVED_INPUT_WITH_WEAK_PULLUP : T9        :        :                   :         : 3         :                
-dipSwitch[2]                 : T10       : input  : 2.5 V             :         : 3         : N              
-dipSwitch[4]                 : T11       : input  : 2.5 V             :         : 3         : N              
+sevenSegments[7]             : T9        : output : 2.5 V             :         : 3         : N              
+dipSwitch[5]                 : T10       : input  : 2.5 V             :         : 3         : N              
+sevenSegments[20]            : T11       : output : 2.5 V             :         : 3         : N              
 hdmiRed[2]                   : T12       : output : 2.5 V             :         : 4         : Y              
-sevenSegments[12]            : T13       : output : 2.5 V             :         : 4         : N              
+sevenSegments[17]            : T13       : output : 2.5 V             :         : 4         : N              
 RESERVED_INPUT_WITH_WEAK_PULLUP : T14       :        :                   :         : 4         :                
 camData[7]                   : T15       : input  : 2.5 V             :         : 4         : Y              
 camData[5]                   : T16       : input  : 2.5 V             :         : 4         : Y              
@@ -473,9 +473,9 @@ GNDA1                        : U5        : gnd    :                   :         
 VCCD_PLL1                    : U6        : power  :                   : 1.2V    :           :                
 sdramCke                     : U7        : output : 2.5 V             :         : 3         : Y              
 sdramAddr[11]                : U8        : output : 2.5 V             :         : 3         : Y              
-RESERVED_INPUT_WITH_WEAK_PULLUP : U9        :        :                   :         : 3         :                
-sevenSegments[8]             : U10       : output : 2.5 V             :         : 3         : N              
-sevenSegments[20]            : U11       : output : 2.5 V             :         : 3         : N              
+dipSwitch[6]                 : U9        : input  : 2.5 V             :         : 3         : N              
+dipSwitch[7]                 : U10       : input  : 2.5 V             :         : 3         : N              
+sevenSegments[15]            : U11       : output : 2.5 V             :         : 3         : N              
 hdmiRed[3]                   : U12       : output : 2.5 V             :         : 4         : Y              
 spiIo3                       : U13       : bidir  : 2.5 V             :         : 4         : Y              
 spiNCs                       : U14       : output : 2.5 V             :         : 4         : Y              
@@ -495,10 +495,10 @@ sdramAddr[7]                 : V5        : output : 2.5 V             :         
 sdramAddr[6]                 : V6        : output : 2.5 V             :         : 3         : Y              
 sdramAddr[5]                 : V7        : output : 2.5 V             :         : 3         : Y              
 dipSwitch[1]                 : V8        : input  : 2.5 V             :         : 3         : N              
-dipSwitch[3]                 : V9        : input  : 2.5 V             :         : 3         : N              
-sevenSegments[18]            : V10       : output : 2.5 V             :         : 3         : N              
-sevenSegments[2]             : V11       : output : 2.5 V             :         : 3         : N              
-sevenSegments[11]            : V12       : output : 2.5 V             :         : 4         : N              
+dipSwitch[4]                 : V9        : input  : 2.5 V             :         : 3         : N              
+sevenSegments[0]             : V10       : output : 2.5 V             :         : 3         : N              
+sevenSegments[12]            : V11       : output : 2.5 V             :         : 3         : N              
+sevenSegments[2]             : V12       : output : 2.5 V             :         : 4         : N              
 spiScl                       : V13       : output : 2.5 V             :         : 4         : Y              
 spiSoIo1                     : V14       : bidir  : 2.5 V             :         : 4         : Y              
 pixelClock                   : V15       : output : 2.5 V             :         : 4         : Y              
@@ -516,9 +516,9 @@ VCCIO2                       : W4        : power  :                   : 2.5V    
 VCCIO3                       : W5        : power  :                   : 2.5V    : 3         :                
 sdramAddr[4]                 : W6        : output : 2.5 V             :         : 3         : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : W7        :        :                   :         : 3         :                
-sevenSegments[7]             : W8        : output : 2.5 V             :         : 3         : N              
+dipSwitch[3]                 : W8        : input  : 2.5 V             :         : 3         : N              
 VCCIO3                       : W9        : power  :                   : 2.5V    : 3         :                
-sevenSegments[19]            : W10       : output : 2.5 V             :         : 3         : N              
+sevenSegments[4]             : W10       : output : 2.5 V             :         : 3         : N              
 VCCIO3                       : W11       : power  :                   : 2.5V    : 3         :                
 VCCIO4                       : W12       : power  :                   : 2.5V    : 4         :                
 spiSiIo0                     : W13       : bidir  : 2.5 V             :         : 4         : Y              
@@ -538,9 +538,9 @@ RESERVED_INPUT_WITH_WEAK_PULLUP : Y4        :        :                   :      
 GND                          : Y5        : gnd    :                   :         :           :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : Y6        :        :                   :         : 3         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : Y7        :        :                   :         : 3         :                
-dipSwitch[5]                 : Y8        : input  : 2.5 V             :         : 3         : N              
+sevenSegments[6]             : Y8        : output : 2.5 V             :         : 3         : N              
 GND                          : Y9        : gnd    :                   :         :           :                
-sevenSegments[15]            : Y10       : output : 2.5 V             :         : 3         : N              
+sevenSegments[11]            : Y10       : output : 2.5 V             :         : 3         : N              
 GND                          : Y11       : gnd    :                   :         :           :                
 GND                          : Y12       : gnd    :                   :         :           :                
 camPclk                      : Y13       : input  : 2.5 V             :         : 4         : Y              
