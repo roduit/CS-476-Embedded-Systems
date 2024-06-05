@@ -35,6 +35,7 @@ int main() {
 
     volatile unsigned int *vga = (unsigned int *)0x50000020;
     camParameters camParams;
+    volatile uint32_t cycles,stall,idle;
 
     vga_clear();
 
@@ -58,10 +59,17 @@ int main() {
     vga[3] = swap_u32((uint32_t)&result[0]);
 
     while (1) {
+        // Add Profiler to check bus occupation
+        asm volatile ("l.nios_rrr r0,r0,%[in2],0xE"::[in2]"r"(7));
         takeSingleImageBlocking((uint32_t)&grayscaleImage[0]);
         compute_sobel_v1((uint32_t)&grayscaleImage[0], (uint8_t *)newImageSobel, camParams.nrOfPixelsPerLine, camParams.nrOfLinesPerImage, THRESHOLD);
         compare_arrays((uint8_t *)newImageSobel, (uint8_t *)oldImageSobel, (uint8_t *) grayscaleImage,  (uint16_t *)result, SIZE);
         memcpy((void*)oldImageSobel, (void*)newImageSobel, SIZE * sizeof(uint8_t));
+        
+        asm volatile ("l.nios_rrr %[out1],r0,%[in2],0xE":[out1]"=r"(cycles):[in2]"r"(1<<8|7<<4));
+        asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xE":[out1]"=r"(stall):[in1]"r"(1),[in2]"r"(1<<9));
+        asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xE":[out1]"=r"(idle):[in1]"r"(2),[in2]"r"(1<<10));
+        printf("nrOfCycles (cycles, stall, idle): %d %d %d\n", cycles, stall, idle);
     }
     return 0;
 }
