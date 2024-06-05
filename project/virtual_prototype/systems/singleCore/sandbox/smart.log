@@ -15,7 +15,7 @@ Info: Running Quartus Prime Shell
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Wed Jun  5 02:52:16 2024
+    Info: Processing started: Wed Jun  5 04:04:50 2024
 Info: Command: quartus_sh --determine_smart_action or1420SingleCore
 Info: Quartus(args): or1420SingleCore
 Info (293032): Detected changes in source files.
@@ -23,7 +23,7 @@ Info (293032): Detected changes in source files.
 Info: SMART_ACTION = SOURCE
 Info (23030): Evaluation of Tcl script /opt/intelFPGA-lite/18.1/quartus/common/tcl/internal/qsh_smart.tcl was successful
 Info: Quartus Prime Shell was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 787 megabytes
-    Info: Processing ended: Wed Jun  5 02:52:16 2024
-    Info: Elapsed time: 00:00:00
+    Info: Peak virtual memory: 784 megabytes
+    Info: Processing ended: Wed Jun  5 04:04:51 2024
+    Info: Elapsed time: 00:00:01
     Info: Total CPU time (on all processors): 00:00:00
