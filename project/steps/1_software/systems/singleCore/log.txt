@@ -20,15 +20,15 @@ Info: Running Quartus Prime Shell
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Tue Jun  4 18:25:59 2024
+    Info: Processing started: Wed Jun  5 14:31:14 2024
 Info: Command: quartus_sh --prepare -f "Cyclone IV E" -d EP4CE30F23C8 -t or1420SingleCore or1420SingleCore
 Info: Quartus(args): -f {Cyclone IV E} -d EP4CE30F23C8 -t or1420SingleCore or1420SingleCore
 Info: /opt/intelFPGA-lite/18.1/quartus/common/tcl/internal/qsh_prepare.tcl version #1
 Info (23030): Evaluation of Tcl script /opt/intelFPGA-lite/18.1/quartus/common/tcl/internal/qsh_prepare.tcl was successful
 Info: Quartus Prime Shell was successful. 0 errors, 0 warnings
     Info: Peak virtual memory: 750 megabytes
-    Info: Processing ended: Tue Jun  4 18:25:59 2024
-    Info: Elapsed time: 00:00:00
+    Info: Processing ended: Wed Jun  5 14:31:15 2024
+    Info: Elapsed time: 00:00:01
     Info: Total CPU time (on all processors): 00:00:00
 ===> Add : ../../../modules/bios/verilog/bios1_rom.v 
 ===> Add : ../../../modules/bios/verilog/bios.v 
@@ -89,6 +89,7 @@ Info: Quartus Prime Shell was successful. 0 errors, 0 warnings
 ===> Add : ../../../modules/support/verilog/sram_512x32.v 
 ===> Add : ../../../modules/support/verilog/sram_1024x16_dp.v 
 ===> Add : ../../../modules/support/verilog/sram2048x8Dp.v 
+===> Add : ../../../modules/grayscale_conv/grayscale_conv.v 
 ===> Add : ../verilog/or1420SingleCore.v 
 ************************************************************
 ===> Add : ../config/project.qsf 
@@ -115,7 +116,7 @@ Info: Running Quartus Prime Analysis & Synthesis
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Tue Jun  4 18:26:01 2024
+    Info: Processing started: Wed Jun  5 14:31:16 2024
 Info: Command: quartus_map --family="Cyclone IV E" or1420SingleCore
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
@@ -237,13 +238,15 @@ Info (12021): Found 1 design units, including 1 entities, in source file /home/v
     Info (12023): Found entity 1: sram1024X16Dp File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/support/verilog/sram_1024x16_dp.v Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/support/verilog/sram2048x8Dp.v
     Info (12023): Found entity 1: sram2048X8Dp File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/support/verilog/sram2048x8Dp.v Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/grayscale_conv/grayscale_conv.v
+    Info (12023): Found entity 1: grayscale_conv File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/grayscale_conv/grayscale_conv.v Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v
     Info (12023): Found entity 1: or1420SingleCore File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 1
 Info (12127): Elaborating entity "or1420SingleCore" for the top level hierarchy
-Warning (10858): Verilog HDL warning at or1420SingleCore.v(318): object s_profileResult used but never assigned File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 318
-Warning (10858): Verilog HDL warning at or1420SingleCore.v(330): object s_profileDone used but never assigned File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 330
-Warning (10030): Net "s_profileResult" at or1420SingleCore.v(318) has no driver or initial value, using a default initial value '0' File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 318
-Warning (10030): Net "s_profileDone" at or1420SingleCore.v(330) has no driver or initial value, using a default initial value '0' File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 330
+Warning (10858): Verilog HDL warning at or1420SingleCore.v(318): object s_ramDmaResult used but never assigned File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 318
+Warning (10858): Verilog HDL warning at or1420SingleCore.v(323): object s_ramDmaDone used but never assigned File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 323
+Warning (10030): Net "s_ramDmaResult" at or1420SingleCore.v(318) has no driver or initial value, using a default initial value '0' File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 318
+Warning (10030): Net "s_ramDmaDone" at or1420SingleCore.v(323) has no driver or initial value, using a default initial value '0' File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 323
 Info (12128): Elaborating entity "altpll" for hierarchy "altpll:altpll_component" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 176
 Info (12130): Elaborated megafunction instantiation "altpll:altpll_component" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 176
 Info (12133): Instantiated megafunction "altpll:altpll_component" with the following parameter: File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 176
@@ -367,20 +370,20 @@ Info (10264): Verilog HDL Case Statement information at i2cMaster.v(113): all ca
 Info (10264): Verilog HDL Case Statement information at i2cMaster.v(170): all case item expressions in this case statement are onehot File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/i2c/verilog/i2cMaster.v Line: 170
 Info (12128): Elaborating entity "delayIse" for hierarchy "delayIse:delayMicro" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 439
 Warning (10230): Verilog HDL assignment warning at delayIse.v(49): truncated value with size 32 to match size of target (4) File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/delay/verilog/delayIse.v Line: 49
-Info (12128): Elaborating entity "rgb565GrayscaleIse" for hierarchy "rgb565GrayscaleIse:converter" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 452
+Info (12128): Elaborating entity "profileCi" for hierarchy "profileCi:profiler" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 456
+Info (12128): Elaborating entity "counter" for hierarchy "profileCi:profiler|counter:counter0" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/profileCi/verilog/profileCi.v Line: 41
+Info (12128): Elaborating entity "grayscale_conv" for hierarchy "grayscale_conv:grayscale" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 465
+Info (12128): Elaborating entity "rgb565GrayscaleIse" for hierarchy "rgb565GrayscaleIse:converter" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 478
 Info (12128): Elaborating entity "rgb565Grayscale" for hierarchy "rgb565GrayscaleIse:converter|rgb565Grayscale:pixel1" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/grayscaleCi/verilog/rgb565ISE.v Line: 18
 Warning (10230): Verilog HDL assignment warning at rgb565Grayscale.v(20): truncated value with size 14 to match size of target (13) File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/grayscaleCi/verilog/rgb565Grayscale.v Line: 20
-Info (12128): Elaborating entity "ramDmaCi" for hierarchy "ramDmaCi:ramDma" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 487
-Info (10264): Verilog HDL Case Statement information at ramDmaCi.v(131): all case item expressions in this case statement are onehot File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/ramDmaCi/verilog/ramDmaCi.v Line: 131
-Info (12128): Elaborating entity "dualPortSSRAM" for hierarchy "ramDmaCi:ramDma|dualPortSSRAM:memory" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/ramDmaCi/verilog/ramDmaCi.v Line: 100
-Info (12128): Elaborating entity "gpio" for hierarchy "gpio:sevenSegDipSwitch" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 516
-Info (12128): Elaborating entity "camera" for hierarchy "camera:camIf" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 553
+Info (12128): Elaborating entity "gpio" for hierarchy "gpio:sevenSegDipSwitch" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 507
+Info (12128): Elaborating entity "camera" for hierarchy "camera:camIf" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 544
 Warning (10036): Verilog HDL or VHDL warning at camera.v(168): object "s_pixelWord1" assigned a value but never read File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/camera/verilog/camera.v Line: 168
 Warning (10036): Verilog HDL or VHDL warning at camera.v(169): object "s_pixelWord2" assigned a value but never read File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/camera/verilog/camera.v Line: 169
 Warning (10230): Verilog HDL assignment warning at camera.v(75): truncated value with size 32 to match size of target (17) File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/camera/verilog/camera.v Line: 75
 Info (10264): Verilog HDL Case Statement information at camera.v(235): all case item expressions in this case statement are onehot File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/camera/verilog/camera.v Line: 235
 Info (12128): Elaborating entity "dualPortRam2k" for hierarchy "camera:camIf|dualPortRam2k:lineBuffer" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/camera/verilog/camera.v Line: 211
-Info (12128): Elaborating entity "screens" for hierarchy "screens:hdmi" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 621
+Info (12128): Elaborating entity "screens" for hierarchy "screens:hdmi" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 612
 Warning (10230): Verilog HDL assignment warning at screens.v(306): truncated value with size 32 to match size of target (8) File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/hdmi_720p/verilog/screens.v Line: 306
 Info (12128): Elaborating entity "hdmi_720p" for hierarchy "screens:hdmi|hdmi_720p:generator" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/hdmi_720p/verilog/screens.v Line: 116
 Info (10264): Verilog HDL Case Statement information at hdmi_720p.v(113): all case item expressions in this case statement are onehot File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/hdmi_720p/verilog/hdmi_720p.v Line: 113
@@ -393,20 +396,19 @@ Info (12128): Elaborating entity "dualPortRam4k" for hierarchy "screens:hdmi|dua
 Info (12128): Elaborating entity "charRom" for hierarchy "screens:hdmi|charRom:asciiRom" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/hdmi_720p/verilog/screens.v Line: 260
 Info (12128): Elaborating entity "graphicsController" for hierarchy "screens:hdmi|graphicsController:graphics" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/hdmi_720p/verilog/screens.v Line: 373
 Info (10264): Verilog HDL Case Statement information at graphicsController.v(148): all case item expressions in this case statement are onehot File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/hdmi_720p/verilog/graphicsController.v Line: 148
-Info (12128): Elaborating entity "spiBus" for hierarchy "spiBus:flash" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 657
+Info (12128): Elaborating entity "spiBus" for hierarchy "spiBus:flash" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 648
 Info (12128): Elaborating entity "spiShiftQuad" for hierarchy "spiBus:flash|spiShiftQuad:quad" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/spi/verilog/spiBus.v Line: 143
 Info (12128): Elaborating entity "spiShiftSingle" for hierarchy "spiBus:flash|spiShiftSingle:single" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/spi/verilog/spiBus.v Line: 174
 Info (10264): Verilog HDL Case Statement information at spiShiftSingle.v(190): all case item expressions in this case statement are onehot File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/spi/verilog/spiShiftSingle.v Line: 190
 Info (10264): Verilog HDL Case Statement information at spiShiftSingle.v(244): all case item expressions in this case statement are onehot File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/spi/verilog/spiShiftSingle.v Line: 244
 Info (10264): Verilog HDL Case Statement information at spiShiftSingle.v(243): all case item expressions in this case statement are onehot File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/spi/verilog/spiShiftSingle.v Line: 243
-Info (12128): Elaborating entity "bios" for hierarchy "bios:start" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 679
+Info (12128): Elaborating entity "bios" for hierarchy "bios:start" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 670
 Info (10264): Verilog HDL Case Statement information at bios.v(78): all case item expressions in this case statement are onehot File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/bios/verilog/bios.v Line: 78
 Info (12128): Elaborating entity "biosRom" for hierarchy "bios:start|biosRom:rom" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/bios/verilog/bios.v Line: 99
-Info (12128): Elaborating entity "busArbiter" for hierarchy "busArbiter:arbiter" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 714
+Info (12128): Elaborating entity "busArbiter" for hierarchy "busArbiter:arbiter" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/verilog/or1420SingleCore.v Line: 703
 Info (10264): Verilog HDL Case Statement information at busArbiter.v(40): all case item expressions in this case statement are onehot File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/bus_arbiter/verilog/busArbiter.v Line: 40
 Info (12128): Elaborating entity "queueMemory" for hierarchy "busArbiter:arbiter|queueMemory:queue" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/bus_arbiter/verilog/busArbiter.v Line: 125
 Warning (276020): Inferred RAM node "uartBus:uart1|uartRxFifo:RXF|uartFifoMemory:fifoMem|s_memory_rtl_0" from synchronous design logic.  Pass-through logic has been added to match the read-during-write behavior of the original design.
-Warning (276027): Inferred dual-clock RAM node "ramDmaCi:ramDma|dualPortSSRAM:memory|memoryContent_rtl_0" from synchronous design logic.  The read-during-write behavior of a dual-clock RAM is undefined and may not match the behavior of the original design.
 Warning (276020): Inferred RAM node "uartBus:uart1|uartTxFifo:TXF|uartFifoMemory:fifoMem|s_memory_rtl_0" from synchronous design logic.  Pass-through logic has been added to match the read-during-write behavior of the original design.
 Warning (276027): Inferred dual-clock RAM node "camera:camIf|dualPortRam2k:lineBuffer|memory_rtl_0" from synchronous design logic.  The read-during-write behavior of a dual-clock RAM is undefined and may not match the behavior of the original design.
 Warning (276027): Inferred dual-clock RAM node "screens:hdmi|dualPortRam2k:LineBuffer2|memory_rtl_0" from synchronous design logic.  The read-during-write behavior of a dual-clock RAM is undefined and may not match the behavior of the original design.
@@ -415,18 +417,6 @@ Warning (276020): Inferred RAM node "sdramController:sdram|sdramFifo:buffer|sram
 Warning (276027): Inferred dual-clock RAM node "screens:hdmi|dualPortRam4k:asciiRam1|memory_rtl_0" from synchronous design logic.  The read-during-write behavior of a dual-clock RAM is undefined and may not match the behavior of the original design.
 Warning (276027): Inferred dual-clock RAM node "screens:hdmi|dualPortRam4k:asciiRam2|memory_rtl_0" from synchronous design logic.  The read-during-write behavior of a dual-clock RAM is undefined and may not match the behavior of the original design.
 Info (276014): Found 65 instances of uninferred RAM logic
-    Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[1].ram2|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
-    Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[0].ram2|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
-    Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[12].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
-    Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[11].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
-    Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[10].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
-    Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[9].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
-    Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[3].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
-    Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[2].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
-    Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[1].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
-    Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[0].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
-    Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[3].ram2|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
-    Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[2].ram2|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
     Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[31].ram2|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
     Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[30].ram2|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
     Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[29].ram2|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
@@ -455,6 +445,16 @@ Info (276014): Found 65 instances of uninferred RAM logic
     Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[6].ram2|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
     Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[5].ram2|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
     Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[4].ram2|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
+    Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[3].ram2|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
+    Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[2].ram2|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
+    Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[1].ram2|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
+    Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[0].ram2|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
+    Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[3].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
+    Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[2].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
+    Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[1].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
+    Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[0].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
+    Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[24].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
+    Info (276007): RAM logic "or1420Top:cpu1|fetchStage:fetch|s_tagMemory" is uninferred due to asynchronous read logic File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/fetchStage.v Line: 83
     Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[31].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
     Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[30].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
     Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[29].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
@@ -462,7 +462,6 @@ Info (276014): Found 65 instances of uninferred RAM logic
     Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[27].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
     Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[26].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
     Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[25].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
-    Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[24].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
     Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[23].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
     Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[22].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
     Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[21].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
@@ -474,13 +473,16 @@ Info (276014): Found 65 instances of uninferred RAM logic
     Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[15].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
     Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[14].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
     Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[13].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
+    Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[12].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
+    Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[11].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
+    Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[10].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
+    Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[9].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
     Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[8].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
     Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[7].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
     Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[6].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
     Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[5].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
     Info (276004): RAM logic "or1420Top:cpu1|registerFile:regs|lutRam32x1:makeregs[4].ram1|mem" is uninferred due to inappropriate RAM size File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/lutram_32x1.v Line: 8
-    Info (276007): RAM logic "or1420Top:cpu1|fetchStage:fetch|s_tagMemory" is uninferred due to asynchronous read logic File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/modules/or1420/verilog/fetchStage.v Line: 83
-Info (19000): Inferred 17 megafunctions from design logic
+Info (19000): Inferred 16 megafunctions from design logic
     Info (276029): Inferred altsyncram megafunction from the following design logic: "uartBus:uart1|uartRxFifo:RXF|uartFifoMemory:fifoMem|s_memory_rtl_0" 
         Info (286033): Parameter OPERATION_MODE set to DUAL_PORT
         Info (286033): Parameter WIDTH_A set to 8
@@ -498,10 +500,10 @@ Info (19000): Inferred 17 megafunctions from design logic
         Info (286033): Parameter WRCONTROL_ACLR_A set to NONE
     Info (276029): Inferred altsyncram megafunction from the following design logic: "busArbiter:arbiter|queueMemory:queue|s_memory_rtl_0" 
         Info (286033): Parameter OPERATION_MODE set to DUAL_PORT
-        Info (286033): Parameter WIDTH_A set to 5
+        Info (286033): Parameter WIDTH_A set to 4
         Info (286033): Parameter WIDTHAD_A set to 5
         Info (286033): Parameter NUMWORDS_A set to 32
-        Info (286033): Parameter WIDTH_B set to 5
+        Info (286033): Parameter WIDTH_B set to 4
         Info (286033): Parameter WIDTHAD_B set to 5
         Info (286033): Parameter NUMWORDS_B set to 32
         Info (286033): Parameter ADDRESS_ACLR_A set to NONE
@@ -512,24 +514,17 @@ Info (19000): Inferred 17 megafunctions from design logic
         Info (286033): Parameter INDATA_ACLR_A set to NONE
         Info (286033): Parameter WRCONTROL_ACLR_A set to NONE
         Info (286033): Parameter READ_DURING_WRITE_MODE_MIXED_PORTS set to OLD_DATA
-    Info (276029): Inferred altsyncram megafunction from the following design logic: "ramDmaCi:ramDma|dualPortSSRAM:memory|memoryContent_rtl_0" 
-        Info (286033): Parameter OPERATION_MODE set to BIDIR_DUAL_PORT
+    Info (276029): Inferred altsyncram megafunction from the following design logic: "or1420Top:cpu1|fetchStage:fetch|s_dataMemory_rtl_0" 
+        Info (286033): Parameter OPERATION_MODE set to SINGLE_PORT
         Info (286033): Parameter WIDTH_A set to 32
-        Info (286033): Parameter WIDTH_B set to 32
         Info (286033): Parameter WIDTHAD_A set to 9
-        Info (286033): Parameter WIDTHAD_B set to 9
         Info (286033): Parameter NUMWORDS_A set to 512
-        Info (286033): Parameter NUMWORDS_B set to 512
         Info (286033): Parameter OUTDATA_REG_A set to UNREGISTERED
-        Info (286033): Parameter OUTDATA_REG_B set to UNREGISTERED
-        Info (286033): Parameter ADDRESS_REG_B set to CLOCK1
-        Info (286033): Parameter INDATA_REG_B set to CLOCK1
-        Info (286033): Parameter WRCONTROL_WRADDRESS_REG_B set to CLOCK1
+        Info (286033): Parameter ADDRESS_ACLR_A set to NONE
+        Info (286033): Parameter OUTDATA_ACLR_A set to NONE
+        Info (286033): Parameter READ_DURING_WRITE_MODE_PORT_A set to OLD_DATA
         Info (286033): Parameter INDATA_ACLR_A set to NONE
         Info (286033): Parameter WRCONTROL_ACLR_A set to NONE
-        Info (286033): Parameter ADDRESS_ACLR_A set to NONE
-        Info (286033): Parameter ADDRESS_ACLR_B set to NONE
-        Info (286033): Parameter OUTDATA_ACLR_B set to NONE
     Info (276029): Inferred altsyncram megafunction from the following design logic: "or1420Top:cpu1|dCache:loadStore|dCacheSpm:spm|byteRam3_rtl_0" 
         Info (286033): Parameter OPERATION_MODE set to SINGLE_PORT
         Info (286033): Parameter WIDTH_A set to 8
@@ -568,17 +563,6 @@ Info (19000): Inferred 17 megafunctions from design logic
         Info (286033): Parameter WIDTH_A set to 8
         Info (286033): Parameter WIDTHAD_A set to 11
         Info (286033): Parameter NUMWORDS_A set to 2048
-        Info (286033): Parameter OUTDATA_REG_A set to UNREGISTERED
-        Info (286033): Parameter ADDRESS_ACLR_A set to NONE
-        Info (286033): Parameter OUTDATA_ACLR_A set to NONE
-        Info (286033): Parameter READ_DURING_WRITE_MODE_PORT_A set to OLD_DATA
-        Info (286033): Parameter INDATA_ACLR_A set to NONE
-        Info (286033): Parameter WRCONTROL_ACLR_A set to NONE
-    Info (276029): Inferred altsyncram megafunction from the following design logic: "or1420Top:cpu1|fetchStage:fetch|s_dataMemory_rtl_0" 
-        Info (286033): Parameter OPERATION_MODE set to SINGLE_PORT
-        Info (286033): Parameter WIDTH_A set to 32
-        Info (286033): Parameter WIDTHAD_A set to 9
-        Info (286033): Parameter NUMWORDS_A set to 512
         Info (286033): Parameter OUTDATA_REG_A set to UNREGISTERED
         Info (286033): Parameter ADDRESS_ACLR_A set to NONE
         Info (286033): Parameter OUTDATA_ACLR_A set to NONE
@@ -739,10 +723,10 @@ Info (12021): Found 1 design units, including 1 entities, in source file db/alts
 Info (12130): Elaborated megafunction instantiation "busArbiter:arbiter|queueMemory:queue|altsyncram:s_memory_rtl_0"
 Info (12133): Instantiated megafunction "busArbiter:arbiter|queueMemory:queue|altsyncram:s_memory_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "DUAL_PORT"
-    Info (12134): Parameter "WIDTH_A" = "5"
+    Info (12134): Parameter "WIDTH_A" = "4"
     Info (12134): Parameter "WIDTHAD_A" = "5"
     Info (12134): Parameter "NUMWORDS_A" = "32"
-    Info (12134): Parameter "WIDTH_B" = "5"
+    Info (12134): Parameter "WIDTH_B" = "4"
     Info (12134): Parameter "WIDTHAD_B" = "5"
     Info (12134): Parameter "NUMWORDS_B" = "32"
     Info (12134): Parameter "ADDRESS_ACLR_A" = "NONE"
@@ -753,43 +737,8 @@ Info (12133): Instantiated megafunction "busArbiter:arbiter|queueMemory:queue|al
     Info (12134): Parameter "INDATA_ACLR_A" = "NONE"
     Info (12134): Parameter "WRCONTROL_ACLR_A" = "NONE"
     Info (12134): Parameter "READ_DURING_WRITE_MODE_MIXED_PORTS" = "OLD_DATA"
-Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_epg1.tdf
-    Info (12023): Found entity 1: altsyncram_epg1 File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/sandbox/db/altsyncram_epg1.tdf Line: 28
-Info (12130): Elaborated megafunction instantiation "ramDmaCi:ramDma|dualPortSSRAM:memory|altsyncram:memoryContent_rtl_0"
-Info (12133): Instantiated megafunction "ramDmaCi:ramDma|dualPortSSRAM:memory|altsyncram:memoryContent_rtl_0" with the following parameter:
-    Info (12134): Parameter "OPERATION_MODE" = "BIDIR_DUAL_PORT"
-    Info (12134): Parameter "WIDTH_A" = "32"
-    Info (12134): Parameter "WIDTH_B" = "32"
-    Info (12134): Parameter "WIDTHAD_A" = "9"
-    Info (12134): Parameter "WIDTHAD_B" = "9"
-    Info (12134): Parameter "NUMWORDS_A" = "512"
-    Info (12134): Parameter "NUMWORDS_B" = "512"
-    Info (12134): Parameter "OUTDATA_REG_A" = "UNREGISTERED"
-    Info (12134): Parameter "OUTDATA_REG_B" = "UNREGISTERED"
-    Info (12134): Parameter "ADDRESS_REG_B" = "CLOCK1"
-    Info (12134): Parameter "INDATA_REG_B" = "CLOCK1"
-    Info (12134): Parameter "WRCONTROL_WRADDRESS_REG_B" = "CLOCK1"
-    Info (12134): Parameter "INDATA_ACLR_A" = "NONE"
-    Info (12134): Parameter "WRCONTROL_ACLR_A" = "NONE"
-    Info (12134): Parameter "ADDRESS_ACLR_A" = "NONE"
-    Info (12134): Parameter "ADDRESS_ACLR_B" = "NONE"
-    Info (12134): Parameter "OUTDATA_ACLR_B" = "NONE"
-Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_m9n1.tdf
-    Info (12023): Found entity 1: altsyncram_m9n1 File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/sandbox/db/altsyncram_m9n1.tdf Line: 28
-Info (12130): Elaborated megafunction instantiation "or1420Top:cpu1|dCache:loadStore|dCacheSpm:spm|altsyncram:byteRam3_rtl_0"
-Info (12133): Instantiated megafunction "or1420Top:cpu1|dCache:loadStore|dCacheSpm:spm|altsyncram:byteRam3_rtl_0" with the following parameter:
-    Info (12134): Parameter "OPERATION_MODE" = "SINGLE_PORT"
-    Info (12134): Parameter "WIDTH_A" = "8"
-    Info (12134): Parameter "WIDTHAD_A" = "11"
-    Info (12134): Parameter "NUMWORDS_A" = "2048"
-    Info (12134): Parameter "OUTDATA_REG_A" = "UNREGISTERED"
-    Info (12134): Parameter "ADDRESS_ACLR_A" = "NONE"
-    Info (12134): Parameter "OUTDATA_ACLR_A" = "NONE"
-    Info (12134): Parameter "READ_DURING_WRITE_MODE_PORT_A" = "OLD_DATA"
-    Info (12134): Parameter "INDATA_ACLR_A" = "NONE"
-    Info (12134): Parameter "WRCONTROL_ACLR_A" = "NONE"
-Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_9f81.tdf
-    Info (12023): Found entity 1: altsyncram_9f81 File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/sandbox/db/altsyncram_9f81.tdf Line: 28
+Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_cpg1.tdf
+    Info (12023): Found entity 1: altsyncram_cpg1 File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/sandbox/db/altsyncram_cpg1.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "or1420Top:cpu1|fetchStage:fetch|altsyncram:s_dataMemory_rtl_0"
 Info (12133): Instantiated megafunction "or1420Top:cpu1|fetchStage:fetch|altsyncram:s_dataMemory_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "SINGLE_PORT"
@@ -804,6 +753,20 @@ Info (12133): Instantiated megafunction "or1420Top:cpu1|fetchStage:fetch|altsync
     Info (12134): Parameter "WRCONTROL_ACLR_A" = "NONE"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_nd81.tdf
     Info (12023): Found entity 1: altsyncram_nd81 File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/sandbox/db/altsyncram_nd81.tdf Line: 28
+Info (12130): Elaborated megafunction instantiation "or1420Top:cpu1|dCache:loadStore|dCacheSpm:spm|altsyncram:byteRam3_rtl_0"
+Info (12133): Instantiated megafunction "or1420Top:cpu1|dCache:loadStore|dCacheSpm:spm|altsyncram:byteRam3_rtl_0" with the following parameter:
+    Info (12134): Parameter "OPERATION_MODE" = "SINGLE_PORT"
+    Info (12134): Parameter "WIDTH_A" = "8"
+    Info (12134): Parameter "WIDTHAD_A" = "11"
+    Info (12134): Parameter "NUMWORDS_A" = "2048"
+    Info (12134): Parameter "OUTDATA_REG_A" = "UNREGISTERED"
+    Info (12134): Parameter "ADDRESS_ACLR_A" = "NONE"
+    Info (12134): Parameter "OUTDATA_ACLR_A" = "NONE"
+    Info (12134): Parameter "READ_DURING_WRITE_MODE_PORT_A" = "OLD_DATA"
+    Info (12134): Parameter "INDATA_ACLR_A" = "NONE"
+    Info (12134): Parameter "WRCONTROL_ACLR_A" = "NONE"
+Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_9f81.tdf
+    Info (12023): Found entity 1: altsyncram_9f81 File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/sandbox/db/altsyncram_9f81.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "camera:camIf|dualPortRam2k:lineBuffer|altsyncram:memory_rtl_0"
 Info (12133): Instantiated megafunction "camera:camIf|dualPortRam2k:lineBuffer|altsyncram:memory_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "DUAL_PORT"
@@ -948,27 +911,27 @@ Warning (14284): Synthesized away the following node(s):
     Warning (14285): Synthesized away the following DSP element node(s):
         Warning (14320): Synthesized away node "or1420Top:cpu1|executeStage:exe|multiplier:mul|lpm_mult:Mult0|mult_7dt:auto_generated|mac_mult7" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/sandbox/db/mult_7dt.tdf Line: 67
         Warning (14320): Synthesized away node "or1420Top:cpu1|executeStage:exe|multiplier:mul|lpm_mult:Mult0|mult_7dt:auto_generated|mac_out8" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/sandbox/db/mult_7dt.tdf Line: 91
-Warning (12241): 1 hierarchies have connectivity warnings - see the Connectivity Checks report folder
+Warning (12241): 2 hierarchies have connectivity warnings - see the Connectivity Checks report folder
 Info (13014): Ignored 84 buffer(s)
     Info (13019): Ignored 84 SOFT buffer(s)
 Info (286030): Timing-Driven Synthesis is running
-Info (17049): 153 registers lost all their fanouts during netlist optimizations.
+Info (17049): 150 registers lost all their fanouts during netlist optimizations.
 Info (144001): Generated suppressed messages file /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/sandbox/or1420SingleCore.map.smsg
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 1 node(s), including 0 DDIO, 1 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 15838 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 15709 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 24 input pins
     Info (21059): Implemented 68 output pins
     Info (21060): Implemented 21 bidirectional pins
-    Info (21061): Implemented 15424 logic cells
-    Info (21064): Implemented 291 RAM segments
+    Info (21061): Implemented 15328 logic cells
+    Info (21064): Implemented 258 RAM segments
     Info (21065): Implemented 1 PLLs
     Info (21062): Implemented 9 DSP elements
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 30 warnings
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 29 warnings
     Info: Peak virtual memory: 1088 megabytes
-    Info: Processing ended: Tue Jun  4 18:26:44 2024
-    Info: Elapsed time: 00:00:43
-    Info: Total CPU time (on all processors): 00:00:53
+    Info: Processing ended: Wed Jun  5 14:31:56 2024
+    Info: Elapsed time: 00:00:40
+    Info: Total CPU time (on all processors): 00:00:50
 echo done > fit.chg
 ===========================================================
   Fitter 
@@ -991,7 +954,7 @@ Info: Running Quartus Prime Fitter
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Tue Jun  4 18:26:45 2024
+    Info: Processing started: Wed Jun  5 14:31:57 2024
 Info: Command: quartus_fit --part=EP4CE30F23C8 --set="FITTER_EFFORT=STANDARD FIT" --set=SMART_RECOMPILE=ON --set=CYCLONE_OPTIMIZATION_TECHNIQUE=SPEED --set="RESERVE_ALL_UNUSED_PINS=AS INPUT TRI-STATED" --set=MUX_RESTRUCTURE=OFF --set=PHYSICAL_SYNTHESIS_REGISTER_RETIMING=ON --set=PHYSICAL_SYNTHESIS_EFFORT=EXTRA --set="FMAX_REQUIREMENT=80 MHz" --set="RESERVE_NCEO_AFTER_CONFIGURATION=USE AS REGULAR IO" --set="CYCLONEII_RESERVE_NCEO_AFTER_CONFIGURATION=USE AS REGULAR IO" or1420SingleCore
 Info: qfit2_default_script.tcl version: #1
 Info: Project  = or1420SingleCore
@@ -1084,29 +1047,29 @@ Info (176215): I/O bank details before I/O pin placement
         Info (176213): I/O bank number 8 does not use VREF pins and has undetermined VCCIO pins. 0 total pin(s) used --  43 pins available
 Info (128000): Starting physical synthesis optimizations for speed
 Info (128001): Physical synthesis optimizations for speed complete: elapsed time is 00:00:03
-Info (171121): Fitter preparation operations ending: elapsed time is 00:00:16
+Info (171121): Fitter preparation operations ending: elapsed time is 00:00:14
 Info (14896): Fitter has disabled Advanced Physical Optimization because it is not supported for the current family.
 Info (170189): Fitter placement preparation operations beginning
 Info (170190): Fitter placement preparation operations ending: elapsed time is 00:00:04
 Info (170191): Fitter placement operations beginning
 Info (170137): Fitter placement was successful
-Info (170192): Fitter placement operations ending: elapsed time is 00:00:32
+Info (170192): Fitter placement operations ending: elapsed time is 00:00:27
 Info (170193): Fitter routing operations beginning
 Info (170195): Router estimated average interconnect usage is 11% of the available device resources
-    Info (170196): Router estimated peak interconnect usage is 46% of the available device resources in the region that extends from location X22_Y22 to location X33_Y32
-Info (170194): Fitter routing operations ending: elapsed time is 00:00:27
-Info (11888): Total time spent on timing analysis during the Fitter is 16.21 seconds.
+    Info (170196): Router estimated peak interconnect usage is 46% of the available device resources in the region that extends from location X34_Y22 to location X44_Y32
+Info (170194): Fitter routing operations ending: elapsed time is 00:00:32
+Info (11888): Total time spent on timing analysis during the Fitter is 14.40 seconds.
 Info (334003): Started post-fitting delay annotation
 Info (334004): Delay annotation completed successfully
 Info (334003): Started post-fitting delay annotation
 Info (334004): Delay annotation completed successfully
-Info (11218): Fitter post-fit operations ending: elapsed time is 00:00:06
+Info (11218): Fitter post-fit operations ending: elapsed time is 00:00:07
 Info (144001): Generated suppressed messages file /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/sandbox/or1420SingleCore.fit.smsg
 Info: Quartus Prime Fitter was successful. 0 errors, 9 warnings
     Info: Peak virtual memory: 1741 megabytes
-    Info: Processing ended: Tue Jun  4 18:28:23 2024
-    Info: Elapsed time: 00:01:38
-    Info: Total CPU time (on all processors): 00:02:39
+    Info: Processing ended: Wed Jun  5 14:33:33 2024
+    Info: Elapsed time: 00:01:36
+    Info: Total CPU time (on all processors): 00:02:38
 echo done > asm.chg
 echo done > sta.chg
 ===========================================================
@@ -1130,14 +1093,14 @@ Info: Running Quartus Prime Assembler
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Tue Jun  4 18:28:24 2024
+    Info: Processing started: Wed Jun  5 14:33:33 2024
 Info: Command: quartus_asm or1420SingleCore
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (115031): Writing out detailed assembly data for power analysis
 Info (115030): Assembler is generating device programming files
 Info: Quartus Prime Assembler was successful. 0 errors, 1 warning
     Info: Peak virtual memory: 845 megabytes
-    Info: Processing ended: Tue Jun  4 18:28:27 2024
+    Info: Processing ended: Wed Jun  5 14:33:36 2024
     Info: Elapsed time: 00:00:03
     Info: Total CPU time (on all processors): 00:00:02
 ===========================================================
@@ -1161,11 +1124,11 @@ Info: Running Quartus Prime Convert_programming_file
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Tue Jun  4 18:28:27 2024
+    Info: Processing started: Wed Jun  5 14:33:36 2024
 Info: Command: quartus_cpf -c or1420SingleCore.sof or1420SingleCore.rbf
 Info: Quartus Prime Convert_programming_file was successful. 0 errors, 0 warnings
     Info: Peak virtual memory: 437 megabytes
-    Info: Processing ended: Tue Jun  4 18:28:27 2024
+    Info: Processing ended: Wed Jun  5 14:33:36 2024
     Info: Elapsed time: 00:00:00
     Info: Total CPU time (on all processors): 00:00:00
 ===========================================================
@@ -1189,7 +1152,7 @@ Info: Running Quartus Prime Timing Analyzer
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Tue Jun  4 18:28:28 2024
+    Info: Processing started: Wed Jun  5 14:33:37 2024
 Info: Command: quartus_sta or1420SingleCore
 Info: qsta_default_script.tcl version: #1
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
@@ -1204,154 +1167,154 @@ Info (332110): Deriving PLL clocks
     Info (332110): create_generated_clock -source {altpll_component|auto_generated|pll1|inclk[0]} -divide_by 8 -multiply_by 99 -duty_cycle 50.00 -name {altpll_component|auto_generated|pll1|clk[3]} {altpll_component|auto_generated|pll1|clk[3]}
 Info (332151): Clock uncertainty is not calculated until you update the timing netlist.
 Warning (332060): Node: camPclk was determined to be a clock but was found without an associated clock assignment.
-    Info (13166): Register camera:camIf|synchroFlop:snl|s_states[0] is being clocked by camPclk
+    Info (13166): Register camera:camIf|synchroFlop:sns|s_states[0] is being clocked by camPclk
 Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in the Timing Analyzer to see clock uncertainties.
 Info: Found TIMING_ANALYZER_REPORT_SCRIPT_INCLUDE_DEFAULT_ANALYSIS = ON
 Info: Analyzing Slow 1200mV 85C Model
 Critical Warning (332148): Timing requirements not met
     Info (11105): For recommendations on closing timing, run Report Timing Closure Recommendations in the Timing Analyzer.
-Info (332146): Worst-case setup slack is -4.447
+Info (332146): Worst-case setup slack is -4.504
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -4.447             -71.152 clk2 
-    Info (332119):    -3.981             -51.763 altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):    -3.643             -17.648 clk1 
-    Info (332119):     0.116               0.000 altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     0.557               0.000 altpll_component|auto_generated|pll1|clk[3] 
-    Info (332119):     3.075               0.000 altpll_component|auto_generated|pll1|clk[1] 
-Info (332146): Worst-case hold slack is 0.409
+    Info (332119):    -4.504             -72.064 clk2 
+    Info (332119):    -3.981             -48.288 altpll_component|auto_generated|pll1|clk[2] 
+    Info (332119):    -3.548             -17.181 clk1 
+    Info (332119):    -0.123              -0.615 altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):     0.429               0.000 altpll_component|auto_generated|pll1|clk[3] 
+    Info (332119):     3.642               0.000 altpll_component|auto_generated|pll1|clk[1] 
+Info (332146): Worst-case hold slack is 0.400
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.409               0.000 altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):     0.450               0.000 altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     0.450               0.000 altpll_component|auto_generated|pll1|clk[3] 
-    Info (332119):     0.463               0.000 altpll_component|auto_generated|pll1|clk[1] 
-    Info (332119):     0.709               0.000 clk1 
+    Info (332119):     0.400               0.000 altpll_component|auto_generated|pll1|clk[2] 
+    Info (332119):     0.451               0.000 altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):     0.451               0.000 altpll_component|auto_generated|pll1|clk[3] 
+    Info (332119):     0.464               0.000 altpll_component|auto_generated|pll1|clk[1] 
     Info (332119):     0.761               0.000 clk2 
-Info (332146): Worst-case recovery slack is -6.216
+    Info (332119):     0.925               0.000 clk1 
+Info (332146): Worst-case recovery slack is -5.689
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -6.216             -13.140 clk1 
-    Info (332119):    -4.335              -4.335 altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):    -4.288              -4.288 clk2 
-    Info (332119):     9.352               0.000 altpll_component|auto_generated|pll1|clk[0] 
-Info (332146): Worst-case removal slack is 1.303
+    Info (332119):    -5.689             -12.859 clk1 
+    Info (332119):    -4.290              -4.290 clk2 
+    Info (332119):    -4.159              -4.159 altpll_component|auto_generated|pll1|clk[2] 
+    Info (332119):     8.967               0.000 altpll_component|auto_generated|pll1|clk[0] 
+Info (332146): Worst-case removal slack is 1.302
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     1.303               0.000 altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     1.868               0.000 altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):     2.340               0.000 clk2 
-    Info (332119):     2.758               0.000 clk1 
-Info (332146): Worst-case minimum pulse width slack is 3.056
+    Info (332119):     1.302               0.000 altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):     2.351               0.000 clk2 
+    Info (332119):     2.599               0.000 clk1 
+    Info (332119):     2.658               0.000 altpll_component|auto_generated|pll1|clk[2] 
+Info (332146): Worst-case minimum pulse width slack is 3.057
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     3.056               0.000 altpll_component|auto_generated|pll1|clk[3] 
     Info (332119):     3.057               0.000 altpll_component|auto_generated|pll1|clk[1] 
-    Info (332119):     6.301               0.000 altpll_component|auto_generated|pll1|clk[2] 
+    Info (332119):     3.057               0.000 altpll_component|auto_generated|pll1|clk[3] 
+    Info (332119):     6.295               0.000 altpll_component|auto_generated|pll1|clk[2] 
     Info (332119):     6.421               0.000 altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     9.760               0.000 clk2 
-    Info (332119):    41.426               0.000 clk1 
+    Info (332119):     9.758               0.000 clk2 
+    Info (332119):    41.427               0.000 clk1 
 Info: Analyzing Slow 1200mV 0C Model
 Info (334003): Started post-fitting delay annotation
 Info (334004): Delay annotation completed successfully
 Warning (332060): Node: camPclk was determined to be a clock but was found without an associated clock assignment.
-    Info (13166): Register camera:camIf|synchroFlop:snl|s_states[0] is being clocked by camPclk
+    Info (13166): Register camera:camIf|synchroFlop:sns|s_states[0] is being clocked by camPclk
 Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in the Timing Analyzer to see clock uncertainties.
 Critical Warning (332148): Timing requirements not met
     Info (11105): For recommendations on closing timing, run Report Timing Closure Recommendations in the Timing Analyzer.
-Info (332146): Worst-case setup slack is -4.465
+Info (332146): Worst-case setup slack is -4.555
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -4.465             -71.440 clk2 
-    Info (332119):    -3.708             -18.003 clk1 
-    Info (332119):    -3.483             -12.847 altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):     1.010               0.000 altpll_component|auto_generated|pll1|clk[3] 
-    Info (332119):     1.107               0.000 altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     3.255               0.000 altpll_component|auto_generated|pll1|clk[1] 
+    Info (332119):    -4.555             -72.880 clk2 
+    Info (332119):    -3.617             -17.473 clk1 
+    Info (332119):    -3.480             -11.909 altpll_component|auto_generated|pll1|clk[2] 
+    Info (332119):     0.822               0.000 altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):     1.020               0.000 altpll_component|auto_generated|pll1|clk[3] 
+    Info (332119):     3.829               0.000 altpll_component|auto_generated|pll1|clk[1] 
 Info (332146): Worst-case hold slack is 0.380
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
     Info (332119):     0.380               0.000 altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):     0.399               0.000 altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     0.399               0.000 altpll_component|auto_generated|pll1|clk[3] 
+    Info (332119):     0.400               0.000 altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):     0.400               0.000 altpll_component|auto_generated|pll1|clk[3] 
     Info (332119):     0.416               0.000 altpll_component|auto_generated|pll1|clk[1] 
-    Info (332119):     0.655               0.000 clk1 
     Info (332119):     0.704               0.000 clk2 
-Info (332146): Worst-case recovery slack is -6.123
+    Info (332119):     0.859               0.000 clk1 
+Info (332146): Worst-case recovery slack is -5.594
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -6.123             -13.045 clk1 
-    Info (332119):    -4.308              -4.308 clk2 
-    Info (332119):    -3.735              -3.735 altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):     9.630               0.000 altpll_component|auto_generated|pll1|clk[0] 
-Info (332146): Worst-case removal slack is 1.175
+    Info (332119):    -5.594             -12.784 clk1 
+    Info (332119):    -4.324              -4.324 clk2 
+    Info (332119):    -3.570              -3.570 altpll_component|auto_generated|pll1|clk[2] 
+    Info (332119):     9.291               0.000 altpll_component|auto_generated|pll1|clk[0] 
+Info (332146): Worst-case removal slack is 1.177
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     1.175               0.000 altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     1.690               0.000 altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):     2.345               0.000 clk2 
-    Info (332119):     2.564               0.000 clk1 
+    Info (332119):     1.177               0.000 altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):     2.354               0.000 altpll_component|auto_generated|pll1|clk[2] 
+    Info (332119):     2.362               0.000 clk2 
+    Info (332119):     2.518               0.000 clk1 
 Info (332146): Worst-case minimum pulse width slack is 3.061
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
+    Info (332119):     3.061               0.000 altpll_component|auto_generated|pll1|clk[1] 
     Info (332119):     3.061               0.000 altpll_component|auto_generated|pll1|clk[3] 
-    Info (332119):     3.062               0.000 altpll_component|auto_generated|pll1|clk[1] 
-    Info (332119):     6.309               0.000 altpll_component|auto_generated|pll1|clk[2] 
+    Info (332119):     6.305               0.000 altpll_component|auto_generated|pll1|clk[2] 
     Info (332119):     6.427               0.000 altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     9.751               0.000 clk2 
-    Info (332119):    41.417               0.000 clk1 
+    Info (332119):     9.750               0.000 clk2 
+    Info (332119):    41.416               0.000 clk1 
 Info: Analyzing Fast 1200mV 0C Model
 Warning (332060): Node: camPclk was determined to be a clock but was found without an associated clock assignment.
-    Info (13166): Register camera:camIf|synchroFlop:snl|s_states[0] is being clocked by camPclk
+    Info (13166): Register camera:camIf|synchroFlop:sns|s_states[0] is being clocked by camPclk
 Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in the Timing Analyzer to see clock uncertainties.
 Critical Warning (332148): Timing requirements not met
     Info (11105): For recommendations on closing timing, run Report Timing Closure Recommendations in the Timing Analyzer.
-Info (332146): Worst-case setup slack is -1.971
+Info (332146): Worst-case setup slack is -1.970
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -1.971              -2.992 altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):    -1.951             -31.216 clk2 
-    Info (332119):    -1.143              -5.298 clk1 
-    Info (332119):     4.084               0.000 altpll_component|auto_generated|pll1|clk[3] 
-    Info (332119):     4.276               0.000 altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     4.965               0.000 altpll_component|auto_generated|pll1|clk[1] 
-Info (332146): Worst-case hold slack is 0.138
+    Info (332119):    -1.970              -2.994 altpll_component|auto_generated|pll1|clk[2] 
+    Info (332119):    -1.923             -30.768 clk2 
+    Info (332119):    -1.166              -5.505 clk1 
+    Info (332119):     4.024               0.000 altpll_component|auto_generated|pll1|clk[3] 
+    Info (332119):     4.474               0.000 altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):     5.220               0.000 altpll_component|auto_generated|pll1|clk[1] 
+Info (332146): Worst-case hold slack is 0.134
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.138               0.000 altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):     0.172               0.000 altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     0.185               0.000 altpll_component|auto_generated|pll1|clk[3] 
+    Info (332119):     0.134               0.000 altpll_component|auto_generated|pll1|clk[2] 
+    Info (332119):     0.185               0.000 altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):     0.186               0.000 altpll_component|auto_generated|pll1|clk[3] 
     Info (332119):     0.193               0.000 altpll_component|auto_generated|pll1|clk[1] 
-    Info (332119):     0.274               0.000 clk1 
-    Info (332119):     0.303               0.000 clk2 
-Info (332146): Worst-case recovery slack is -2.547
+    Info (332119):     0.304               0.000 clk2 
+    Info (332119):     0.343               0.000 clk1 
+Info (332146): Worst-case recovery slack is -1.988
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -2.547              -4.799 clk1 
-    Info (332119):    -1.939              -1.939 clk2 
-    Info (332119):    -1.669              -1.669 altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):    11.549               0.000 altpll_component|auto_generated|pll1|clk[0] 
-Info (332146): Worst-case removal slack is 0.539
+    Info (332119):    -1.988              -4.164 clk1 
+    Info (332119):    -1.906              -1.906 clk2 
+    Info (332119):    -1.597              -1.597 altpll_component|auto_generated|pll1|clk[2] 
+    Info (332119):    11.401               0.000 altpll_component|auto_generated|pll1|clk[0] 
+Info (332146): Worst-case removal slack is 0.538
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.539               0.000 altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     0.783               0.000 altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):     0.889               0.000 clk2 
-    Info (332119):     0.930               0.000 clk1 
+    Info (332119):     0.538               0.000 altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):     0.850               0.000 clk2 
+    Info (332119):     0.915               0.000 clk1 
+    Info (332119):     1.102               0.000 altpll_component|auto_generated|pll1|clk[2] 
 Info (332146): Worst-case minimum pulse width slack is 3.149
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
     Info (332119):     3.149               0.000 altpll_component|auto_generated|pll1|clk[3] 
     Info (332119):     3.150               0.000 altpll_component|auto_generated|pll1|clk[1] 
     Info (332119):     6.482               0.000 altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):     6.487               0.000 altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     9.447               0.000 clk2 
+    Info (332119):     6.484               0.000 altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):     9.445               0.000 clk2 
     Info (332119):    41.111               0.000 clk1 
 Info (332102): Design is not fully constrained for setup requirements
 Info (332102): Design is not fully constrained for hold requirements
 Info: Quartus Prime Timing Analyzer was successful. 0 errors, 7 warnings
-    Info: Peak virtual memory: 1037 megabytes
-    Info: Processing ended: Tue Jun  4 18:28:35 2024
+    Info: Peak virtual memory: 1039 megabytes
+    Info: Processing ended: Wed Jun  5 14:33:44 2024
     Info: Elapsed time: 00:00:07
     Info: Total CPU time (on all processors): 00:00:10
 make[1]: Leaving directory '/home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/1_software/systems/singleCore/sandbox'

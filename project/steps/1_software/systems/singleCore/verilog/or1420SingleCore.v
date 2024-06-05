@@ -476,41 +476,6 @@ grayscale_conv #(.customInstructionId(8'd13)) grayscale
                        .iseId(s_cpu1CiN),
                        .done(s_grayDone),
                        .result(s_grayResult) );
-  
-  /*
-   *
-   * The RAM-DMA ISE
-   *
-   */
-  wire s_ramDmaRequest, s_ramDmaGranted, s_ramDmaBeginTransaction, s_ramDmaReadNotWrite;
-  wire s_ramDmaEndTransaction, s_ramDmaDataValid;
-  wire [3:0] s_ramDmaByteEnables;
-  wire [7:0] s_ramDmaBurstSize;
-  wire [31:0] s_ramDmaAddressData;
-  
-  ramDmaCi #(.customId(8'd20) ) ramDma
-            (.start(s_cpu1CiStart),
-             .clock(s_systemClock),
-             .reset(s_cpuReset),
-             .valueA(s_cpu1CiDataA),
-             .valueB(s_cpu1CiDataB),
-             .ciN(s_cpu1CiN),
-             .done(s_ramDmaDone),
-             .result(s_ramDmaResult),
-             .requestTransaction(s_ramDmaRequest),
-             .transactionGranted(s_ramDmaGranted),
-             .endTransactionIn(s_endTransaction),
-             .dataValidIn(s_dataValid),
-             .busErrorIn(s_busError),
-             .busyIn(s_busy),
-             .addressDataIn(s_addressData),
-             .beginTransactionOut(s_ramDmaBeginTransaction),
-             .readNotWriteOut(s_ramDmaReadNotWrite),
-             .endTransactionOut(s_ramDmaEndTransaction),
-             .dataValidOut(s_ramDmaDataValid),
-             .byteEnablesOut(s_ramDmaByteEnables),
-             .burstSizeOut(s_ramDmaBurstSize),
-             .addressDataOut(s_ramDmaAddressData));
 
   /*
    *
@@ -716,14 +681,12 @@ grayscale_conv #(.customInstructionId(8'd13)) grayscale
  assign s_busRequests[30] = s_cpu1IcacheRequestBus;
  assign s_busRequests[29] = s_hdmiRequestBus;
  assign s_busRequests[28] =  s_camReqBus;
- assign s_busRequests[27] = s_ramDmaRequest;
  assign s_busRequests[26:0] = 27'd0;
  
  assign s_cpu1DcacheBusAccessGranted = s_busGrants[31];
  assign s_cpu1IcacheBusAccessGranted = s_busGrants[30];
  assign s_hdmiBusgranted             = s_busGrants[29];
  assign s_camAckBus                  = s_busGrants[28];
- assign s_ramDmaGranted              = s_busGrants[27];
 
  busArbiter arbiter ( .clock(s_systemClock),
                       .reset(s_reset),
@@ -745,17 +708,17 @@ grayscale_conv #(.customInstructionId(8'd13)) grayscale
    *
    */
  assign s_busError         = s_arbBusError | s_biosBusError | s_uartBusError | s_sdramBusError | s_flashBusError | sGpioBusError;
- assign s_beginTransaction = s_cpu1BeginTransaction | s_hdmiBeginTransaction | s_camBeginTransaction| s_ramDmaBeginTransaction;
+ assign s_beginTransaction = s_cpu1BeginTransaction | s_hdmiBeginTransaction | s_camBeginTransaction;
  assign s_endTransaction   = s_cpu1EndTransaction | s_arbEndTransaction | s_biosEndTransaction | s_uartEndTransaction |
                              s_sdramEndTransaction | s_hdmiEndTransaction | s_flashEndTransaction | s_camEndTransaction |
-                             sGpioEndTransaction | s_ramDmaEndTransaction;
+                             sGpioEndTransaction;
  assign s_addressData      = s_cpu1AddressData | s_biosAddressData | s_uartAddressData | s_sdramAddressData | s_hdmiAddressData |
-                             s_flashAddressData | s_camAddressData | sGpioAddressData | s_ramDmaAddressData;
- assign s_byteEnables      = s_cpu1byteEnables | s_hdmiByteEnables | s_camByteEnables | s_ramDmaByteEnables;
- assign s_readNotWrite     = s_cpu1ReadNotWrite | s_hdmiReadNotWrite | s_ramDmaReadNotWrite;
+                             s_flashAddressData | s_camAddressData | sGpioAddressData;
+ assign s_byteEnables      = s_cpu1byteEnables | s_hdmiByteEnables | s_camByteEnables;
+ assign s_readNotWrite     = s_cpu1ReadNotWrite | s_hdmiReadNotWrite;
  assign s_dataValid        = s_cpu1DataValid | s_biosDataValid | s_uartDataValid | s_sdramDataValid | s_hdmiDataValid | 
-                             s_flashDataValid | s_camDataValid | sGpioDataValid | s_ramDmaDataValid;
+                             s_flashDataValid | s_camDataValid | sGpioDataValid;
  assign s_busy             = s_sdramBusy;
- assign s_burstSize        = s_cpu1BurstSize | s_hdmiBurstSize | s_camBurstSize | s_ramDmaBurstSize;
+ assign s_burstSize        = s_cpu1BurstSize | s_hdmiBurstSize | s_camBurstSize;
  
 endmodule
