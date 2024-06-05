@@ -4,7 +4,7 @@ module sobel
                         pixel3, pixel4, pixel5,
                         pixel6, pixel7, pixel8,
     input wire  [7:0]   threshold,
-    output wire [7:0]   edge_val
+    output wire         edge_val
 );
 
     // Sobel kernels
@@ -23,7 +23,7 @@ module sobel
     assign Gy_abs = Gy < 0 ? -Gy : Gy;
 
     // Calculate the edge value
-    assign edge_val = (Gx_abs + Gy_abs) > threshold ? 255 : 0;
+    assign edge_val = (Gx_abs + Gy_abs) > threshold ? 1'b1 : 1'b0;
     //assign edge_val = (Gx_abs + Gy_abs);
 
 endmodule

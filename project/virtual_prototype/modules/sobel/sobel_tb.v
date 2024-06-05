@@ -109,10 +109,10 @@ module sobel_tb;
         $display("");
         $display("Threshold: \033[34m%0d\033[0m", DUT.threshold);
         $display("");
-        $display("Result 1 : \033[34m%0d\033[0m", edge_data[7:0]);
-        $display("Result 2 : \033[34m%0d\033[0m", edge_data[15:8]);
-        $display("Result 3 : \033[34m%0d\033[0m", edge_data[23:16]);
-        $display("Result 4 : \033[34m%0d\033[0m", edge_data[31:24]);
+        $display("Shift Register : \033[34m%1b\033[0m", edge_data);
+        // $display("Result 2 : \033[34m%0d\033[0m", edge_data[15:8]);
+        // $display("Result 3 : \033[34m%0d\033[0m", edge_data[23:16]);
+        // $display("Result 4 : \033[34m%0d\033[0m", edge_data[31:24]);
         // $display("Gx   : \033[34m%0d\033[0m, \tValueX: \033[34m%0d\033[0m", DUT.sobel_module.Gx, valueX);
         // $display("Gy   : \033[34m%0d\033[0m, \tValueY: \033[34m%0d\033[0m", DUT.sobel_module.Gy, valueY);
 
@@ -157,32 +157,40 @@ module sobel_tb;
         `WAITCYCLE;
         start = 1'b0;
 
-        // line[0] = 32'h8c652f85;
-        // line[1] = 32'h9c6440bb;
-        // line[2] = 32'hfa4391b4;
-        // line[3] = 32'hd916909e;
-        // line[4] = 32'h4285b377;
-        // line[5] = 32'h6e848536;
+        line[0] = 32'h20202020;
+        line[1] = 32'h20212220;
+        line[2] = 32'h25202020;
+        line[3] = 32'h21217121;
+        line[4] = 32'h20212121;
+        line[5] = 32'h20202120;
+
+        compute_sobel(line[0], line[1], line[2], line[3], line[4], line[5], threshold, 0);
+        compute_sobel(32'd0, 32'd0, 32'd0, 32'd0, 32'd0, 32'd0, threshold, 0);
+        compute_sobel(line[0], line[1], line[2], line[3], line[4], line[5], threshold, 0);
+        compute_sobel(32'd0, 32'd0, 32'd0, 32'd0, 32'd0, 32'd0, threshold, 0);
+        compute_sobel(line[0], line[1], line[2], line[3], line[4], line[5], threshold, 0);
+        compute_sobel(32'd0, 32'd0, 32'd0, 32'd0, 32'd0, 32'd0, threshold, 0);
+        compute_sobel(line[0], line[1], line[2], line[3], line[4], line[5], threshold, 0);
+        compute_sobel(line[0], line[1], line[2], line[3], line[4], line[5], threshold, 0);
+        // compute_sobel(32'd0, 32'd0, 32'd0, 32'd0, 32'd0, 32'd0, threshold, 0);
+        //compute_sobel(line[0], line[1], line[2], line[3], line[4], line[5], threshold, 0);
+
+        // line[0] = 32'h000000ff;
+        // line[1] = 32'h00000000;
+        // line[2] = 32'h00000000;
+        // line[3] = 32'h00000000;
+        // line[4] = 32'h00000000;
+        // line[5] = 32'h00000000;
 
         // compute_sobel(line[0], line[1], line[2], line[3], line[4], line[5], threshold, 0);
-        //compute_sobel(line[0], line[1], line[2], line[3], line[4], line[5], threshold, 1);
 
-        line[0] = 32'h000000ff;
-        line[1] = 32'h00000000;
-        line[2] = 32'h00000000;
-        line[3] = 32'h00000000;
-        line[4] = 32'h00000000;
-        line[5] = 32'h00000000;
-
-        compute_sobel(line[0], line[1], line[2], line[3], line[4], line[5], threshold, 0);
-
-        line[0] = 32'h00000000;
-        line[1] = 32'h000000ff;
-        line[2] = 32'h00000000;
-        line[3] = 32'h00000000;
-        line[4] = 32'h00000000;
-        line[5] = 32'h00000000;
-        compute_sobel(line[0], line[1], line[2], line[3], line[4], line[5], threshold, 0);
+        // line[0] = 32'h00000000;
+        // line[1] = 32'h000000ff;
+        // line[2] = 32'h00000000;
+        // line[3] = 32'h00000000;
+        // line[4] = 32'h00000000;
+        // line[5] = 32'h00000000;
+        // compute_sobel(line[0], line[1], line[2], line[3], line[4], line[5], threshold, 0);
 
         // Finish simulation
         $finish;
