@@ -91,6 +91,7 @@ int main() {
         asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xE":[out1]"=r"(stall):[in1]"r"(1),[in2]"r"(1<<9));
         asm volatile ("l.nios_rrr %[out1],%[in1],%[in2],0xE":[out1]"=r"(idle):[in1]"r"(2),[in2]"r"(1<<10));
         printf("nrOfCycles (cycles, stall, idle): %d %d %d\n", cycles, stall, idle);
+
     }
     return 0;
 }
