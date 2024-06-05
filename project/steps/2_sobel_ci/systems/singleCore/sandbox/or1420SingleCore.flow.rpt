@@ -1,5 +1,5 @@
 Flow report for or1420SingleCore
-Wed Jun  5 14:43:33 2024
+Wed Jun  5 15:23:37 2024
 Quartus Prime Version 18.1.1 Build 646 04/11/2019 SJ Lite Edition
 
 
@@ -41,7 +41,7 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------------------------------------------+
 ; Flow Summary                                                                     ;
 +------------------------------------+---------------------------------------------+
-; Flow Status                        ; Successful - Wed Jun  5 14:43:24 2024       ;
+; Flow Status                        ; Successful - Wed Jun  5 15:23:28 2024       ;
 ; Quartus Prime Version              ; 18.1.1 Build 646 04/11/2019 SJ Lite Edition ;
 ; Revision Name                      ; or1420SingleCore                            ;
 ; Top-level Entity Name              ; or1420SingleCore                            ;
@@ -65,7 +65,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 06/05/2024 14:40:56 ;
+; Start date & time ; 06/05/2024 15:21:07 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; or1420SingleCore    ;
 +-------------------+---------------------+
@@ -76,7 +76,7 @@ https://fpgasoftware.intel.com/eula.
 +-----------------------+------------------------------+---------------+-------------+------------+
 ; Assignment Name       ; Value                        ; Default Value ; Entity Name ; Section Id ;
 +-----------------------+------------------------------+---------------+-------------+------------+
-; COMPILER_SIGNATURE_ID ; 345052325557.171759125638164 ; --            ; --          ; --         ;
+; COMPILER_SIGNATURE_ID ; 345052325557.171759366708484 ; --            ; --          ; --         ;
 +-----------------------+------------------------------+---------------+-------------+------------+
 
 
@@ -85,11 +85,11 @@ https://fpgasoftware.intel.com/eula.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:41     ; 1.0                     ; 1079 MB             ; 00:00:51                           ;
-; Fitter               ; 00:01:40     ; 1.1                     ; 1756 MB             ; 00:02:38                           ;
-; Assembler            ; 00:00:02     ; 1.0                     ; 844 MB              ; 00:00:02                           ;
-; Timing Analyzer      ; 00:00:08     ; 1.5                     ; 1040 MB             ; 00:00:10                           ;
-; Total                ; 00:02:31     ; --                      ; --                  ; 00:03:41                           ;
+; Analysis & Synthesis ; 00:00:39     ; 1.0                     ; 1078 MB             ; 00:00:48                           ;
+; Fitter               ; 00:01:35     ; 1.1                     ; 1744 MB             ; 00:02:34                           ;
+; Assembler            ; 00:00:02     ; 1.0                     ; 843 MB              ; 00:00:02                           ;
+; Timing Analyzer      ; 00:00:08     ; 1.5                     ; 1036 MB             ; 00:00:10                           ;
+; Total                ; 00:02:24     ; --                      ; --                  ; 00:03:34                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

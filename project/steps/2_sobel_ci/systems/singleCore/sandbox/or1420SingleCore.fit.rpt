@@ -1,5 +1,5 @@
 Fitter report for or1420SingleCore
-Wed Jun  5 14:43:19 2024
+Wed Jun  5 15:23:23 2024
 Quartus Prime Version 18.1.1 Build 646 04/11/2019 SJ Lite Edition
 
 
@@ -78,7 +78,7 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------------------------------------------+
 ; Fitter Summary                                                                   ;
 +------------------------------------+---------------------------------------------+
-; Fitter Status                      ; Successful - Wed Jun  5 14:43:19 2024       ;
+; Fitter Status                      ; Successful - Wed Jun  5 15:23:22 2024       ;
 ; Quartus Prime Version              ; 18.1.1 Build 646 04/11/2019 SJ Lite Edition ;
 ; Revision Name                      ; or1420SingleCore                            ;
 ; Top-level Entity Name              ; or1420SingleCore                            ;
@@ -3164,8 +3164,8 @@ Info (170192): Fitter placement operations ending: elapsed time is 00:00:29
 Info (170193): Fitter routing operations beginning
 Info (170195): Router estimated average interconnect usage is 11% of the available device resources
     Info (170196): Router estimated peak interconnect usage is 46% of the available device resources in the region that extends from location X34_Y22 to location X44_Y32
-Info (170194): Fitter routing operations ending: elapsed time is 00:00:34
-Info (11888): Total time spent on timing analysis during the Fitter is 15.10 seconds.
+Info (170194): Fitter routing operations ending: elapsed time is 00:00:32
+Info (11888): Total time spent on timing analysis during the Fitter is 14.49 seconds.
 Info (334003): Started post-fitting delay annotation
 Info (334004): Delay annotation completed successfully
 Info (334003): Started post-fitting delay annotation
@@ -3173,10 +3173,10 @@ Info (334004): Delay annotation completed successfully
 Info (11218): Fitter post-fit operations ending: elapsed time is 00:00:07
 Info (144001): Generated suppressed messages file /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/2_sobel_ci/systems/singleCore/sandbox/or1420SingleCore.fit.smsg
 Info: Quartus Prime Fitter was successful. 0 errors, 9 warnings
-    Info: Peak virtual memory: 1756 megabytes
-    Info: Processing ended: Wed Jun  5 14:43:21 2024
-    Info: Elapsed time: 00:01:42
-    Info: Total CPU time (on all processors): 00:02:41
+    Info: Peak virtual memory: 1744 megabytes
+    Info: Processing ended: Wed Jun  5 15:23:25 2024
+    Info: Elapsed time: 00:01:38
+    Info: Total CPU time (on all processors): 00:02:36
 
 
 +----------------------------+

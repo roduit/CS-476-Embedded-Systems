@@ -20,14 +20,14 @@ Info: Running Quartus Prime Shell
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Wed Jun  5 14:40:54 2024
+    Info: Processing started: Wed Jun  5 15:21:05 2024
 Info: Command: quartus_sh --prepare -f "Cyclone IV E" -d EP4CE30F23C8 -t or1420SingleCore or1420SingleCore
 Info: Quartus(args): -f {Cyclone IV E} -d EP4CE30F23C8 -t or1420SingleCore or1420SingleCore
 Info: /opt/intelFPGA-lite/18.1/quartus/common/tcl/internal/qsh_prepare.tcl version #1
 Info (23030): Evaluation of Tcl script /opt/intelFPGA-lite/18.1/quartus/common/tcl/internal/qsh_prepare.tcl was successful
 Info: Quartus Prime Shell was successful. 0 errors, 0 warnings
     Info: Peak virtual memory: 750 megabytes
-    Info: Processing ended: Wed Jun  5 14:40:54 2024
+    Info: Processing ended: Wed Jun  5 15:21:05 2024
     Info: Elapsed time: 00:00:00
     Info: Total CPU time (on all processors): 00:00:00
 ===> Add : ../../../modules/bios/verilog/bios1_rom.v 
@@ -118,7 +118,7 @@ Info: Running Quartus Prime Analysis & Synthesis
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Wed Jun  5 14:40:55 2024
+    Info: Processing started: Wed Jun  5 15:21:06 2024
 Info: Command: quartus_map --family="Cyclone IV E" or1420SingleCore
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
@@ -941,10 +941,10 @@ Info (21057): Implemented 15709 device resources after synthesis - the final res
     Info (21065): Implemented 1 PLLs
     Info (21062): Implemented 9 DSP elements
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 33 warnings
-    Info: Peak virtual memory: 1088 megabytes
-    Info: Processing ended: Wed Jun  5 14:41:38 2024
-    Info: Elapsed time: 00:00:43
-    Info: Total CPU time (on all processors): 00:00:53
+    Info: Peak virtual memory: 1087 megabytes
+    Info: Processing ended: Wed Jun  5 15:21:47 2024
+    Info: Elapsed time: 00:00:41
+    Info: Total CPU time (on all processors): 00:00:50
 echo done > fit.chg
 ===========================================================
   Fitter 
@@ -967,7 +967,7 @@ Info: Running Quartus Prime Fitter
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Wed Jun  5 14:41:39 2024
+    Info: Processing started: Wed Jun  5 15:21:47 2024
 Info: Command: quartus_fit --part=EP4CE30F23C8 --set="FITTER_EFFORT=STANDARD FIT" --set=SMART_RECOMPILE=ON --set=CYCLONE_OPTIMIZATION_TECHNIQUE=SPEED --set="RESERVE_ALL_UNUSED_PINS=AS INPUT TRI-STATED" --set=MUX_RESTRUCTURE=OFF --set=PHYSICAL_SYNTHESIS_REGISTER_RETIMING=ON --set=PHYSICAL_SYNTHESIS_EFFORT=EXTRA --set="FMAX_REQUIREMENT=80 MHz" --set="RESERVE_NCEO_AFTER_CONFIGURATION=USE AS REGULAR IO" --set="CYCLONEII_RESERVE_NCEO_AFTER_CONFIGURATION=USE AS REGULAR IO" or1420SingleCore
 Info: qfit2_default_script.tcl version: #1
 Info: Project  = or1420SingleCore
@@ -1070,8 +1070,8 @@ Info (170192): Fitter placement operations ending: elapsed time is 00:00:29
 Info (170193): Fitter routing operations beginning
 Info (170195): Router estimated average interconnect usage is 11% of the available device resources
     Info (170196): Router estimated peak interconnect usage is 46% of the available device resources in the region that extends from location X34_Y22 to location X44_Y32
-Info (170194): Fitter routing operations ending: elapsed time is 00:00:34
-Info (11888): Total time spent on timing analysis during the Fitter is 15.10 seconds.
+Info (170194): Fitter routing operations ending: elapsed time is 00:00:32
+Info (11888): Total time spent on timing analysis during the Fitter is 14.49 seconds.
 Info (334003): Started post-fitting delay annotation
 Info (334004): Delay annotation completed successfully
 Info (334003): Started post-fitting delay annotation
@@ -1079,10 +1079,10 @@ Info (334004): Delay annotation completed successfully
 Info (11218): Fitter post-fit operations ending: elapsed time is 00:00:07
 Info (144001): Generated suppressed messages file /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/2_sobel_ci/systems/singleCore/sandbox/or1420SingleCore.fit.smsg
 Info: Quartus Prime Fitter was successful. 0 errors, 9 warnings
-    Info: Peak virtual memory: 1756 megabytes
-    Info: Processing ended: Wed Jun  5 14:43:21 2024
-    Info: Elapsed time: 00:01:42
-    Info: Total CPU time (on all processors): 00:02:41
+    Info: Peak virtual memory: 1744 megabytes
+    Info: Processing ended: Wed Jun  5 15:23:25 2024
+    Info: Elapsed time: 00:01:38
+    Info: Total CPU time (on all processors): 00:02:36
 echo done > asm.chg
 echo done > sta.chg
 ===========================================================
@@ -1106,14 +1106,14 @@ Info: Running Quartus Prime Assembler
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Wed Jun  5 14:43:22 2024
+    Info: Processing started: Wed Jun  5 15:23:26 2024
 Info: Command: quartus_asm or1420SingleCore
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (115031): Writing out detailed assembly data for power analysis
 Info (115030): Assembler is generating device programming files
 Info: Quartus Prime Assembler was successful. 0 errors, 1 warning
-    Info: Peak virtual memory: 844 megabytes
-    Info: Processing ended: Wed Jun  5 14:43:24 2024
+    Info: Peak virtual memory: 843 megabytes
+    Info: Processing ended: Wed Jun  5 15:23:28 2024
     Info: Elapsed time: 00:00:02
     Info: Total CPU time (on all processors): 00:00:02
 ===========================================================
@@ -1137,11 +1137,11 @@ Info: Running Quartus Prime Convert_programming_file
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Wed Jun  5 14:43:25 2024
+    Info: Processing started: Wed Jun  5 15:23:28 2024
 Info: Command: quartus_cpf -c or1420SingleCore.sof or1420SingleCore.rbf
 Info: Quartus Prime Convert_programming_file was successful. 0 errors, 0 warnings
     Info: Peak virtual memory: 437 megabytes
-    Info: Processing ended: Wed Jun  5 14:43:25 2024
+    Info: Processing ended: Wed Jun  5 15:23:28 2024
     Info: Elapsed time: 00:00:00
     Info: Total CPU time (on all processors): 00:00:00
 ===========================================================
@@ -1165,7 +1165,7 @@ Info: Running Quartus Prime Timing Analyzer
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Wed Jun  5 14:43:25 2024
+    Info: Processing started: Wed Jun  5 15:23:29 2024
 Info: Command: quartus_sta or1420SingleCore
 Info: qsta_default_script.tcl version: #1
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
@@ -1326,9 +1326,9 @@ Info (332146): Worst-case minimum pulse width slack is 3.149
 Info (332102): Design is not fully constrained for setup requirements
 Info (332102): Design is not fully constrained for hold requirements
 Info: Quartus Prime Timing Analyzer was successful. 0 errors, 7 warnings
-    Info: Peak virtual memory: 1040 megabytes
-    Info: Processing ended: Wed Jun  5 14:43:34 2024
-    Info: Elapsed time: 00:00:09
+    Info: Peak virtual memory: 1036 megabytes
+    Info: Processing ended: Wed Jun  5 15:23:37 2024
+    Info: Elapsed time: 00:00:08
     Info: Total CPU time (on all processors): 00:00:10
 make[1]: Leaving directory '/home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/2_sobel_ci/systems/singleCore/sandbox'
 ****************************************************************************

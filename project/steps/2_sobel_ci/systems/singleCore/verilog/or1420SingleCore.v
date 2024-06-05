@@ -456,8 +456,8 @@ module or1420SingleCore ( input wire         clock12MHz,
               .result(s_profileResult) );
 
 /*
-* Edge Detection CI
-*/
+ * Edge Detection CI
+ */
 
 edge_detection #(.customInstructionId(8'd12)) sobel
                  (.start(s_cpu1CiStart),
@@ -469,8 +469,8 @@ edge_detection #(.customInstructionId(8'd12)) sobel
                   .result(s_sobelResult) );
 
  /*
-* Grayscale custom Instruction
-*/                 
+  * Grayscale custom Instruction
+  */                 
 
 grayscale_conv #(.customInstructionId(8'd13)) grayscale
                  (.start(s_cpu1CiStart),
