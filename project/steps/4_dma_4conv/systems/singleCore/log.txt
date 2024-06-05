@@ -20,15 +20,15 @@ Info: Running Quartus Prime Shell
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Tue Jun  4 18:35:50 2024
+    Info: Processing started: Wed Jun  5 14:54:48 2024
 Info: Command: quartus_sh --prepare -f "Cyclone IV E" -d EP4CE30F23C8 -t or1420SingleCore or1420SingleCore
 Info: Quartus(args): -f {Cyclone IV E} -d EP4CE30F23C8 -t or1420SingleCore or1420SingleCore
 Info: /opt/intelFPGA-lite/18.1/quartus/common/tcl/internal/qsh_prepare.tcl version #1
 Info (23030): Evaluation of Tcl script /opt/intelFPGA-lite/18.1/quartus/common/tcl/internal/qsh_prepare.tcl was successful
 Info: Quartus Prime Shell was successful. 0 errors, 0 warnings
     Info: Peak virtual memory: 750 megabytes
-    Info: Processing ended: Tue Jun  4 18:35:50 2024
-    Info: Elapsed time: 00:00:00
+    Info: Processing ended: Wed Jun  5 14:54:49 2024
+    Info: Elapsed time: 00:00:01
     Info: Total CPU time (on all processors): 00:00:00
 ===> Add : ../../../modules/bios/verilog/bios1_rom.v 
 ===> Add : ../../../modules/bios/verilog/bios.v 
@@ -118,7 +118,7 @@ Info: Running Quartus Prime Analysis & Synthesis
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Tue Jun  4 18:35:52 2024
+    Info: Processing started: Wed Jun  5 14:54:50 2024
 Info: Command: quartus_map --family="Cyclone IV E" or1420SingleCore
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
@@ -249,10 +249,6 @@ Info (12021): Found 1 design units, including 1 entities, in source file /home/v
 Info (12021): Found 1 design units, including 1 entities, in source file /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v
     Info (12023): Found entity 1: or1420SingleCore File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 1
 Info (12127): Elaborating entity "or1420SingleCore" for the top level hierarchy
-Warning (10858): Verilog HDL warning at or1420SingleCore.v(318): object s_profileResult used but never assigned File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 318
-Warning (10858): Verilog HDL warning at or1420SingleCore.v(330): object s_profileDone used but never assigned File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 330
-Warning (10030): Net "s_profileResult" at or1420SingleCore.v(318) has no driver or initial value, using a default initial value '0' File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 318
-Warning (10030): Net "s_profileDone" at or1420SingleCore.v(330) has no driver or initial value, using a default initial value '0' File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 330
 Info (12128): Elaborating entity "altpll" for hierarchy "altpll:altpll_component" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 176
 Info (12130): Elaborated megafunction instantiation "altpll:altpll_component" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 176
 Info (12133): Instantiated megafunction "altpll:altpll_component" with the following parameter: File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 176
@@ -376,27 +372,29 @@ Info (10264): Verilog HDL Case Statement information at i2cMaster.v(113): all ca
 Info (10264): Verilog HDL Case Statement information at i2cMaster.v(170): all case item expressions in this case statement are onehot File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/i2c/verilog/i2cMaster.v Line: 170
 Info (12128): Elaborating entity "delayIse" for hierarchy "delayIse:delayMicro" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 439
 Warning (10230): Verilog HDL assignment warning at delayIse.v(49): truncated value with size 32 to match size of target (4) File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/delay/verilog/delayIse.v Line: 49
-Info (12128): Elaborating entity "edge_detection" for hierarchy "edge_detection:sobel" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 448
+Info (12128): Elaborating entity "profileCi" for hierarchy "profileCi:profiler" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 456
+Info (12128): Elaborating entity "counter" for hierarchy "profileCi:profiler|counter:counter0" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/profileCi/verilog/profileCi.v Line: 41
+Info (12128): Elaborating entity "edge_detection" for hierarchy "edge_detection:sobel" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 471
 Info (12128): Elaborating entity "sobel" for hierarchy "edge_detection:sobel|sobel:sobel_module_0" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/sobel/edge_detection.v Line: 75
 Warning (10230): Verilog HDL assignment warning at sobel.v(21): truncated value with size 32 to match size of target (11) File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/sobel/sobel.v Line: 21
 Warning (10230): Verilog HDL assignment warning at sobel.v(22): truncated value with size 32 to match size of target (11) File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/sobel/sobel.v Line: 22
 Warning (10230): Verilog HDL assignment warning at sobel.v(25): truncated value with size 32 to match size of target (8) File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/sobel/sobel.v Line: 25
-Info (12128): Elaborating entity "grayscale_conv" for hierarchy "grayscale_conv:grayscale" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 457
-Info (12128): Elaborating entity "rgb565GrayscaleIse" for hierarchy "rgb565GrayscaleIse:converter" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 470
+Info (12128): Elaborating entity "grayscale_conv" for hierarchy "grayscale_conv:grayscale" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 486
+Info (12128): Elaborating entity "rgb565GrayscaleIse" for hierarchy "rgb565GrayscaleIse:converter" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 499
 Info (12128): Elaborating entity "rgb565Grayscale" for hierarchy "rgb565GrayscaleIse:converter|rgb565Grayscale:pixel1" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/grayscaleCi/verilog/rgb565ISE.v Line: 18
 Warning (10230): Verilog HDL assignment warning at rgb565Grayscale.v(20): truncated value with size 14 to match size of target (13) File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/grayscaleCi/verilog/rgb565Grayscale.v Line: 20
-Info (12128): Elaborating entity "ramDmaCi" for hierarchy "ramDmaCi:ramDma" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 505
+Info (12128): Elaborating entity "ramDmaCi" for hierarchy "ramDmaCi:ramDma" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 534
 Info (10264): Verilog HDL Case Statement information at ramDmaCi.v(132): all case item expressions in this case statement are onehot File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/ramDmaCi/verilog/ramDmaCi.v Line: 132
 Warning (10230): Verilog HDL assignment warning at ramDmaCi.v(222): truncated value with size 33 to match size of target (32) File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/ramDmaCi/verilog/ramDmaCi.v Line: 222
 Info (12128): Elaborating entity "dualPortSSRAM" for hierarchy "ramDmaCi:ramDma|dualPortSSRAM:memory" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/ramDmaCi/verilog/ramDmaCi.v Line: 100
-Info (12128): Elaborating entity "gpio" for hierarchy "gpio:sevenSegDipSwitch" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 534
-Info (12128): Elaborating entity "camera" for hierarchy "camera:camIf" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 571
+Info (12128): Elaborating entity "gpio" for hierarchy "gpio:sevenSegDipSwitch" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 563
+Info (12128): Elaborating entity "camera" for hierarchy "camera:camIf" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 600
 Warning (10036): Verilog HDL or VHDL warning at camera.v(168): object "s_pixelWord1" assigned a value but never read File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/camera/verilog/camera.v Line: 168
 Warning (10036): Verilog HDL or VHDL warning at camera.v(169): object "s_pixelWord2" assigned a value but never read File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/camera/verilog/camera.v Line: 169
 Warning (10230): Verilog HDL assignment warning at camera.v(75): truncated value with size 32 to match size of target (17) File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/camera/verilog/camera.v Line: 75
 Info (10264): Verilog HDL Case Statement information at camera.v(235): all case item expressions in this case statement are onehot File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/camera/verilog/camera.v Line: 235
 Info (12128): Elaborating entity "dualPortRam2k" for hierarchy "camera:camIf|dualPortRam2k:lineBuffer" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/camera/verilog/camera.v Line: 211
-Info (12128): Elaborating entity "screens" for hierarchy "screens:hdmi" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 639
+Info (12128): Elaborating entity "screens" for hierarchy "screens:hdmi" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 668
 Warning (10230): Verilog HDL assignment warning at screens.v(306): truncated value with size 32 to match size of target (8) File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/hdmi_720p/verilog/screens.v Line: 306
 Info (12128): Elaborating entity "hdmi_720p" for hierarchy "screens:hdmi|hdmi_720p:generator" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/hdmi_720p/verilog/screens.v Line: 116
 Info (10264): Verilog HDL Case Statement information at hdmi_720p.v(113): all case item expressions in this case statement are onehot File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/hdmi_720p/verilog/hdmi_720p.v Line: 113
@@ -409,16 +407,16 @@ Info (12128): Elaborating entity "dualPortRam4k" for hierarchy "screens:hdmi|dua
 Info (12128): Elaborating entity "charRom" for hierarchy "screens:hdmi|charRom:asciiRom" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/hdmi_720p/verilog/screens.v Line: 260
 Info (12128): Elaborating entity "graphicsController" for hierarchy "screens:hdmi|graphicsController:graphics" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/hdmi_720p/verilog/screens.v Line: 373
 Info (10264): Verilog HDL Case Statement information at graphicsController.v(148): all case item expressions in this case statement are onehot File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/hdmi_720p/verilog/graphicsController.v Line: 148
-Info (12128): Elaborating entity "spiBus" for hierarchy "spiBus:flash" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 675
+Info (12128): Elaborating entity "spiBus" for hierarchy "spiBus:flash" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 704
 Info (12128): Elaborating entity "spiShiftQuad" for hierarchy "spiBus:flash|spiShiftQuad:quad" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/spi/verilog/spiBus.v Line: 143
 Info (12128): Elaborating entity "spiShiftSingle" for hierarchy "spiBus:flash|spiShiftSingle:single" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/spi/verilog/spiBus.v Line: 174
 Info (10264): Verilog HDL Case Statement information at spiShiftSingle.v(190): all case item expressions in this case statement are onehot File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/spi/verilog/spiShiftSingle.v Line: 190
 Info (10264): Verilog HDL Case Statement information at spiShiftSingle.v(244): all case item expressions in this case statement are onehot File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/spi/verilog/spiShiftSingle.v Line: 244
 Info (10264): Verilog HDL Case Statement information at spiShiftSingle.v(243): all case item expressions in this case statement are onehot File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/spi/verilog/spiShiftSingle.v Line: 243
-Info (12128): Elaborating entity "bios" for hierarchy "bios:start" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 697
+Info (12128): Elaborating entity "bios" for hierarchy "bios:start" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 726
 Info (10264): Verilog HDL Case Statement information at bios.v(78): all case item expressions in this case statement are onehot File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/bios/verilog/bios.v Line: 78
 Info (12128): Elaborating entity "biosRom" for hierarchy "bios:start|biosRom:rom" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/bios/verilog/bios.v Line: 99
-Info (12128): Elaborating entity "busArbiter" for hierarchy "busArbiter:arbiter" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 732
+Info (12128): Elaborating entity "busArbiter" for hierarchy "busArbiter:arbiter" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/verilog/or1420SingleCore.v Line: 761
 Info (10264): Verilog HDL Case Statement information at busArbiter.v(40): all case item expressions in this case statement are onehot File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/bus_arbiter/verilog/busArbiter.v Line: 40
 Info (12128): Elaborating entity "queueMemory" for hierarchy "busArbiter:arbiter|queueMemory:queue" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/bus_arbiter/verilog/busArbiter.v Line: 125
 Warning (276020): Inferred RAM node "uartBus:uart1|uartRxFifo:RXF|uartFifoMemory:fifoMem|s_memory_rtl_0" from synchronous design logic.  Pass-through logic has been added to match the read-during-write behavior of the original design.
@@ -732,8 +730,8 @@ Info (19000): Inferred 17 megafunctions from design logic
 Info (278001): Inferred 8 megafunctions from design logic
     Info (278002): Inferred adder/subtractor megafunction ("lpm_add_sub") from the following logic: "edge_detection:sobel|sobel:sobel_module_1|Add10" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/sobel/sobel.v Line: 21
     Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "or1420Top:cpu1|executeStage:exe|multiplier:mul|Mult0" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/or1420/verilog/multiplier.v Line: 5
-    Info (278002): Inferred adder/subtractor megafunction ("lpm_add_sub") from the following logic: "edge_detection:sobel|sobel:sobel_module_2|Add10" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/sobel/sobel.v Line: 21
     Info (278002): Inferred adder/subtractor megafunction ("lpm_add_sub") from the following logic: "edge_detection:sobel|sobel:sobel_module_3|Add10" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/sobel/sobel.v Line: 21
+    Info (278002): Inferred adder/subtractor megafunction ("lpm_add_sub") from the following logic: "edge_detection:sobel|sobel:sobel_module_2|Add10" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/sobel/sobel.v Line: 21
     Info (278002): Inferred adder/subtractor megafunction ("lpm_add_sub") from the following logic: "edge_detection:sobel|sobel:sobel_module_0|Add10" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/sobel/sobel.v Line: 21
     Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "screens:hdmi|textController:textC1|Mult0" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/hdmi_720p/verilog/textController.v Line: 242
     Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "screens:hdmi|textController:textC1|Mult2" File: /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/modules/hdmi_720p/verilog/textController.v Line: 243
@@ -984,19 +982,19 @@ Info (17049): 153 registers lost all their fanouts during netlist optimizations.
 Info (144001): Generated suppressed messages file /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/sandbox/or1420SingleCore.map.smsg
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 1 node(s), including 0 DDIO, 1 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 16652 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 16886 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 24 input pins
     Info (21059): Implemented 68 output pins
     Info (21060): Implemented 21 bidirectional pins
-    Info (21061): Implemented 16238 logic cells
+    Info (21061): Implemented 16472 logic cells
     Info (21064): Implemented 291 RAM segments
     Info (21065): Implemented 1 PLLs
     Info (21062): Implemented 9 DSP elements
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 34 warnings
-    Info: Peak virtual memory: 1097 megabytes
-    Info: Processing ended: Tue Jun  4 18:36:34 2024
-    Info: Elapsed time: 00:00:42
-    Info: Total CPU time (on all processors): 00:00:51
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 30 warnings
+    Info: Peak virtual memory: 1094 megabytes
+    Info: Processing ended: Wed Jun  5 14:55:34 2024
+    Info: Elapsed time: 00:00:44
+    Info: Total CPU time (on all processors): 00:00:54
 echo done > fit.chg
 ===========================================================
   Fitter 
@@ -1019,7 +1017,7 @@ Info: Running Quartus Prime Fitter
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Tue Jun  4 18:36:34 2024
+    Info: Processing started: Wed Jun  5 14:55:35 2024
 Info: Command: quartus_fit --part=EP4CE30F23C8 --set="FITTER_EFFORT=STANDARD FIT" --set=SMART_RECOMPILE=ON --set=CYCLONE_OPTIMIZATION_TECHNIQUE=SPEED --set="RESERVE_ALL_UNUSED_PINS=AS INPUT TRI-STATED" --set=MUX_RESTRUCTURE=OFF --set=PHYSICAL_SYNTHESIS_REGISTER_RETIMING=ON --set=PHYSICAL_SYNTHESIS_EFFORT=EXTRA --set="FMAX_REQUIREMENT=80 MHz" --set="RESERVE_NCEO_AFTER_CONFIGURATION=USE AS REGULAR IO" --set="CYCLONEII_RESERVE_NCEO_AFTER_CONFIGURATION=USE AS REGULAR IO" or1420SingleCore
 Info: qfit2_default_script.tcl version: #1
 Info: Project  = or1420SingleCore
@@ -1118,12 +1116,12 @@ Info (170189): Fitter placement preparation operations beginning
 Info (170190): Fitter placement preparation operations ending: elapsed time is 00:00:04
 Info (170191): Fitter placement operations beginning
 Info (170137): Fitter placement was successful
-Info (170192): Fitter placement operations ending: elapsed time is 00:00:30
+Info (170192): Fitter placement operations ending: elapsed time is 00:00:33
 Info (170193): Fitter routing operations beginning
-Info (170195): Router estimated average interconnect usage is 11% of the available device resources
-    Info (170196): Router estimated peak interconnect usage is 45% of the available device resources in the region that extends from location X34_Y11 to location X44_Y21
-Info (170194): Fitter routing operations ending: elapsed time is 00:00:25
-Info (11888): Total time spent on timing analysis during the Fitter is 15.97 seconds.
+Info (170195): Router estimated average interconnect usage is 12% of the available device resources
+    Info (170196): Router estimated peak interconnect usage is 41% of the available device resources in the region that extends from location X22_Y22 to location X33_Y32
+Info (170194): Fitter routing operations ending: elapsed time is 00:00:27
+Info (11888): Total time spent on timing analysis during the Fitter is 15.61 seconds.
 Info (334003): Started post-fitting delay annotation
 Info (334004): Delay annotation completed successfully
 Info (334003): Started post-fitting delay annotation
@@ -1131,10 +1129,10 @@ Info (334004): Delay annotation completed successfully
 Info (11218): Fitter post-fit operations ending: elapsed time is 00:00:07
 Info (144001): Generated suppressed messages file /home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/sandbox/or1420SingleCore.fit.smsg
 Info: Quartus Prime Fitter was successful. 0 errors, 9 warnings
-    Info: Peak virtual memory: 1746 megabytes
-    Info: Processing ended: Tue Jun  4 18:38:07 2024
-    Info: Elapsed time: 00:01:33
-    Info: Total CPU time (on all processors): 00:02:40
+    Info: Peak virtual memory: 1752 megabytes
+    Info: Processing ended: Wed Jun  5 14:57:14 2024
+    Info: Elapsed time: 00:01:39
+    Info: Total CPU time (on all processors): 00:02:47
 echo done > asm.chg
 echo done > sta.chg
 ===========================================================
@@ -1158,15 +1156,15 @@ Info: Running Quartus Prime Assembler
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Tue Jun  4 18:38:08 2024
+    Info: Processing started: Wed Jun  5 14:57:15 2024
 Info: Command: quartus_asm or1420SingleCore
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (115031): Writing out detailed assembly data for power analysis
 Info (115030): Assembler is generating device programming files
 Info: Quartus Prime Assembler was successful. 0 errors, 1 warning
-    Info: Peak virtual memory: 844 megabytes
-    Info: Processing ended: Tue Jun  4 18:38:10 2024
-    Info: Elapsed time: 00:00:02
+    Info: Peak virtual memory: 846 megabytes
+    Info: Processing ended: Wed Jun  5 14:57:18 2024
+    Info: Elapsed time: 00:00:03
     Info: Total CPU time (on all processors): 00:00:02
 ===========================================================
   Creating .rbf file 
@@ -1189,12 +1187,12 @@ Info: Running Quartus Prime Convert_programming_file
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Tue Jun  4 18:38:10 2024
+    Info: Processing started: Wed Jun  5 14:57:18 2024
 Info: Command: quartus_cpf -c or1420SingleCore.sof or1420SingleCore.rbf
 Info: Quartus Prime Convert_programming_file was successful. 0 errors, 0 warnings
     Info: Peak virtual memory: 437 megabytes
-    Info: Processing ended: Tue Jun  4 18:38:11 2024
-    Info: Elapsed time: 00:00:01
+    Info: Processing ended: Wed Jun  5 14:57:18 2024
+    Info: Elapsed time: 00:00:00
     Info: Total CPU time (on all processors): 00:00:00
 ===========================================================
   TimeQuest Timing Analyzer 
@@ -1217,7 +1215,7 @@ Info: Running Quartus Prime Timing Analyzer
     Info: Intel and sold by Intel or its authorized distributors.  Please
     Info: refer to the applicable agreement for further details, at
     Info: https://fpgasoftware.intel.com/eula.
-    Info: Processing started: Tue Jun  4 18:38:11 2024
+    Info: Processing started: Wed Jun  5 14:57:19 2024
 Info: Command: quartus_sta or1420SingleCore
 Info: qsta_default_script.tcl version: #1
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
@@ -1232,140 +1230,140 @@ Info (332110): Deriving PLL clocks
     Info (332110): create_generated_clock -source {altpll_component|auto_generated|pll1|inclk[0]} -divide_by 8 -multiply_by 99 -duty_cycle 50.00 -name {altpll_component|auto_generated|pll1|clk[3]} {altpll_component|auto_generated|pll1|clk[3]}
 Info (332151): Clock uncertainty is not calculated until you update the timing netlist.
 Warning (332060): Node: camPclk was determined to be a clock but was found without an associated clock assignment.
-    Info (13166): Register camera:camIf|synchroFlop:snl|s_states[0] is being clocked by camPclk
+    Info (13166): Register camera:camIf|synchroFlop:sns|s_states[0] is being clocked by camPclk
 Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in the Timing Analyzer to see clock uncertainties.
 Info: Found TIMING_ANALYZER_REPORT_SCRIPT_INCLUDE_DEFAULT_ANALYSIS = ON
 Info: Analyzing Slow 1200mV 85C Model
 Critical Warning (332148): Timing requirements not met
     Info (11105): For recommendations on closing timing, run Report Timing Closure Recommendations in the Timing Analyzer.
-Info (332146): Worst-case setup slack is -4.511
+Info (332146): Worst-case setup slack is -4.446
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -4.511             -72.176 clk2 
-    Info (332119):    -3.982           -1794.538 altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):    -3.586             -17.034 clk1 
-    Info (332119):    -0.916              -6.879 altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     0.521               0.000 altpll_component|auto_generated|pll1|clk[3] 
-    Info (332119):     3.725               0.000 altpll_component|auto_generated|pll1|clk[1] 
-Info (332146): Worst-case hold slack is 0.401
+    Info (332119):    -4.446             -71.136 clk2 
+    Info (332119):    -3.983           -1585.489 altpll_component|auto_generated|pll1|clk[2] 
+    Info (332119):    -3.728             -17.806 clk1 
+    Info (332119):    -0.709              -4.888 altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):     0.593               0.000 altpll_component|auto_generated|pll1|clk[3] 
+    Info (332119):     2.930               0.000 altpll_component|auto_generated|pll1|clk[1] 
+Info (332146): Worst-case hold slack is 0.410
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.401               0.000 altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):     0.424               0.000 altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     0.451               0.000 altpll_component|auto_generated|pll1|clk[3] 
+    Info (332119):     0.410               0.000 altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):     0.412               0.000 altpll_component|auto_generated|pll1|clk[2] 
+    Info (332119):     0.452               0.000 altpll_component|auto_generated|pll1|clk[3] 
     Info (332119):     0.464               0.000 altpll_component|auto_generated|pll1|clk[1] 
     Info (332119):     0.760               0.000 clk2 
-    Info (332119):     1.026               0.000 clk1 
-Info (332146): Worst-case recovery slack is -5.304
+    Info (332119):     1.313               0.000 clk1 
+Info (332146): Worst-case recovery slack is -4.299
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -5.304             -12.318 clk1 
-    Info (332119):    -4.172              -4.172 altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):    -4.020              -4.020 clk2 
-    Info (332119):     8.457               0.000 altpll_component|auto_generated|pll1|clk[0] 
-Info (332146): Worst-case removal slack is 1.292
+    Info (332119):    -4.299              -4.299 clk2 
+    Info (332119):    -4.160              -4.160 altpll_component|auto_generated|pll1|clk[2] 
+    Info (332119):    -3.429             -10.188 clk1 
+    Info (332119):     7.906               0.000 altpll_component|auto_generated|pll1|clk[0] 
+Info (332146): Worst-case removal slack is 1.312
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     1.292               0.000 altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     1.828               0.000 altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):     2.202               0.000 clk2 
-    Info (332119):     2.563               0.000 clk1 
-Info (332146): Worst-case minimum pulse width slack is 3.057
+    Info (332119):     1.312               0.000 altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):     2.013               0.000 clk1 
+    Info (332119):     2.288               0.000 clk2 
+    Info (332119):     2.665               0.000 altpll_component|auto_generated|pll1|clk[2] 
+Info (332146): Worst-case minimum pulse width slack is 3.056
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     3.057               0.000 altpll_component|auto_generated|pll1|clk[3] 
-    Info (332119):     3.058               0.000 altpll_component|auto_generated|pll1|clk[1] 
-    Info (332119):     6.294               0.000 altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):     6.422               0.000 altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     9.758               0.000 clk2 
+    Info (332119):     3.056               0.000 altpll_component|auto_generated|pll1|clk[1] 
+    Info (332119):     3.056               0.000 altpll_component|auto_generated|pll1|clk[3] 
+    Info (332119):     6.297               0.000 altpll_component|auto_generated|pll1|clk[2] 
+    Info (332119):     6.412               0.000 altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):     9.756               0.000 clk2 
     Info (332119):    41.424               0.000 clk1 
 Info: Analyzing Slow 1200mV 0C Model
 Info (334003): Started post-fitting delay annotation
 Info (334004): Delay annotation completed successfully
 Warning (332060): Node: camPclk was determined to be a clock but was found without an associated clock assignment.
-    Info (13166): Register camera:camIf|synchroFlop:snl|s_states[0] is being clocked by camPclk
+    Info (13166): Register camera:camIf|synchroFlop:sns|s_states[0] is being clocked by camPclk
 Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in the Timing Analyzer to see clock uncertainties.
 Critical Warning (332148): Timing requirements not met
     Info (11105): For recommendations on closing timing, run Report Timing Closure Recommendations in the Timing Analyzer.
-Info (332146): Worst-case setup slack is -4.542
+Info (332146): Worst-case setup slack is -4.474
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -4.542             -72.672 clk2 
-    Info (332119):    -3.626             -17.326 clk1 
-    Info (332119):    -3.482            -450.063 altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):     0.034               0.000 altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     1.082               0.000 altpll_component|auto_generated|pll1|clk[3] 
-    Info (332119):     3.871               0.000 altpll_component|auto_generated|pll1|clk[1] 
-Info (332146): Worst-case hold slack is 0.381
+    Info (332119):    -4.474             -71.584 clk2 
+    Info (332119):    -3.788             -18.066 clk1 
+    Info (332119):    -3.488            -421.844 altpll_component|auto_generated|pll1|clk[2] 
+    Info (332119):     0.204               0.000 altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):     1.051               0.000 altpll_component|auto_generated|pll1|clk[3] 
+    Info (332119):     3.114               0.000 altpll_component|auto_generated|pll1|clk[1] 
+Info (332146): Worst-case hold slack is 0.390
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.381               0.000 altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):     0.400               0.000 altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):     0.390               0.000 altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):     0.392               0.000 altpll_component|auto_generated|pll1|clk[2] 
     Info (332119):     0.400               0.000 altpll_component|auto_generated|pll1|clk[3] 
-    Info (332119):     0.415               0.000 altpll_component|auto_generated|pll1|clk[1] 
+    Info (332119):     0.416               0.000 altpll_component|auto_generated|pll1|clk[1] 
     Info (332119):     0.704               0.000 clk2 
-    Info (332119):     0.966               0.000 clk1 
-Info (332146): Worst-case recovery slack is -5.156
+    Info (332119):     1.193               0.000 clk1 
+Info (332146): Worst-case recovery slack is -4.332
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -5.156             -12.282 clk1 
-    Info (332119):    -4.069              -4.069 clk2 
-    Info (332119):    -3.583              -3.583 altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):     8.779               0.000 altpll_component|auto_generated|pll1|clk[0] 
-Info (332146): Worst-case removal slack is 1.168
+    Info (332119):    -4.332              -4.332 clk2 
+    Info (332119):    -3.567              -3.567 altpll_component|auto_generated|pll1|clk[2] 
+    Info (332119):    -3.428             -10.213 clk1 
+    Info (332119):     8.270               0.000 altpll_component|auto_generated|pll1|clk[0] 
+Info (332146): Worst-case removal slack is 1.186
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     1.168               0.000 altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     1.662               0.000 altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):     2.211               0.000 clk2 
-    Info (332119):     2.485               0.000 clk1 
+    Info (332119):     1.186               0.000 altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):     2.001               0.000 clk1 
+    Info (332119):     2.311               0.000 clk2 
+    Info (332119):     2.397               0.000 altpll_component|auto_generated|pll1|clk[2] 
 Info (332146): Worst-case minimum pulse width slack is 3.061
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
     Info (332119):     3.061               0.000 altpll_component|auto_generated|pll1|clk[1] 
-    Info (332119):     3.063               0.000 altpll_component|auto_generated|pll1|clk[3] 
-    Info (332119):     6.307               0.000 altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):     6.427               0.000 altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     9.751               0.000 clk2 
+    Info (332119):     3.061               0.000 altpll_component|auto_generated|pll1|clk[3] 
+    Info (332119):     6.304               0.000 altpll_component|auto_generated|pll1|clk[2] 
+    Info (332119):     6.381               0.000 altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):     9.749               0.000 clk2 
     Info (332119):    41.414               0.000 clk1 
 Info: Analyzing Fast 1200mV 0C Model
 Warning (332060): Node: camPclk was determined to be a clock but was found without an associated clock assignment.
-    Info (13166): Register camera:camIf|synchroFlop:snl|s_states[0] is being clocked by camPclk
+    Info (13166): Register camera:camIf|synchroFlop:sns|s_states[0] is being clocked by camPclk
 Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in the Timing Analyzer to see clock uncertainties.
 Critical Warning (332148): Timing requirements not met
     Info (11105): For recommendations on closing timing, run Report Timing Closure Recommendations in the Timing Analyzer.
-Info (332146): Worst-case setup slack is -2.058
+Info (332146): Worst-case setup slack is -1.972
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -2.058             -32.928 clk2 
-    Info (332119):    -1.973              -2.988 altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):    -1.220              -5.182 clk1 
-    Info (332119):     4.047               0.000 altpll_component|auto_generated|pll1|clk[3] 
-    Info (332119):     4.320               0.000 altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     5.319               0.000 altpll_component|auto_generated|pll1|clk[1] 
-Info (332146): Worst-case hold slack is 0.139
+    Info (332119):    -1.972              -3.126 altpll_component|auto_generated|pll1|clk[2] 
+    Info (332119):    -1.961             -31.376 clk2 
+    Info (332119):    -1.192              -5.408 clk1 
+    Info (332119):     4.042               0.000 altpll_component|auto_generated|pll1|clk[3] 
+    Info (332119):     4.461               0.000 altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):     4.911               0.000 altpll_component|auto_generated|pll1|clk[1] 
+Info (332146): Worst-case hold slack is 0.137
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.139               0.000 altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):     0.150               0.000 altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):     0.137               0.000 altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):     0.148               0.000 altpll_component|auto_generated|pll1|clk[2] 
     Info (332119):     0.186               0.000 altpll_component|auto_generated|pll1|clk[3] 
     Info (332119):     0.193               0.000 altpll_component|auto_generated|pll1|clk[1] 
-    Info (332119):     0.304               0.000 clk2 
-    Info (332119):     0.396               0.000 clk1 
-Info (332146): Worst-case recovery slack is -2.106
+    Info (332119):     0.303               0.000 clk2 
+    Info (332119):     0.494               0.000 clk1 
+Info (332146): Worst-case recovery slack is -1.905
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -2.106              -4.344 clk1 
-    Info (332119):    -1.857              -1.857 clk2 
-    Info (332119):    -1.602              -1.602 altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):    11.081               0.000 altpll_component|auto_generated|pll1|clk[0] 
-Info (332146): Worst-case removal slack is 0.535
+    Info (332119):    -1.905              -1.905 clk2 
+    Info (332119):    -1.594              -1.594 altpll_component|auto_generated|pll1|clk[2] 
+    Info (332119):    -1.037              -3.082 clk1 
+    Info (332119):    10.863               0.000 altpll_component|auto_generated|pll1|clk[0] 
+Info (332146): Worst-case removal slack is 0.541
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.535               0.000 altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     0.761               0.000 altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):     0.777               0.000 clk2 
-    Info (332119):     0.880               0.000 clk1 
+    Info (332119):     0.541               0.000 altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):     0.575               0.000 clk1 
+    Info (332119):     0.828               0.000 clk2 
+    Info (332119):     1.147               0.000 altpll_component|auto_generated|pll1|clk[2] 
 Info (332146): Worst-case minimum pulse width slack is 3.150
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
@@ -1373,13 +1371,13 @@ Info (332146): Worst-case minimum pulse width slack is 3.150
     Info (332119):     3.150               0.000 altpll_component|auto_generated|pll1|clk[3] 
     Info (332119):     6.483               0.000 altpll_component|auto_generated|pll1|clk[2] 
     Info (332119):     6.487               0.000 altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     9.447               0.000 clk2 
+    Info (332119):     9.445               0.000 clk2 
     Info (332119):    41.111               0.000 clk1 
 Info (332102): Design is not fully constrained for setup requirements
 Info (332102): Design is not fully constrained for hold requirements
 Info: Quartus Prime Timing Analyzer was successful. 0 errors, 7 warnings
-    Info: Peak virtual memory: 1055 megabytes
-    Info: Processing ended: Tue Jun  4 18:38:19 2024
+    Info: Peak virtual memory: 1061 megabytes
+    Info: Processing ended: Wed Jun  5 14:57:27 2024
     Info: Elapsed time: 00:00:08
     Info: Total CPU time (on all processors): 00:00:11
 make[1]: Leaving directory '/home/vroduit/Desktop/CS-476-Embedded-Systems/project/steps/4_dma_4conv/systems/singleCore/sandbox'
