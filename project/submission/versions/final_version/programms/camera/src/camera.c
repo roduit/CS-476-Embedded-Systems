@@ -4,7 +4,6 @@
 #include <ov7670.h>
 #include <swap.h>
 #include <vga.h>
-#include <floyd_steinberg.h>
 #include <sobel.h>
 #include <edge_detection.h>
 
