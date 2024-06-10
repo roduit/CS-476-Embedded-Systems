@@ -25,6 +25,7 @@ This repository contains all the material form the Course CS-476 Embedded System
 The repository is constructed as follow:
 ```
 .
+├── LICENSE
 ├── README.md
 ├── labs
 │   ├── pw0
@@ -47,7 +48,6 @@ The repository is constructed as follow:
 │   │   ├── embeddedd_system_lab3.pdf
 │   │   └── virtual_prototype
 │   ├── pw4
-│   │   ├── 325140_329487.zip
 │   │   ├── README.md
 │   │   ├── embeddedd_system_lab4.pdf
 │   │   ├── part1
@@ -64,21 +64,32 @@ The repository is constructed as follow:
 ├── project
 │   ├── README.md
 │   ├── documents
-│   │   └── cs476_presentation.pptx
+│   │   ├── cs476_presentation.pdf
+│   │   └── cs_476_project_report.pdf
 │   ├── python_tb
 │   │   └── sobel_calc.py
 │   ├── steps
-│   │   ├── dma_alone
-│   │   ├── sobel_ci
-│   │   └── software
+│   │   ├── 1_software
+│   │   ├── 2_sobel_ci
+│   │   ├── 3_dma_alone
+│   │   ├── 4_dma_4conv
+│   │   ├── 5_pingpong_blocks
+│   │   ├── 6_dma_for_comp
+│   │   └── 7_sobel_1bit
+│   ├── submission
+│   │   ├── README.md
+│   │   ├── documents
+│   │   ├── logo-epfl.png
+│   │   ├── python_tb
+│   │   └── versions
 │   └── virtual_prototype
 │       ├── README.md
 │       ├── modules
 │       ├── programms
 │       └── systems
-├── resources
-│   └── logo-epfl.png
-└── tree.txt
+└── resources
+     └── logo-epfl.png
+
 ```
 The folder `labs` contains all the laboratories done during the semester. The `project` folder contains all the files used to elaborated the final project. For more details about this project, please refer to the README.md that can be found under `./project/README.md`
 
